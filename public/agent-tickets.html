@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Queue · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="flex min-h-screen">
+      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
+        <div class="flex items-center gap-2.5 mb-10">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+          >
+            HD
+          </div>
+          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+        </div>
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="agent-tickets.html"
+            id="navQueue"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-brand/15 text-white border-l-2 border-brand font-medium"
+            >My Queue</a
+          >
+        </nav>
+        <div
+          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+          >
+            AS
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="agentName">Aarav Shah</p>
+            <p class="text-white/40 text-xs uppercase tracking-wide">Agent</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-white text-xs underline"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-10">
+        <div class="mb-6">
+          <p
+            class="font-mono text-xs uppercase tracking-widest text-brand mb-1"
+          >
+            Queue
+          </p>
+          <h1 class="font-display text-3xl font-semibold">Tickets</h1>
+        </div>
+
+        <!-- Filter pills -->
+        <div id="ticketFilters" class="flex items-center gap-2 mb-6">
+          <button
+            class="filter-pill active px-4 py-2 rounded-full text-sm font-medium bg-ink text-white"
+            data-filter="mine"
+          >
+            Assigned to me · 9
+          </button>
+          <button
+            class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white border border-black/10 text-inksoft hover:border-black/20"
+            data-filter="unassigned"
+          >
+            Unassigned · 6
+          </button>
+          <button
+            class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white border border-black/10 text-inksoft hover:border-black/20"
+            data-filter="all"
+          >
+            All tickets · 42
+          </button>
+          <button
+            class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white border border-black/10 text-inksoft hover:border-black/20"
+            data-filter="breached"
+          >
+            SLA breached · 3
+          </button>
+        </div>
+
+        <div class="bg-white border border-black/5 rounded-2xl overflow-hidden">
+          <div
+            class="grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-3 text-xs font-mono uppercase tracking-wide text-inksoft bg-surface"
+          >
+            <span></span>
+            <span>ID</span>
+            <span>Subject</span>
+            <span>Status</span>
+            <span>SLA</span>
+            <span class="text-right">Assignee</span>
+          </div>
+
+          <div id="ticketQueueList" class="divide-y divide-black/5">
+            <a
+              href="ticket-detail.html"
+              class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-surface transition-colors"
+              data-ticket-id="1042"
+            >
+              <span
+                class="priority-bar h-full rounded-full bg-[#C4453B]"
+              ></span>
+              <span class="font-mono text-xs text-inksoft">#TCK-1042</span>
+              <div class="min-w-0">
+                <p class="font-medium truncate">
+                  Payment webhook failing intermittently
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">
+                  Sana Vora · Critical priority
+                </p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FBE8E6] text-[#C4453B] w-fit"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C4453B]"></span> Open
+              </span>
+              <div class="sla-indicator">
+                <div
+                  class="w-full h-1.5 rounded-full bg-black/5 overflow-hidden mb-1"
+                >
+                  <div class="h-full bg-[#C4453B]" style="width: 100%"></div>
+                </div>
+                <p class="text-xs text-[#C4453B] font-medium">
+                  Breached 12m ago
+                </p>
+              </div>
+              <span class="text-xs text-inksoft text-right">Unassigned</span>
+            </a>
+
+            <a
+              href="ticket-detail.html"
+              class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-surface transition-colors"
+              data-ticket-id="1041"
+            >
+              <span
+                class="priority-bar h-full rounded-full bg-[#C77C11]"
+              ></span>
+              <span class="font-mono text-xs text-inksoft">#TCK-1041</span>
+              <div class="min-w-0">
+                <p class="font-medium truncate">
+                  Unable to export report as CSV
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">
+                  Kabir Nair · High priority
+                </p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FCEFD9] text-[#C77C11] w-fit"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C77C11]"></span> In
+                progress
+              </span>
+              <div class="sla-indicator">
+                <div
+                  class="w-full h-1.5 rounded-full bg-black/5 overflow-hidden mb-1"
+                >
+                  <div class="h-full bg-[#C77C11]" style="width: 70%"></div>
+                </div>
+                <p class="text-xs text-inksoft font-medium">1h 20m left</p>
+              </div>
+              <span class="text-xs text-inksoft text-right">Aarav S.</span>
+            </a>
+
+            <a
+              href="ticket-detail.html"
+              class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-surface transition-colors"
+              data-ticket-id="1038"
+            >
+              <span class="priority-bar h-full rounded-full bg-brand"></span>
+              <span class="font-mono text-xs text-inksoft">#TCK-1038</span>
+              <div class="min-w-0">
+                <p class="font-medium truncate">Question about billing cycle</p>
+                <p class="text-xs text-inksoft mt-0.5">
+                  Meera Iyer · Medium priority
+                </p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FCEFD9] text-[#C77C11] w-fit"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C77C11]"></span> In
+                progress
+              </span>
+              <div class="sla-indicator">
+                <div
+                  class="w-full h-1.5 rounded-full bg-black/5 overflow-hidden mb-1"
+                >
+                  <div class="h-full bg-brand" style="width: 35%"></div>
+                </div>
+                <p class="text-xs text-inksoft font-medium">5h 10m left</p>
+              </div>
+              <span class="text-xs text-inksoft text-right">Aarav S.</span>
+            </a>
+
+            <a
+              href="ticket-detail.html"
+              class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-surface transition-colors"
+              data-ticket-id="1029"
+            >
+              <span
+                class="priority-bar h-full rounded-full bg-inksoft/40"
+              ></span>
+              <span class="font-mono text-xs text-inksoft">#TCK-1029</span>
+              <div class="min-w-0">
+                <p class="font-medium truncate">Feature request: bulk export</p>
+                <p class="text-xs text-inksoft mt-0.5">
+                  Priya Kapoor · Low priority
+                </p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#E4F3EA] text-[#2F8659] w-fit"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#2F8659]"></span>
+                Resolved
+              </span>
+              <div class="sla-indicator">
+                <p class="text-xs text-inksoft font-medium">Met · closed</p>
+              </div>
+              <span class="text-xs text-inksoft text-right">Aarav S.</span>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

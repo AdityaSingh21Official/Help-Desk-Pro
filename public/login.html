@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+      <!-- Left: brand / product panel -->
+      <div
+        class="hidden lg:flex flex-col justify-between bg-panel text-white p-16 relative overflow-hidden"
+      >
+        <div
+          class="absolute -right-24 -top-24 w-80 h-80 rounded-full border border-brand/20"
+        ></div>
+        <div
+          class="absolute -right-8 -top-8 w-56 h-56 rounded-full border border-brand/20"
+        ></div>
+
+        <div class="relative z-10">
+          <div
+            class="w-11 h-11 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-panel mb-8"
+          >
+            HD
+          </div>
+          <h1 class="font-display text-4xl leading-tight max-w-md">
+            Every ticket, tracked. Every SLA, watched.
+          </h1>
+          <p class="text-white/50 text-sm mt-4 max-w-sm">
+            Agents work the queue, customers track their tickets, and
+            integrators submit tickets through a rate-limited API — one system,
+            one source of truth.
+          </p>
+        </div>
+
+        <div
+          class="relative z-10 flex items-center gap-6 pt-8 border-t border-panelline"
+        >
+          <div>
+            <p class="font-mono text-2xl text-brand">128</p>
+            <p class="text-white/40 text-xs mt-1">Open tickets</p>
+          </div>
+          <div>
+            <p class="font-mono text-2xl text-brand">99.2%</p>
+            <p class="text-white/40 text-xs mt-1">SLA met (30d)</p>
+          </div>
+          <div>
+            <p class="font-mono text-2xl text-brand">4m</p>
+            <p class="text-white/40 text-xs mt-1">Avg first response</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: login form -->
+      <div class="flex items-center justify-center p-8">
+        <div class="w-full max-w-sm">
+          <div
+            class="lg:hidden w-10 h-10 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-white mb-8"
+          >
+            HD
+          </div>
+
+          <h2 class="font-display text-2xl font-semibold text-ink">
+            Welcome back
+          </h2>
+          <p class="text-inksoft text-sm mt-1 mb-8">
+            Sign in to your HelpDesk Pro account.
+          </p>
+
+          <p
+            id="loginError"
+            class="hidden bg-[#FBE8E6] text-[#C4453B] text-sm font-medium px-4 py-2.5 rounded-lg mb-5"
+          >
+            That email and password don't match our records.
+          </p>
+
+          <form id="loginForm" class="space-y-5">
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-semibold text-ink mb-1.5"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@company.com"
+                class="w-full px-4 py-2.5 rounded-lg border border-black/10 text-sm placeholder:text-inksoft/60 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-semibold text-ink mb-1.5"
+                >Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                class="w-full px-4 py-2.5 rounded-lg border border-black/10 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="loginBtn"
+              class="w-full bg-brand hover:bg-brand-dark text-white text-sm font-semibold py-2.5 rounded-lg transition-colors"
+            >
+              Sign in
+            </button>
+          </form>
+
+          <p class="text-center text-sm text-inksoft mt-6">
+            New customer?
+            <a
+              href="signup.html"
+              id="goToSignup"
+              class="text-brand font-semibold hover:text-brand-dark"
+              >Create an account</a
+            >
+          </p>
+          <p class="text-center text-xs text-inksoft/70 mt-3">
+            Agents and admins are provisioned by an administrator.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

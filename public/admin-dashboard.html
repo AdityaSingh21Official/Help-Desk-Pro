@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
+        <div class="flex items-center gap-2.5 mb-10">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+          >
+            HD
+          </div>
+          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+        </div>
+
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="admin-dashboard.html"
+            id="navDashboard"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-brand/15 text-white border-l-2 border-brand font-medium"
+            >Dashboard</a
+          >
+          <a
+            href="admin-agents.html"
+            id="navAgents"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >Agents</a
+          >
+          <a
+            href="admin-api-keys.html"
+            id="navApiKeys"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >API Keys</a
+          >
+          <a
+            href="agent-tickets.html"
+            id="navAllTickets"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >All Tickets</a
+          >
+        </nav>
+
+        <div
+          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+          >
+            RM
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="adminName">Rita Mehta</p>
+            <p class="text-white/40 text-xs uppercase tracking-wide">Admin</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-white text-xs underline"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="flex-1 p-10">
+        <div class="mb-8">
+          <p
+            class="font-mono text-xs uppercase tracking-widest text-brand mb-1"
+          >
+            Overview
+          </p>
+          <h1 class="font-display text-3xl font-semibold">
+            Good morning, Rita
+          </h1>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="grid grid-cols-4 gap-5 mb-10">
+          <div class="bg-white border border-black/5 rounded-2xl p-5">
+            <p class="text-inksoft text-xs font-medium uppercase tracking-wide">
+              Open tickets
+            </p>
+            <p
+              id="statOpenTickets"
+              class="font-display text-3xl font-semibold mt-2"
+            >
+              42
+            </p>
+          </div>
+          <div class="bg-white border border-black/5 rounded-2xl p-5">
+            <p class="text-inksoft text-xs font-medium uppercase tracking-wide">
+              SLA breached
+            </p>
+            <p
+              id="statSlaBreached"
+              class="font-display text-3xl font-semibold mt-2 text-[#C4453B]"
+            >
+              3
+            </p>
+          </div>
+          <div class="bg-white border border-black/5 rounded-2xl p-5">
+            <p class="text-inksoft text-xs font-medium uppercase tracking-wide">
+              Active agents
+            </p>
+            <p
+              id="statActiveAgents"
+              class="font-display text-3xl font-semibold mt-2"
+            >
+              8
+            </p>
+          </div>
+          <div class="bg-white border border-black/5 rounded-2xl p-5">
+            <p class="text-inksoft text-xs font-medium uppercase tracking-wide">
+              Avg first response
+            </p>
+            <p
+              id="statAvgResponse"
+              class="font-display text-3xl font-semibold mt-2"
+            >
+              4m
+            </p>
+          </div>
+        </div>
+
+        <!-- Recent tickets -->
+        <div class="bg-white border border-black/5 rounded-2xl overflow-hidden">
+          <div
+            class="flex items-center justify-between px-6 py-5 border-b border-black/5"
+          >
+            <h2 class="font-display font-semibold text-lg">Recent tickets</h2>
+            <a
+              href="agent-tickets.html"
+              class="text-brand text-sm font-semibold hover:text-brand-dark"
+              >View all →</a
+            >
+          </div>
+
+          <div id="recentTicketsList" class="divide-y divide-black/5">
+            <!-- Ticket row -->
+            <div
+              class="ticket-row flex items-center gap-4 px-6 py-4"
+              data-ticket-id="1042"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-[#C4453B] shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1042</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">
+                  Payment webhook failing intermittently
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">Sana Vora · 2h ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FBE8E6] text-[#C4453B] shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C4453B]"></span> Open
+              </span>
+              <span class="text-xs text-inksoft w-24 text-right shrink-0"
+                >Unassigned</span
+              >
+            </div>
+
+            <div
+              class="ticket-row flex items-center gap-4 px-6 py-4"
+              data-ticket-id="1041"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-[#C77C11] shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1041</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">
+                  Unable to export report as CSV
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">Kabir Nair · 5h ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FCEFD9] text-[#C77C11] shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C77C11]"></span> In
+                progress
+              </span>
+              <span class="text-xs text-inksoft w-24 text-right shrink-0"
+                >Aarav S.</span
+              >
+            </div>
+
+            <div
+              class="ticket-row flex items-center gap-4 px-6 py-4"
+              data-ticket-id="1039"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-brand shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1039</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">Feature request: dark mode</p>
+                <p class="text-xs text-inksoft mt-0.5">Meera Iyer · 1d ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#E4F3EA] text-[#2F8659] shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#2F8659]"></span>
+                Resolved
+              </span>
+              <span class="text-xs text-inksoft w-24 text-right shrink-0"
+                >Priya K.</span
+              >
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

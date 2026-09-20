@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Keys · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="flex min-h-screen">
+      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
+        <div class="flex items-center gap-2.5 mb-10">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+          >
+            HD
+          </div>
+          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+        </div>
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="admin-dashboard.html"
+            id="navDashboard"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >Dashboard</a
+          >
+          <a
+            href="admin-agents.html"
+            id="navAgents"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >Agents</a
+          >
+          <a
+            href="admin-api-keys.html"
+            id="navApiKeys"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-brand/15 text-white border-l-2 border-brand font-medium"
+            >API Keys</a
+          >
+          <a
+            href="agent-tickets.html"
+            id="navAllTickets"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >All Tickets</a
+          >
+        </nav>
+        <div
+          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+          >
+            RM
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="adminName">Rita Mehta</p>
+            <p class="text-white/40 text-xs uppercase tracking-wide">Admin</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-white text-xs underline"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-10">
+        <div class="mb-8">
+          <p
+            class="font-mono text-xs uppercase tracking-widest text-brand mb-1"
+          >
+            Integrations
+          </p>
+          <h1 class="font-display text-3xl font-semibold">API keys</h1>
+        </div>
+
+        <!-- Newly created key banner (shown once right after creation) -->
+        <div
+          id="newKeyBanner"
+          class="hidden bg-brand/10 border border-brand/30 rounded-2xl px-6 py-5 mb-6"
+        >
+          <p class="text-sm font-semibold text-brand-dark mb-2">
+            Copy your new key now — you won't be able to see it again.
+          </p>
+          <div class="flex items-center gap-3">
+            <code
+              id="newKeyValue"
+              class="font-mono text-sm bg-white px-4 py-2 rounded-lg border border-black/10 flex-1 truncate"
+              >hd_live_9f3a1c...redacted</code
+            >
+            <button
+              id="copyNewKeyBtn"
+              class="text-sm font-semibold text-brand hover:text-brand-dark shrink-0"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-8 items-start">
+          <!-- Keys table -->
+          <div
+            class="col-span-2 bg-white border border-black/5 rounded-2xl overflow-hidden"
+          >
+            <table class="w-full text-sm">
+              <thead>
+                <tr
+                  class="text-left text-xs font-mono uppercase tracking-wide text-inksoft bg-surface"
+                >
+                  <th class="px-6 py-3.5 font-medium">Organization</th>
+                  <th class="px-6 py-3.5 font-medium">Key</th>
+                  <th class="px-6 py-3.5 font-medium">Tier</th>
+                  <th class="px-6 py-3.5 font-medium">Usage today</th>
+                  <th class="px-6 py-3.5 font-medium">Status</th>
+                  <th class="px-6 py-3.5 font-medium"></th>
+                </tr>
+              </thead>
+              <tbody id="apiKeysTableBody" class="divide-y divide-black/5">
+                <tr class="api-key-row" data-key-id="1">
+                  <td class="px-6 py-4 font-medium key-org-name">
+                    Northwind Retail
+                  </td>
+                  <td
+                    class="px-6 py-4 font-mono text-xs text-inksoft key-masked-value"
+                  >
+                    hd_live_••••8a2f
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-tier-pill inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-[#E1F2F1] text-brand-dark"
+                      >Pro</span
+                    >
+                  </td>
+                  <td class="px-6 py-4 key-usage-today">
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="w-20 h-1.5 rounded-full bg-black/5 overflow-hidden"
+                      >
+                        <div class="h-full bg-brand" style="width: 24%"></div>
+                      </div>
+                      <span class="text-xs text-inksoft"
+                        >144 / 600 req/min</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#E4F3EA] text-[#2F8659]"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-[#2F8659]"
+                      ></span>
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <button
+                      class="revokeKeyBtn text-xs font-semibold text-[#C4453B] hover:underline"
+                      data-key-id="1"
+                    >
+                      Revoke
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="api-key-row" data-key-id="2">
+                  <td class="px-6 py-4 font-medium key-org-name">
+                    Loop Analytics
+                  </td>
+                  <td
+                    class="px-6 py-4 font-mono text-xs text-inksoft key-masked-value"
+                  >
+                    hd_live_••••11c9
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-tier-pill inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-black/5 text-inksoft"
+                      >Free</span
+                    >
+                  </td>
+                  <td class="px-6 py-4 key-usage-today">
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="w-20 h-1.5 rounded-full bg-black/5 overflow-hidden"
+                      >
+                        <div
+                          class="h-full bg-[#C77C11]"
+                          style="width: 88%"
+                        ></div>
+                      </div>
+                      <span class="text-xs text-inksoft">53 / 60 req/min</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#E4F3EA] text-[#2F8659]"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-[#2F8659]"
+                      ></span>
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <button
+                      class="revokeKeyBtn text-xs font-semibold text-[#C4453B] hover:underline"
+                      data-key-id="2"
+                    >
+                      Revoke
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="api-key-row" data-key-id="3">
+                  <td class="px-6 py-4 font-medium key-org-name">
+                    Vantage CRM
+                  </td>
+                  <td
+                    class="px-6 py-4 font-mono text-xs text-inksoft key-masked-value"
+                  >
+                    hd_live_••••7d40
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-tier-pill inline-flex px-2.5 py-1 rounded-full text-xs font-medium bg-black/5 text-inksoft"
+                      >Free</span
+                    >
+                  </td>
+                  <td class="px-6 py-4 key-usage-today text-xs text-inksoft">
+                    —
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-black/5 text-inksoft"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-inksoft/50"
+                      ></span>
+                      Revoked
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right text-xs text-inksoft/50">
+                    —
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Create key form -->
+          <div class="bg-white border border-black/5 rounded-2xl p-6">
+            <h2 class="font-display font-semibold text-lg mb-1">
+              Create a new key
+            </h2>
+            <p class="text-inksoft text-sm mb-5">
+              Each key belongs to one organization and is rate-limited by its
+              tier.
+            </p>
+
+            <form id="createApiKeyForm" class="space-y-4">
+              <div>
+                <label
+                  for="keyOrgName"
+                  class="block text-xs font-semibold uppercase tracking-wide text-inksoft mb-1.5"
+                  >Organization name</label
+                >
+                <input
+                  type="text"
+                  id="keyOrgName"
+                  name="keyOrgName"
+                  placeholder="Acme Inc."
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-black/10 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="keyTier"
+                  class="block text-xs font-semibold uppercase tracking-wide text-inksoft mb-1.5"
+                  >Tier</label
+                >
+                <select
+                  id="keyTier"
+                  name="keyTier"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-black/10 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                >
+                  <option value="free">Free — 60 req/min</option>
+                  <option value="pro">Pro — 600 req/min</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                id="createApiKeyBtn"
+                class="w-full bg-ink hover:bg-black text-white text-sm font-semibold py-2.5 rounded-lg transition-colors"
+              >
+                Generate key
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

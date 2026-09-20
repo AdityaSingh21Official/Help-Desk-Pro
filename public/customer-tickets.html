@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Tickets · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="flex min-h-screen">
+      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
+        <div class="flex items-center gap-2.5 mb-10">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+          >
+            HD
+          </div>
+          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+        </div>
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="customer-tickets.html"
+            id="navMyTickets"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-brand/15 text-white border-l-2 border-brand font-medium"
+            >My Tickets</a
+          >
+          <a
+            href="new-ticket.html"
+            id="navNewTicket"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >New Ticket</a
+          >
+        </nav>
+        <div
+          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+          >
+            SV
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="customerName">Sana Vora</p>
+            <p class="text-white/40 text-xs uppercase tracking-wide">
+              Customer
+            </p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-white text-xs underline"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-10">
+        <div class="flex items-end justify-between mb-6">
+          <div>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-brand mb-1"
+            >
+              Support
+            </p>
+            <h1 class="font-display text-3xl font-semibold">My tickets</h1>
+          </div>
+          <a
+            href="new-ticket.html"
+            id="newTicketBtn"
+            class="bg-brand hover:bg-brand-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
+          >
+            + New ticket
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2 mb-6">
+          <button
+            class="filter-pill active px-4 py-2 rounded-full text-sm font-medium bg-ink text-white"
+            data-filter="all"
+          >
+            All · 5
+          </button>
+          <button
+            class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white border border-black/10 text-inksoft hover:border-black/20"
+            data-filter="open"
+          >
+            Open · 2
+          </button>
+          <button
+            class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white border border-black/10 text-inksoft hover:border-black/20"
+            data-filter="resolved"
+          >
+            Resolved · 3
+          </button>
+        </div>
+
+        <div class="bg-white border border-black/5 rounded-2xl overflow-hidden">
+          <div id="myTicketsList" class="divide-y divide-black/5">
+            <a
+              href="ticket-detail.html"
+              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors"
+              data-ticket-id="1042"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-[#C4453B] shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1042</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">
+                  Payment webhook failing intermittently
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">Opened 2h ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FBE8E6] text-[#C4453B] shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C4453B]"></span> Open
+              </span>
+            </a>
+
+            <a
+              href="ticket-detail.html"
+              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors"
+              data-ticket-id="1035"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-[#C77C11] shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1035</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">
+                  Invoice shows wrong tax amount
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">Opened 3d ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FCEFD9] text-[#C77C11] shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C77C11]"></span> In
+                progress
+              </span>
+            </a>
+
+            <a
+              href="ticket-detail.html"
+              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors"
+              data-ticket-id="1018"
+            >
+              <span
+                class="priority-bar w-1 h-10 rounded-full bg-inksoft/40 shrink-0"
+              ></span>
+              <span class="font-mono text-xs text-inksoft w-20 shrink-0"
+                >#TCK-1018</span
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-medium truncate">
+                  How do I add a second seat to my plan?
+                </p>
+                <p class="text-xs text-inksoft mt-0.5">Opened 2w ago</p>
+              </div>
+              <span
+                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-black/5 text-inksoft shrink-0"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-inksoft/50"></span>
+                Closed
+              </span>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

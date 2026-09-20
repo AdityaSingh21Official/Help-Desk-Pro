@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>#TCK-1042 · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-ink">
+    <div class="flex min-h-screen">
+      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
+        <div class="flex items-center gap-2.5 mb-10">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+          >
+            HD
+          </div>
+          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+        </div>
+        <nav class="flex flex-col gap-1 text-sm">
+          <a
+            href="agent-tickets.html"
+            id="navQueue"
+            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            >My Queue</a
+          >
+        </nav>
+        <div
+          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+          >
+            AS
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="agentName">Aarav Shah</p>
+            <p class="text-white/40 text-xs uppercase tracking-wide">Agent</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-white text-xs underline"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-10">
+        <a
+          href="agent-tickets.html"
+          id="backToQueueBtn"
+          class="text-sm text-inksoft hover:text-ink font-medium mb-4 inline-flex items-center gap-1.5"
+          >← Back to queue</a
+        >
+
+        <div class="flex items-start justify-between mb-8">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="font-mono text-sm text-inksoft" id="ticketIdBadge"
+                >#TCK-1042</span
+              >
+              <span
+                id="priorityBadge"
+                class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FBE8E6] text-[#C4453B]"
+                >Critical priority</span
+              >
+            </div>
+            <h1
+              id="ticketSubjectHeading"
+              class="font-display text-2xl font-semibold max-w-xl"
+            >
+              Payment webhook failing intermittently
+            </h1>
+          </div>
+          <span
+            id="currentStatusPill"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-[#FBE8E6] text-[#C4453B] shrink-0"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-[#C4453B]"></span> Open
+          </span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-8 items-start">
+          <!-- Main column -->
+          <div class="col-span-2 space-y-6">
+            <!-- Description -->
+            <div class="bg-white border border-black/5 rounded-2xl p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div
+                  class="w-9 h-9 rounded-full bg-brand/15 text-brand flex items-center justify-center text-xs font-semibold shrink-0"
+                >
+                  SV
+                </div>
+                <div>
+                  <p class="font-medium text-sm">Sana Vora</p>
+                  <p class="text-xs text-inksoft">Opened 2 hours ago</p>
+                </div>
+              </div>
+              <p
+                id="ticketDescriptionText"
+                class="text-sm text-inksoft leading-relaxed"
+              >
+                We're seeing our payment webhook fail roughly 1 in 20 times with
+                a 504 from your end. It doesn't seem tied to load — happens even
+                during quiet hours. Started around Tuesday evening. Can someone
+                take a look at the webhook delivery logs on your side for our
+                account?
+              </p>
+            </div>
+
+            <!-- Comment thread -->
+            <div class="bg-white border border-black/5 rounded-2xl p-6">
+              <h2 class="font-display font-semibold text-lg mb-5">Activity</h2>
+
+              <div id="commentsList" class="space-y-5">
+                <div class="comment-item flex gap-3" data-comment-id="1">
+                  <div
+                    class="w-9 h-9 rounded-full bg-brand/15 text-brand flex items-center justify-center text-xs font-semibold shrink-0"
+                  >
+                    AS
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <p class="font-medium text-sm">Aarav Shah</p>
+                      <span class="text-xs text-inksoft">1h ago</span>
+                    </div>
+                    <p class="text-sm text-inksoft">
+                      Looking into the delivery logs now — can you confirm the
+                      endpoint URL you have registered?
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="comment-item internal flex gap-3 bg-[#FCEFD9]/50 -mx-3 px-3 py-3 rounded-xl"
+                  data-comment-id="2"
+                >
+                  <div
+                    class="w-9 h-9 rounded-full bg-[#C77C11]/15 text-[#C77C11] flex items-center justify-center text-xs font-semibold shrink-0"
+                  >
+                    AS
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <p class="font-medium text-sm">Aarav Shah</p>
+                      <span
+                        class="internal-badge inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide bg-[#C77C11]/15 text-[#C77C11]"
+                        >Internal note</span
+                      >
+                      <span class="text-xs text-inksoft">45m ago</span>
+                    </div>
+                    <p class="text-sm text-inksoft">
+                      Their webhook endpoint is timing out at ~28s — looks like
+                      it's our retry queue backing up, not their config.
+                      Escalating to platform team.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="comment-item flex gap-3" data-comment-id="3">
+                  <div
+                    class="w-9 h-9 rounded-full bg-brand/15 text-brand flex items-center justify-center text-xs font-semibold shrink-0"
+                  >
+                    SV
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <p class="font-medium text-sm">Sana Vora</p>
+                      <span class="text-xs text-inksoft">30m ago</span>
+                    </div>
+                    <p class="text-sm text-inksoft">
+                      https://api.northwind.co/webhooks/payments — thanks for
+                      looking into it.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <form id="commentForm" class="mt-6 pt-6 border-t border-black/5">
+                <textarea
+                  id="commentText"
+                  name="commentText"
+                  rows="3"
+                  placeholder="Write a reply…"
+                  class="w-full px-4 py-2.5 rounded-lg border border-black/10 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                ></textarea>
+                <div class="flex items-center justify-between mt-3">
+                  <label
+                    class="flex items-center gap-2 text-sm text-inksoft cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      id="internalNoteToggle"
+                      name="internalNoteToggle"
+                      class="rounded border-black/20 text-[#C77C11] focus:ring-[#C77C11]/30"
+                    />
+                    Internal note (agents only)
+                  </label>
+                  <button
+                    type="submit"
+                    id="postCommentBtn"
+                    class="bg-ink hover:bg-black text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
+                  >
+                    Post reply
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right sidebar -->
+          <div class="space-y-6">
+            <!-- Details -->
+            <div class="bg-white border border-black/5 rounded-2xl p-6">
+              <h3 class="font-display font-semibold mb-4">Details</h3>
+              <dl class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <dt class="text-inksoft">Requester</dt>
+                  <dd class="font-medium" id="ticketRequesterName">
+                    Sana Vora
+                  </dd>
+                </div>
+                <div class="flex justify-between items-center">
+                  <dt class="text-inksoft">Assigned to</dt>
+                  <dd>
+                    <select
+                      id="assignAgentSelect"
+                      class="text-sm font-medium border-none bg-transparent text-right focus:outline-none focus:ring-0 cursor-pointer"
+                    >
+                      <option>Unassigned</option>
+                      <option selected>Aarav Shah</option>
+                      <option>Priya Kapoor</option>
+                    </select>
+                  </dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-inksoft">Priority</dt>
+                  <dd class="font-medium" id="ticketPriorityText">Critical</dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-inksoft">Created</dt>
+                  <dd class="font-medium" id="ticketCreatedAt">
+                    Sep 18, 10:14 AM
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <!-- SLA -->
+            <div class="bg-white border border-black/5 rounded-2xl p-6">
+              <h3 class="font-display font-semibold mb-3">SLA</h3>
+              <div
+                class="w-full h-2 rounded-full bg-black/5 overflow-hidden mb-2"
+              >
+                <div
+                  id="slaProgressBar"
+                  class="h-full bg-[#C4453B]"
+                  style="width: 100%"
+                ></div>
+              </div>
+              <p id="slaTimeText" class="text-sm font-medium text-[#C4453B]">
+                Breached 12 minutes ago
+              </p>
+              <p class="text-xs text-inksoft mt-1">
+                Response due within 30 min for critical priority
+              </p>
+            </div>
+
+            <!-- Status transition -->
+            <div class="bg-white border border-black/5 rounded-2xl p-6">
+              <h3 class="font-display font-semibold mb-1">Change status</h3>
+              <p class="text-xs text-inksoft mb-4">
+                Only valid transitions from the current state should be enabled
+                — enforce this per your state machine.
+              </p>
+              <div id="statusTransitionGroup" class="flex flex-col gap-2">
+                <button
+                  class="status-option-btn text-left px-4 py-2.5 rounded-lg border-2 border-[#C4453B] bg-[#FBE8E6] text-[#C4453B] text-sm font-semibold"
+                  data-status="open"
+                  disabled
+                >
+                  Open
+                  <span class="text-xs font-normal opacity-70">(current)</span>
+                </button>
+                <button
+                  class="status-option-btn text-left px-4 py-2.5 rounded-lg border border-black/10 text-sm font-medium hover:border-[#C77C11] hover:bg-[#FCEFD9] hover:text-[#C77C11] transition-colors"
+                  data-status="in_progress"
+                >
+                  Start progress
+                </button>
+                <button
+                  class="status-option-btn text-left px-4 py-2.5 rounded-lg border border-black/10 text-sm font-medium hover:border-[#2F8659] hover:bg-[#E4F3EA] hover:text-[#2F8659] transition-colors"
+                  data-status="resolved"
+                >
+                  Mark resolved
+                </button>
+                <button
+                  class="status-option-btn text-left px-4 py-2.5 rounded-lg border border-black/10 text-sm font-medium text-inksoft/50 cursor-not-allowed"
+                  data-status="closed"
+                  disabled
+                >
+                  Close <span class="text-xs font-normal">(resolve first)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

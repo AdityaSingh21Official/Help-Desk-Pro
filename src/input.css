@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #12151c;
+  --color-inksoft: #5b6472;
+  --color-surface: #f5f6f8;
+  --color-panel: #0e1420;
+  --color-panelline: #232b3d;
+  --color-brand: #0e7c86;
+  --color-brand-dark: #0b646c;
+  --color-brand-tint: #e1f2f1;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: Inter, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+/* only needed if v4's auto-detection doesn't find your HTML files —
+   paths are relative to THIS css file, adjust to match your actual layout */
+@source "../*.html";

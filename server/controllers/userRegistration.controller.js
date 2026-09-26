@@ -38,7 +38,7 @@ async function stageNewUser(req, res) {
       }
 
       const NewVerificationOTP = crypto.randomInt(100000, 1000000);
-
+      const NewPasswordHash = await bcrypt.hash(password, 12);
       const new_verification_OTP_Hash = await bcrypt.hash(
         NewVerificationOTP.toString(),
         12,
@@ -50,9 +50,9 @@ async function stageNewUser(req, res) {
 
       await tempConn.query(
         `update customer_staging 
-        set OTPcodeHash = ?, attemptCount = 0, isFlagged = 0, isFlaggedUntil = null
+        set OTPcodeHash = ?,CpasswordHash = ?, attemptCount = 0, isFlagged = 0, isFlaggedUntil = null
         where CEmail = ?`,
-        [new_verification_OTP_Hash, email],
+        [new_verification_OTP_Hash, NewPasswordHash, email],
       );
 
       await tempConn.commit();

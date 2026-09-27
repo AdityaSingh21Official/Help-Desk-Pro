@@ -16,11 +16,18 @@ async function stageNewUser(req, res) {
       `
       select case 
       when exists (select 1 from customer_staging where cemail = ?) then "STAGED"
-      when exists (select 1 from customer where cemail = ?) then "REGISTERED"
+      when exists ( select 1 from 
+      (select 1 from customer where cemail = ? 
+      union all 
+      select 1 from admin where aemail = ? 
+      union all 
+      select 1 from agent where agemail = ?)
+      u) 
+      then "REGISTERED"
       else "NEW"
       end as Customer_is;
       `,
-      [email, email],
+      [email, email, email, email],
     );
 
     if (data[0]["Customer_is"] === "STAGED") {

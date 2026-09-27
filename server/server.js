@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import { testConnection } from "./database/db.config.js";
 import newUserCreator from "./routes/signup.routes.js";
+import loginRouter from "./routes/login.routes.js";
 
 config();
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api", newUserCreator);
+app.use("/api", loginRouter);
 
 app.listen(port, async () => {
   await testConnection();

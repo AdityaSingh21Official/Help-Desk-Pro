@@ -1,8 +1,9 @@
 function isEmail(email) {
   if (typeof email !== "string") throw new Error("BAD EMAIL FORMAT");
+  if (email.length > 100) throw new Error("BAD EMAIL FORMAT");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-_]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) throw new Error("BAD EMAIL FORMAT");
-  return;
+  return email.toLowerCase();
 }
 function validatePassword(password) {
   if (typeof password !== "string") throw new Error("BAD PASSWORD FORMAT");
@@ -23,7 +24,7 @@ function validateLoginRequest(req, res, next) {
     const data = req.body;
     validateLoginReqBody(data);
     const { email, password } = data;
-    isEmail(email);
+    req.body.email = isEmail(email);
     validatePassword(password);
 
     next();

@@ -3,7 +3,7 @@ function isEmail(email) {
   if (email.length > 100) throw new Error("INVALID EMAIL");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) throw new Error("INVALID EMAIL");
-  return;
+  return email.toLowerCase();
 }
 
 function validatePassword(password) {
@@ -51,7 +51,7 @@ function validateStagingData(req, res, next) {
     const data = req.body;
     validateStagingBody(data);
     const { email, password, name } = data;
-    isEmail(email);
+    req.body.email = isEmail(email);
     validateName(name);
     validatePassword(password);
 

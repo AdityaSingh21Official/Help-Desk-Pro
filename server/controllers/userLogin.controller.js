@@ -39,12 +39,28 @@ async function userLogin(req, res) {
     const passIsCorrect = await bcrypt.compare(password, data[0]["password"]);
 
     if (!passIsCorrect) {
-      await tempConn.rollback();
+      await tempConn.query(
+        `
+        update login_rate_limit 
+        set failed_Count = failed_Count + 1 
+        where login_key = ?;
+        `,
+        [email],
+      );
+      await tempConn.commit();
       return res.status(401).json({
         success: false,
         message: "INVALID CREDENTIALS",
       });
     }
+
+    await tempConn.query(
+      `
+      delete from login_rate_limit
+      where login_key = ?
+      `,
+      [email],
+    );
 
     const accessToken = jwt.sign(
       {

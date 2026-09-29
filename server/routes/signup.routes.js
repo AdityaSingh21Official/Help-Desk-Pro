@@ -7,7 +7,7 @@ import {
 import {
   validateStagingData,
   validateVerficationOTPData,
-} from "../middleware/registrationDataValidation.middleware.js";
+} from "../middleware/data.middleware/registrationDataValidation.middleware.js";
 
 const accountCreator = express.Router();
 

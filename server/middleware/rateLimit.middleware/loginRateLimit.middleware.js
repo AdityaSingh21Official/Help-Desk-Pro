@@ -1,4 +1,4 @@
-import dbConn from "../database/db.config.js";
+import dbConn from "../../database/db.config.js";
 import { config } from "dotenv";
 
 config();

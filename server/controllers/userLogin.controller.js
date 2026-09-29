@@ -93,12 +93,14 @@ async function userLogin(req, res) {
       });
     }
 
+    const refreshExpiry = process.env.REFRESH_TOKEN_EXPIRY;
+
     await tempConn.query(
       `
       insert into refresh_token(tokenHash, expiresAt,${colName} )
-      values(?, CURRENT_TIMESTAMP + interval 1 day, ?);
+      values(?, CURRENT_TIMESTAMP + interval ? minute , ?);
       `,
-      [hashedRefreshToken, data[0]["id"]],
+      [hashedRefreshToken, refreshExpiry, data[0]["id"]],
     );
 
     await tempConn.commit();

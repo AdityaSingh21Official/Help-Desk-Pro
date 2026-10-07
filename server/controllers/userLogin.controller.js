@@ -16,13 +16,13 @@ async function userLogin(req, res) {
 
     const [data] = await tempConn.query(
       `
-      select u.id as id, u.password as password , u.type as type
+      select u.id as id, u.password as password , u.type as type, u.name as name
       from (
-      select cid as id , CPassword as password , "CUSTOMER" as type, CEmail as email from customer
+      select cid as id , CPassword as password , "CUSTOMER" as type, cname as name , CEmail as email from customer
       union all
-      select aid as id, APassword as password , "ADMIN" as type, AEmail as email from admin
+      select aid as id, APassword as password , "ADMIN" as type, aname as name, AEmail as email from admin
       union all
-      select agid as id, AGPassword as password , "AGENT" as type, AGEmail as email from agent  
+      select agid as id, AGPassword as password , "AGENT" as type, agname as name,AGEmail as email from agent  
       ) u where u.email = ?;
       `,
       [email],
@@ -116,6 +116,7 @@ async function userLogin(req, res) {
     return res.status(200).json({
       success: true,
       message: `${data[0]["type"]} login succesfull`,
+      userName: data[0]["name"],
       accessToken: accessToken,
     });
   } catch (error) {

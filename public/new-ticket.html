@@ -6,88 +6,113 @@
     <title>New Ticket · HelpDesk Pro</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
       rel="stylesheet"
     />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
-    </style>
   </head>
-  <body class="bg-surface text-ink">
-    <div class="flex min-h-screen">
-      <aside class="w-64 shrink-0 bg-panel text-white flex flex-col p-6">
-        <div class="flex items-center gap-2.5 mb-10">
+  <body
+    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
+  >
+    <div class="flex min-h-screen flex-col lg:flex-row">
+      <!-- Sidebar -->
+      <aside
+        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
+        ></div>
+
+        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
           <div
-            class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-mono font-bold text-sm"
+            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
           >
             HD
           </div>
-          <span class="font-display font-semibold text-lg">HelpDesk Pro</span>
+          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+            >HelpDesk Pro</span
+          >
         </div>
-        <nav class="flex flex-col gap-1 text-sm">
+
+        <nav
+          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+        >
           <a
             href="customer-tickets.html"
             id="navMyTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
             >My Tickets</a
           >
           <a
             href="new-ticket.html"
             id="navNewTicket"
-            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-brand/15 text-white border-l-2 border-brand font-medium"
+            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
             >New Ticket</a
           >
         </nav>
+
         <div
-          class="mt-auto pt-6 border-t border-panelline flex items-center gap-3"
+          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
         >
           <div
-            class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center text-xs font-semibold"
+            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
           >
             SV
           </div>
           <div class="text-sm leading-tight">
             <p id="customerName">Sana Vora</p>
-            <p class="text-white/40 text-xs uppercase tracking-wide">
-              Customer
-            </p>
+            <p class="text-white/40 text-[11px] uppercase mt-0.5">Customer</p>
           </div>
           <button
             id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-white text-xs underline"
+            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
           >
             Log out
           </button>
         </div>
       </aside>
 
-      <main class="flex-1 p-10 flex justify-center">
+      <!-- Main -->
+      <main class="flex-1 p-6 sm:p-8 lg:p-10 flex justify-center min-w-0">
         <div class="w-full max-w-2xl">
           <div class="mb-8">
             <p
-              class="font-mono text-xs uppercase tracking-widest text-brand mb-1"
+              class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
             >
-              Support
+              / Support
             </p>
-            <h1 class="font-display text-3xl font-semibold">
-              Open a new ticket
+            <h1
+              class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            >
+              Open a <span class="text-[#feff7c]">new ticket</span>
             </h1>
-            <p class="text-inksoft text-sm mt-1">
-              Tell us what's going wrong — we'll route it to the right agent.
+            <p class="text-white/60 text-sm mt-3">
+              / Tell us what's going wrong — we'll route it to the right agent.
             </p>
           </div>
 
           <form
             id="newTicketForm"
-            class="bg-white border border-black/5 rounded-2xl p-8 space-y-6"
+            class="relative border border-white/10 bg-[#020203] p-6 sm:p-8 space-y-6"
           >
+            <span
+              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
+            ></span>
+            <span
+              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
+            ></span>
+            <span
+              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
+            ></span>
+            <span
+              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
+            ></span>
+
             <div>
               <label
                 for="ticketSubject"
-                class="block text-sm font-semibold mb-1.5"
+                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
                 >Subject</label
               >
               <input
@@ -95,7 +120,7 @@
                 id="ticketSubject"
                 name="ticketSubject"
                 placeholder="Brief summary of the issue"
-                class="w-full px-4 py-2.5 rounded-lg border border-black/10 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
                 required
               />
             </div>
@@ -103,7 +128,7 @@
             <div>
               <label
                 for="ticketDescription"
-                class="block text-sm font-semibold mb-1.5"
+                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
                 >Description</label
               >
               <textarea
@@ -111,14 +136,20 @@
                 name="ticketDescription"
                 rows="6"
                 placeholder="What happened? Steps to reproduce, if any."
-                class="w-full px-4 py-2.5 rounded-lg border border-black/10 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] resize-none focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
                 required
               ></textarea>
             </div>
 
             <div>
-              <label class="block text-sm font-semibold mb-2">Priority</label>
-              <div id="prioritySelector" class="grid grid-cols-4 gap-3">
+              <label
+                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                >Priority</label
+              >
+              <div
+                id="prioritySelector"
+                class="grid grid-cols-2 sm:grid-cols-4 gap-3"
+              >
                 <label class="priority-option cursor-pointer">
                   <input
                     type="radio"
@@ -127,7 +158,7 @@
                     class="peer sr-only"
                   />
                   <div
-                    class="text-center px-3 py-2.5 rounded-lg border border-black/10 text-sm font-medium text-inksoft peer-checked:border-inksoft peer-checked:bg-black/5 peer-checked:text-ink transition-colors"
+                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-white/60 peer-checked:bg-white/10 peer-checked:text-white hover:border-white/30 transition-colors"
                   >
                     Low
                   </div>
@@ -141,7 +172,7 @@
                     checked
                   />
                   <div
-                    class="text-center px-3 py-2.5 rounded-lg border border-black/10 text-sm font-medium text-inksoft peer-checked:border-brand peer-checked:bg-brand/10 peer-checked:text-brand-dark transition-colors"
+                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#feff7c] peer-checked:bg-[#feff7c]/10 peer-checked:text-[#feff7c] hover:border-white/30 transition-colors"
                   >
                     Medium
                   </div>
@@ -154,7 +185,7 @@
                     class="peer sr-only"
                   />
                   <div
-                    class="text-center px-3 py-2.5 rounded-lg border border-black/10 text-sm font-medium text-inksoft peer-checked:border-[#C77C11] peer-checked:bg-[#FCEFD9] peer-checked:text-[#C77C11] transition-colors"
+                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#ffb347] peer-checked:bg-[#ffb347]/10 peer-checked:text-[#ffb347] hover:border-white/30 transition-colors"
                   >
                     High
                   </div>
@@ -167,7 +198,7 @@
                     class="peer sr-only"
                   />
                   <div
-                    class="text-center px-3 py-2.5 rounded-lg border border-black/10 text-sm font-medium text-inksoft peer-checked:border-[#C4453B] peer-checked:bg-[#FBE8E6] peer-checked:text-[#C4453B] transition-colors"
+                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#ff6b6b] peer-checked:bg-[#ff6b6b]/10 peer-checked:text-[#ff8a8a] hover:border-white/30 transition-colors"
                   >
                     Critical
                   </div>
@@ -179,14 +210,14 @@
               <button
                 type="submit"
                 id="submitTicketBtn"
-                class="bg-brand hover:bg-brand-dark text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-xs font-medium uppercase tracking-[-0.5px] px-6 py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 Submit ticket
               </button>
               <a
                 href="customer-tickets.html"
                 id="cancelTicketBtn"
-                class="text-sm font-medium text-inksoft hover:text-ink px-4 py-2.5"
+                class="text-[11px] uppercase tracking-[-0.2px] text-white/60 hover:text-[#feff7c] px-4 py-3 transition-colors"
                 >Cancel</a
               >
             </div>

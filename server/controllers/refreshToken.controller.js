@@ -1,4 +1,4 @@
-import mainConn from "../database/db.config";
+import mainConn from "../database/db.config.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 

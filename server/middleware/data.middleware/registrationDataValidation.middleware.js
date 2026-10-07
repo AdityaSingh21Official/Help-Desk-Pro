@@ -8,8 +8,9 @@ function isEmail(email) {
 
 function validatePassword(password) {
   if (typeof password !== "string") throw new Error("INVALID PASSWORD");
-  if (password.length < 6) throw new Error("INVALID PASSWORD");
-  if (password.length > 72) throw new Error("INVALID PASSWORD");
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-[\]{};:,./?\\|])[A-Za-z0-9!@#$%^&*()_+=\-[\]{};:,./?\\|]{8,40}$/;
+  if (!passwordRegex.test(password)) throw new Error("INVALID PASSWORD");
   return;
 }
 

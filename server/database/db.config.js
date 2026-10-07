@@ -8,6 +8,7 @@ const dbConn = mysql.createPool({
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
+  flags: ["+FOUND_ROWS"],
 });
 
 async function testConnection() {

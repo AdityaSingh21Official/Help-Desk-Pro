@@ -11,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
       rel="stylesheet"
     />
+    <script src="./js/auth.js"></script>
   </head>
   <body
     class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
@@ -130,163 +131,10 @@
                     <th class="px-6 py-3.5 font-normal"></th>
                   </tr>
                 </thead>
-                <tbody id="agentsTableBody" class="divide-y divide-white/10">
-                  <tr
-                    class="agent-row hover:bg-white/[0.03] transition-colors"
-                    data-agent-id="1"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="w-8 h-8 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs shrink-0"
-                        >
-                          AS
-                        </div>
-                        <div>
-                          <p class="agent-name text-sm">Aarav Shah</p>
-                          <p
-                            class="text-[11px] text-white/40 agent-email mt-0.5"
-                          >
-                            aarav@helpdesk.pro
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 agent-workload">
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 h-1.5 bg-white/10 overflow-hidden">
-                          <div
-                            class="h-full bg-[#feff7c]"
-                            style="width: 60%"
-                          ></div>
-                        </div>
-                        <span class="text-xs text-white/40 whitespace-nowrap"
-                          >9 open</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="agent-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0]"
-                      >
-                        <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span>
-                        Active
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                      <button
-                        class="deactivateAgentBtn text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] underline underline-offset-4 cursor-pointer transition-colors"
-                        data-agent-id="1"
-                      >
-                        Deactivate
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr
-                    class="agent-row hover:bg-white/[0.03] transition-colors"
-                    data-agent-id="2"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="w-8 h-8 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs shrink-0"
-                        >
-                          PK
-                        </div>
-                        <div>
-                          <p class="agent-name text-sm">Priya Kapoor</p>
-                          <p
-                            class="text-[11px] text-white/40 agent-email mt-0.5"
-                          >
-                            priya@helpdesk.pro
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 agent-workload">
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 h-1.5 bg-white/10 overflow-hidden">
-                          <div
-                            class="h-full bg-[#feff7c]"
-                            style="width: 33%"
-                          ></div>
-                        </div>
-                        <span class="text-xs text-white/40 whitespace-nowrap"
-                          >5 open</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="agent-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0]"
-                      >
-                        <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span>
-                        Active
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                      <button
-                        class="deactivateAgentBtn text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] underline underline-offset-4 cursor-pointer transition-colors"
-                        data-agent-id="2"
-                      >
-                        Deactivate
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr
-                    class="agent-row hover:bg-white/[0.03] transition-colors"
-                    data-agent-id="3"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="w-8 h-8 border border-white/10 bg-white/5 text-white/40 flex items-center justify-center text-xs shrink-0"
-                        >
-                          DM
-                        </div>
-                        <div>
-                          <p class="agent-name text-sm">Dev Malhotra</p>
-                          <p
-                            class="text-[11px] text-white/40 agent-email mt-0.5"
-                          >
-                            dev@helpdesk.pro
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 agent-workload">
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 h-1.5 bg-white/10 overflow-hidden">
-                          <div
-                            class="h-full bg-white/30"
-                            style="width: 0%"
-                          ></div>
-                        </div>
-                        <span class="text-xs text-white/40 whitespace-nowrap"
-                          >0 open</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="agent-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/40"
-                      >
-                        <span class="w-1.5 h-1.5 bg-white/30"></span>
-                        Inactive
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                      <button
-                        class="reactivateAgentBtn text-[11px] uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4 cursor-pointer transition-colors"
-                        data-agent-id="3"
-                      >
-                        Reactivate
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody
+                  id="agentsTableBody"
+                  class="divide-y divide-white/10"
+                ></tbody>
               </table>
             </div>
           </div>
@@ -350,16 +198,8 @@
                 <label
                   for="agentTempPassword"
                   class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Temporary password</label
+                  >Temporary password - Auto Generated - Sent Via Email</label
                 >
-                <input
-                  type="text"
-                  id="agentTempPassword"
-                  name="agentTempPassword"
-                  placeholder="Auto-generated or set one"
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                  required
-                />
               </div>
               <button
                 type="submit"
@@ -373,5 +213,10 @@
         </div>
       </main>
     </div>
+    <div
+      id="toast"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+    ></div>
   </body>
+  <script type="module" src="./js/admin-agents.js"></script>
 </html>

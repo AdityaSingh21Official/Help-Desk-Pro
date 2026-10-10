@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelpDesk Pro · Every ticket, tracked</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased scroll-smooth"
+  >
+    <div class="flex min-h-screen">
+      <div
+        class="hidden xl:block w-[77px] shrink-0 border-r border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
+      ></div>
+
+      <div class="flex-1 min-w-0">
+        <!-- Nav -->
+        <header
+          class="sticky top-0 z-50 bg-[#080809]/90 backdrop-blur border-b border-white/10"
+        >
+          <div class="flex items-center justify-between px-5 sm:px-8 py-4">
+            <a href="#top" class="flex items-center gap-2.5">
+              <span
+                class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
+                >HD</span
+              >
+              <span
+                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                >HelpDesk Pro</span
+              >
+            </a>
+
+            <nav
+              class="hidden md:flex items-center gap-8 text-xs uppercase tracking-[-0.2px] text-white/60"
+            >
+              <a href="#features" class="hover:text-[#feff7c] transition-colors"
+                >Features</a
+              >
+              <a href="#process" class="hover:text-[#feff7c] transition-colors"
+                >Process</a
+              >
+              <a href="#roles" class="hover:text-[#feff7c] transition-colors"
+                >Roles</a
+              >
+              <a href="#creator" class="hover:text-[#feff7c] transition-colors"
+                >Creator</a
+              >
+            </nav>
+
+            <div class="hidden md:flex items-center gap-3">
+              <a
+                href="login.html"
+                class="text-xs uppercase tracking-[-0.2px] text-white/80 border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-4 py-2.5 transition-colors"
+                >Log in</a
+              >
+              <a
+                href="signup.html"
+                class="text-xs font-medium uppercase tracking-[-0.2px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-4 py-2.5 transition-colors"
+                >Sign up</a
+              >
+            </div>
+
+            <button
+              id="menuBtn"
+              aria-label="Toggle menu"
+              class="md:hidden w-10 h-10 border border-white/10 flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span
+                class="w-5 h-0.5 bg-white transition-transform duration-300"
+              ></span>
+              <span
+                class="w-5 h-0.5 bg-white transition-opacity duration-300"
+              ></span>
+              <span
+                class="w-5 h-0.5 bg-white transition-transform duration-300"
+              ></span>
+            </button>
+          </div>
+
+          <div
+            id="mobileMenu"
+            class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300"
+          >
+            <div class="overflow-hidden">
+              <div
+                class="flex flex-col gap-4 px-5 pb-6 pt-2 text-xs uppercase tracking-[-0.2px] text-white/60"
+              >
+                <a href="#features">Features</a>
+                <a href="#process">Process</a>
+                <a href="#roles">Roles</a>
+                <a href="#creator">Creator</a>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                  <a
+                    href="login.html"
+                    class="text-center text-white/80 border border-white/10 py-3"
+                    >Log in</a
+                  >
+                  <a
+                    href="signup.html"
+                    class="text-center font-medium bg-[#feff7c] text-[#434302] py-3"
+                    >Sign up</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main id="top">
+          <!-- Hero -->
+          <section
+            class="px-5 sm:px-8 pt-16 sm:pt-24 pb-16 relative overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
+            ></div>
+            <div class="relative max-w-5xl">
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 inline-flex items-center gap-2 border border-white/10 bg-[#020203] px-3 py-1.5 mb-8"
+              >
+                <span class="w-1.5 h-1.5 bg-[#feff7c] animate-pulse"></span>
+                <span
+                  class="text-[11px] uppercase tracking-[-0.2px] text-white/60"
+                  >Support desk · SLA aware</span
+                >
+              </div>
+
+              <h1
+                data-split
+                class="font-['Geist_Pixel',sans-serif] text-[40px] leading-[1.05] sm:text-6xl lg:text-7xl tracking-[-2px] sm:tracking-[-3px]"
+              >
+                Every ticket, tracked.
+                <span class="text-[#feff7c]">Every SLA, watched.</span>
+              </h1>
+
+              <p
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-500 text-white/60 text-sm sm:text-base leading-7 mt-8 max-w-xl"
+              >
+                / Agents work the queue, customers track their tickets, and
+                integrators submit through a rate-limited API. One system, one
+                source of truth.
+              </p>
+
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-700 flex flex-col sm:flex-row gap-3 mt-10"
+              >
+                <a
+                  href="signup.html"
+                  class="text-center text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-7 py-3.5 transition-colors"
+                  >Create an account</a
+                >
+                <a
+                  href="login.html"
+                  class="text-center text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-7 py-3.5 transition-colors"
+                  >Log in</a
+                >
+              </div>
+            </div>
+
+            <!-- Product preview -->
+            <div
+              data-reveal
+              class="opacity-0 translate-y-10 transition-all duration-1000 delay-300 relative mt-16 max-w-5xl"
+            >
+              <div
+                data-corners="y"
+                class="relative border border-white/10 bg-[#020203]"
+              >
+                <div
+                  class="flex items-center justify-between px-5 py-4 border-b border-white/10"
+                >
+                  <span
+                    class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                    >Recent tickets</span
+                  >
+                  <span class="text-[11px] uppercase text-[#feff7c]"
+                    >Live queue</span
+                  >
+                </div>
+                <div class="divide-y divide-white/10">
+                  <div class="flex items-center gap-4 px-5 py-4">
+                    <span class="w-1 h-10 bg-[#ff6b6b] shrink-0"></span>
+                    <span
+                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
+                      >#TCK-1042</span
+                    >
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm truncate">
+                        Payment webhook failing intermittently
+                      </p>
+                      <p class="text-[11px] text-white/40 mt-1">
+                        Sana Vora · 2h ago
+                      </p>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] shrink-0"
+                      ><span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span>Open</span
+                    >
+                  </div>
+                  <div class="flex items-center gap-4 px-5 py-4">
+                    <span class="w-1 h-10 bg-[#feff7c] shrink-0"></span>
+                    <span
+                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
+                      >#TCK-1041</span
+                    >
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm truncate">
+                        Unable to export report as CSV
+                      </p>
+                      <p class="text-[11px] text-white/40 mt-1">
+                        Kabir Nair · 5h ago
+                      </p>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] shrink-0"
+                      ><span class="w-1.5 h-1.5 bg-[#feff7c]"></span>In
+                      progress</span
+                    >
+                  </div>
+                  <div class="flex items-center gap-4 px-5 py-4">
+                    <span class="w-1 h-10 bg-[#41412b] shrink-0"></span>
+                    <span
+                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
+                      >#TCK-1039</span
+                    >
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm truncate">Feature request: dark mode</p>
+                      <p class="text-[11px] text-white/40 mt-1">
+                        Meera Iyer · 1d ago
+                      </p>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] shrink-0"
+                      ><span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span
+                      >Resolved</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stats -->
+          <section class="border-y border-white/10 bg-[#0b0b06]">
+            <div
+              class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10"
+            >
+              <div class="p-6 sm:p-8 border-b lg:border-b-0 border-white/10">
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px]"
+                >
+                  <span data-count="99.2" data-decimals="1">0</span>%
+                </p>
+                <p class="text-white/40 text-[11px] uppercase mt-3">
+                  / SLA met (30d)
+                </p>
+              </div>
+              <div class="p-6 sm:p-8 border-b lg:border-b-0 border-white/10">
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] text-[#feff7c]"
+                >
+                  <span data-count="4">0</span>m
+                </p>
+                <p class="text-white/40 text-[11px] uppercase mt-3">
+                  / Avg first response
+                </p>
+              </div>
+              <div class="p-6 sm:p-8">
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px]"
+                >
+                  <span data-count="600">0</span>
+                </p>
+                <p class="text-white/40 text-[11px] uppercase mt-3">
+                  / API req/min on Pro
+                </p>
+              </div>
+              <div class="p-6 sm:p-8">
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] text-[#feff7c]"
+                >
+                  <span data-count="3">0</span>
+                </p>
+                <p class="text-white/40 text-[11px] uppercase mt-3">
+                  / Roles, one platform
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Features -->
+          <section id="features" class="px-5 sm:px-8 py-20">
+            <div
+              data-reveal
+              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
+            >
+              <p
+                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
+              >
+                / Features
+              </p>
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
+              >
+                Built for the <span class="text-[#feff7c]">whole desk</span>
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">01</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  SLA tracking
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Live countdowns and breach alerts on every ticket, by
+                  priority.
+                </p>
+              </div>
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">02</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  Agent queue
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Filter by mine, unassigned or breached, and assign in one
+                  click.
+                </p>
+              </div>
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">03</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  Internal notes
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Agents collaborate privately, customers only see the replies.
+                </p>
+              </div>
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">04</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  Status workflow
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Open, in progress, resolved, closed. Only valid transitions
+                  allowed.
+                </p>
+              </div>
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">05</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  Rate-limited API
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Per-organization keys with Free and Pro tiers and daily usage.
+                </p>
+              </div>
+              <div
+                data-reveal
+                data-corners="o"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
+              >
+                <p class="text-[#feff7c] text-xs mb-6">06</p>
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
+                >
+                  Role-based access
+                </h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Customers, agents and admins each get exactly the tools they
+                  need.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Process -->
+          <section
+            id="process"
+            class="px-5 sm:px-8 py-20 bg-[#0b0b06] border-y border-white/10"
+          >
+            <div
+              data-reveal
+              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
+            >
+              <p
+                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
+              >
+                / Process
+              </p>
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
+              >
+                From request to <span class="text-[#feff7c]">resolved</span>
+              </h2>
+            </div>
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-white/10 bg-[#080809]"
+            >
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 p-6 border-b lg:border-b-0 sm:border-r border-white/10"
+              >
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
+                >
+                  01
+                </p>
+                <h3 class="text-sm uppercase mb-2">Submit</h3>
+                <p class="text-white/60 text-sm leading-6">
+                  A customer or integration opens a ticket with a priority.
+                </p>
+              </div>
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 p-6 border-b lg:border-b-0 lg:border-r border-white/10"
+              >
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
+                >
+                  02
+                </p>
+                <h3 class="text-sm uppercase mb-2">Assign</h3>
+                <p class="text-white/60 text-sm leading-6">
+                  It lands in the queue and gets routed to the right agent.
+                </p>
+              </div>
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 p-6 border-b sm:border-b-0 sm:border-r border-white/10"
+              >
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
+                >
+                  03
+                </p>
+                <h3 class="text-sm uppercase mb-2">Resolve</h3>
+                <p class="text-white/60 text-sm leading-6">
+                  The agent replies and moves it through the workflow within
+                  SLA.
+                </p>
+              </div>
+              <div
+                data-reveal
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-300 p-6"
+              >
+                <p
+                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
+                >
+                  04
+                </p>
+                <h3 class="text-sm uppercase mb-2">Review</h3>
+                <p class="text-white/60 text-sm leading-6">
+                  Admins watch breaches, workload and response times.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Roles -->
+          <section id="roles" class="px-5 sm:px-8 py-20">
+            <div
+              data-reveal
+              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
+            >
+              <p
+                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
+              >
+                / Roles
+              </p>
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
+              >
+                One desk, <span class="text-[#feff7c]">three views</span>
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div
+                data-reveal
+                data-corners="y"
+                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-7"
+              >
+                <span
+                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] mb-5"
+                  >Customer</span
+                >
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
+                >
+                  Ask and follow
+                </h3>
+                <p class="text-white/60 text-sm leading-6 mb-6">
+                  Open tickets, set priority and track every reply in one place.
+                </p>
+                <a
+                  href="signup.html"
+                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
+                  >Create an account →</a
+                >
+              </div>
+              <div
+                data-reveal
+                data-corners="y"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-7"
+              >
+                <span
+                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] mb-5"
+                  >Agent</span
+                >
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
+                >
+                  Work the queue
+                </h3>
+                <p class="text-white/60 text-sm leading-6 mb-6">
+                  Triage by SLA, reply, leave internal notes and resolve faster.
+                </p>
+                <a
+                  href="login.html"
+                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
+                  >Agent log in →</a
+                >
+              </div>
+              <div
+                data-reveal
+                data-corners="y"
+                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-7"
+              >
+                <span
+                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#ffb347]/30 bg-[#ffb347]/10 text-[#ffb347] mb-5"
+                  >Admin</span
+                >
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
+                >
+                  Run the desk
+                </h3>
+                <p class="text-white/60 text-sm leading-6 mb-6">
+                  Provision agents, issue API keys and monitor SLA health.
+                </p>
+                <a
+                  href="login.html"
+                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
+                  >Admin log in →</a
+                >
+              </div>
+            </div>
+          </section>
+
+          <!-- Creator -->
+          <section id="creator" class="px-5 sm:px-8 pb-20">
+            <div
+              data-reveal
+              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
+            >
+              <p
+                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
+              >
+                / Creator
+              </p>
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
+              >
+                Built by <span class="text-[#feff7c]">Aditya Singh</span>
+              </h2>
+            </div>
+
+            <div
+              data-reveal
+              data-corners="y"
+              class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 sm:p-8 max-w-3xl"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+                <span
+                  class="w-20 h-20 shrink-0 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-3xl"
+                  >AS</span
+                >
+                <div class="flex-1 min-w-0">
+                  <span
+                    class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] mb-3"
+                    >Full Stack Developer</span
+                  >
+                  <h3
+                    class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-2"
+                  >
+                    Aditya Singh
+                  </h3>
+                  <p class="text-white/60 text-sm leading-6">
+                    Designed and built HelpDesk Pro from A to Z as the sole full
+                    stack developer: the agent queue, SLA tracking, role-based
+                    access and the rate-limited API, from database to interface.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-3 mt-8">
+                <a
+                  href="https://adityasingh.info"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-center text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-7 py-3.5 transition-colors"
+                  >Visit adityasingh.info ↗</a
+                >
+                <a
+                  href="https://github.com/AdityaSingh21Official"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center gap-2.5 text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-7 py-3.5 transition-colors"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                    />
+                  </svg>
+                  GitHub ↗
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA -->
+          <section class="px-5 sm:px-8 pb-20">
+            <div
+              data-reveal
+              data-corners="y"
+              class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#0b0b06] px-6 py-16 sm:py-20 text-center overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
+              ></div>
+              <div class="relative">
+                <h2
+                  class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px] max-w-2xl mx-auto"
+                >
+                  Ready to <span class="text-[#feff7c]">clear the queue?</span>
+                </h2>
+                <p class="text-white/60 text-sm mt-5">
+                  / Create a customer account in under a minute.
+                </p>
+                <div
+                  class="flex flex-col sm:flex-row justify-center gap-3 mt-9"
+                >
+                  <a
+                    href="signup.html"
+                    class="text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-8 py-3.5 transition-colors"
+                    >Sign up</a
+                  >
+                  <a
+                    href="login.html"
+                    class="text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-8 py-3.5 transition-colors"
+                    >Log in</a
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer
+          class="border-t border-white/10 px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40"
+        >
+          <span>
+            © 2026 HELPDESK PRO · Built by
+            <a
+              href="https://adityasingh.info"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-white/60 hover:text-[#feff7c] transition-colors underline underline-offset-4"
+              >Aditya Singh</a
+            >
+          </span>
+          <div class="flex items-center gap-6 uppercase">
+            <a
+              href="https://github.com/AdityaSingh21Official"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#feff7c] transition-colors"
+              >GitHub</a
+            >
+            <a href="login.html" class="hover:text-[#feff7c] transition-colors"
+              >Log in</a
+            >
+            <a href="signup.html" class="hover:text-[#feff7c] transition-colors"
+              >Sign up</a
+            >
+          </div>
+        </footer>
+      </div>
+
+      <div
+        class="hidden xl:block w-[77px] shrink-0 border-l border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
+      ></div>
+    </div>
+
+    <script>
+      const cornerColors = { y: "border-[#feff7c]", o: "border-[#41412b]" };
+      const cornerSpots = [
+        "-top-px -left-px border-t border-l",
+        "-top-px -right-px border-t border-r",
+        "-bottom-px -left-px border-b border-l",
+        "-bottom-px -right-px border-b border-r",
+      ];
+      document.querySelectorAll("[data-corners]").forEach((el) => {
+        cornerSpots.forEach((spot) => {
+          const corner = document.createElement("span");
+          corner.className = `absolute w-2.5 h-2.5 pointer-events-none ${spot} ${cornerColors[el.dataset.corners]}`;
+          el.appendChild(corner);
+        });
+      });
+
+      const letters = [];
+      function splitLetters(node) {
+        [...node.childNodes].forEach((child) => {
+          if (child.nodeType === 1) return splitLetters(child);
+          const fragment = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part))
+              return fragment.appendChild(document.createTextNode(" "));
+            const word = document.createElement("span");
+            word.className = "inline-block whitespace-nowrap";
+            [...part].forEach((char) => {
+              const letter = document.createElement("span");
+              letter.textContent = char;
+              letter.className =
+                "inline-block opacity-0 blur-[10px] translate-y-2 transition-all duration-500";
+              letters.push(letter);
+              word.appendChild(letter);
+            });
+            fragment.appendChild(word);
+          });
+          child.replaceWith(fragment);
+        });
+      }
+      document.querySelectorAll("[data-split]").forEach(splitLetters);
+      requestAnimationFrame(() => {
+        letters.forEach((letter, index) => {
+          letter.style.transitionDelay = `${index * 25}ms`;
+          letter.classList.remove("opacity-0", "blur-[10px]", "translate-y-2");
+        });
+      });
+
+      const countUp = (el) => {
+        const target = parseFloat(el.dataset.count);
+        const decimals = parseInt(el.dataset.decimals || "0", 10);
+        const duration = 1400;
+        const start = performance.now();
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = (target * eased).toFixed(decimals);
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15 },
+      );
+      document
+        .querySelectorAll("[data-reveal]")
+        .forEach((el) => observer.observe(el));
+
+      const counterObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            countUp(entry.target);
+            counterObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.6 },
+      );
+      document
+        .querySelectorAll("[data-count]")
+        .forEach((el) => counterObserver.observe(el));
+
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const bars = menuBtn.querySelectorAll("span");
+      let menuOpen = false;
+      const setMenu = (open) => {
+        menuOpen = open;
+        mobileMenu.classList.toggle("grid-rows-[1fr]", open);
+        mobileMenu.classList.toggle("grid-rows-[0fr]", !open);
+        bars[0].classList.toggle("translate-y-2", open);
+        bars[0].classList.toggle("rotate-45", open);
+        bars[1].classList.toggle("opacity-0", open);
+        bars[2].classList.toggle("-translate-y-2", open);
+        bars[2].classList.toggle("-rotate-45", open);
+      };
+      menuBtn.addEventListener("click", () => setMenu(!menuOpen));
+      mobileMenu
+        .querySelectorAll("a")
+        .forEach((link) =>
+          link.addEventListener("click", () => setMenu(false)),
+        );
+    </script>
+  </body>
+</html>

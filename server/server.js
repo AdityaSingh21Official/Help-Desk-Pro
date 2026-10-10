@@ -7,6 +7,7 @@ import newUserCreator from "./routes/signup.routes.js";
 import loginRouter from "./routes/login.routes.js";
 import tokenRouter from "./routes/token.routes.js";
 import redisClient from "./database/redis.config.js";
+import adminRouter from "./routes/admin.routes.js";
 
 config();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use("/api", newUserCreator);
 app.use("/api", loginRouter);
 app.use("/api", tokenRouter);
+app.use("/api", adminRouter);
 
 async function startServer() {
   try {

@@ -1,3 +1,14 @@
+function generateRandomPassword(len) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#%^&*";
+  let result = "";
+  for (let i = 0; i < len; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  return result;
+}
+
 function isEmail(email) {
   if (typeof email !== "string") throw new Error("INVALID EMAIL");
   if (email.length > 100) throw new Error("INVALID EMAIL");
@@ -36,6 +47,14 @@ function validateStagingBody(data) {
   if (!("email" in data)) throw new Error("INVALID BODY");
   if (!("name" in data)) throw new Error("INVALID BODY");
   if (!("password" in data)) throw new Error("INVALID BODY");
+  return;
+}
+
+function validateNewAgentBody(data) {
+  if (typeof data !== "object") throw new Error("INVALID BODY");
+  if (Object.keys(data).length !== 2) throw new Error("INVALID BODY");
+  if (!("email" in data)) throw new Error("INVALID BODY");
+  if (!("name" in data)) throw new Error("INVALID BODY");
   return;
 }
 
@@ -82,4 +101,23 @@ function validateVerficationOTPData(req, res, next) {
   }
 }
 
-export { validateStagingData, validateVerficationOTPData };
+function validateAgentData(req, res, next) {
+  try {
+    const data = req.body;
+    validateNewAgentBody(data);
+    const { email, name } = data;
+    req.body.email = isEmail(email);
+    validateName(name);
+
+    let tempPassword = generateRandomPassword(10);
+    req.body.password = tempPassword;
+
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+export { validateStagingData, validateVerficationOTPData, validateAgentData };

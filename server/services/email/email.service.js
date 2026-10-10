@@ -1,6 +1,7 @@
 import Mailgen from "mailgen";
 import nodemailer from "nodemailer";
 import { config } from "dotenv";
+import { name } from "nodemailer/lib/package-info.js";
 
 config();
 
@@ -36,6 +37,20 @@ async function sendNewEmail(emailType, data) {
           },
           outro:
             "If you did not register, please do not share this code with anyone. You can safely ignore this email.",
+        },
+      };
+      break;
+    }
+    case "newAgent": {
+      emailContent = {
+        body: {
+          name: data.userName,
+          intro: `Welcome to the team!!`,
+          dictionary: {
+            "Temporary Password": data.password,
+            Note: "Reset the password for security",
+          },
+          outro: "Welcome to the team, We are glad to have you!!",
         },
       };
       break;

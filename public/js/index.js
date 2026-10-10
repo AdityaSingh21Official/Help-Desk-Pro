@@ -24,7 +24,7 @@ submitBtn.addEventListener("click", async function (e) {
   if (!emailOk.success) return showToast("Invalid Email", true);
   if (!passwordOk.success) return showToast("Invalid Password", true);
 
-  const response = await fetch("http://localhost:6901/api/auth/login", {
+  const response = await fetch("http://127.0.0.1:6901/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,7 @@ submitBtn.addEventListener("click", async function (e) {
   if (role === "CUSTOMER") nextLoc = "customer-tickets.html";
   else if (role === "ADMIN") nextLoc = "admin-dashboard.html";
   else if (role === "AGENT") nextLoc = "agent-tickets.html";
-  else return showToast("Error Occured Please Try Later", ture);
+  else return showToast("Error Occured Please Try Later", true);
 
   showToast(data.message);
   setTimeout(() => {

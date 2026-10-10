@@ -11,7 +11,7 @@ tokenRouter.get("/auth/access", verifyAccessToken, (req, res) => {
   });
 });
 
-tokenRouter.post(
+tokenRouter.get(
   "/auth/refresh",
   validateRefreshToken,
   RefreshTokenVerification,

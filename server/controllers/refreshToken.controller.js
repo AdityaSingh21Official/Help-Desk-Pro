@@ -93,7 +93,7 @@ async function RefreshTokenVerification(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      path: "/api/refresh",
+      path: "/",
       maxAge: data[0]["remainingSeconds"] * 1000,
     });
 

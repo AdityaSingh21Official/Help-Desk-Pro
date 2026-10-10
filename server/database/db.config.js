@@ -13,13 +13,14 @@ const dbConn = mysql.createPool({
 
 async function testConnection() {
   try {
+    console.log("MySQL Connecting . . .");
     const test = await dbConn.getConnection();
     await test.ping();
-    console.log("✅ DATABASE CONNECTED....");
+    console.log("✅ MySQL CONNECTED....");
     test.release();
     return;
   } catch (error) {
-    throw new Error("❌ DATABASE CONNECTION ERROR ❌\n" + error);
+    throw new Error("❌ MySQL CONNECTION ERROR ❌\n" + error);
   }
 }
 

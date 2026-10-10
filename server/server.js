@@ -6,6 +6,7 @@ import { testConnection } from "./database/db.config.js";
 import newUserCreator from "./routes/signup.routes.js";
 import loginRouter from "./routes/login.routes.js";
 import tokenRouter from "./routes/token.routes.js";
+import redisClient from "./database/redis.config.js";
 
 config();
 
@@ -26,7 +27,21 @@ app.use("/api", newUserCreator);
 app.use("/api", loginRouter);
 app.use("/api", tokenRouter);
 
-app.listen(port, async () => {
-  await testConnection();
-  console.log(`Server Started at http://localhost:${port}`);
-});
+async function startServer() {
+  try {
+    console.log("|========REDIS========|");
+    await redisClient.connect();
+    console.log("=======================\n");
+    console.log("|========MYSQL========|");
+    await testConnection();
+    console.log("=======================\n");
+    console.log("|========SERVER========|");
+    app.listen(port, function () {
+      console.log(`Server Running On --> http://127.0.0.1:${port}\n\n`);
+    });
+  } catch (error) {
+    console.log("-----------------Failed to start server-----------------");
+  }
+}
+
+startServer();

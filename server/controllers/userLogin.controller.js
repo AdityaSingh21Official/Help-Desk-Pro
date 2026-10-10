@@ -109,7 +109,7 @@ async function userLogin(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      path: "/api/refresh",
+      path: "/",
       maxAge: 24 * 60 * 60 * 1000,
     });
 

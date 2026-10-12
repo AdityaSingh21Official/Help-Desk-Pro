@@ -5,8 +5,11 @@ import {
   getAllAgents,
   addAgent,
   toggleAgentStatus,
+  newApiKey,
 } from "../controllers/admin.controller.js";
 import { validateAgentData } from "../middleware/data.middleware/registrationDataValidation.middleware.js";
+import { validateApiCreationRequest } from "../middleware/data.middleware/apiDataValidation.middleware.js";
+
 const adminRouter = express.Router();
 
 adminRouter.get("/agents/all", verifyAccessToken, isAdminRole, getAllAgents);
@@ -22,5 +25,14 @@ adminRouter.put(
   verifyAccessToken,
   isAdminRole,
   toggleAgentStatus,
+);
+
+// adminRouter.put("/admin/metaData", verifyAccessToken, isAdminRole);
+adminRouter.post(
+  "/api-keys",
+  verifyAccessToken,
+  isAdminRole,
+  validateApiCreationRequest,
+  newApiKey,
 );
 export default adminRouter;

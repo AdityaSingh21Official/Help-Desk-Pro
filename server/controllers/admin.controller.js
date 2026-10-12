@@ -3,6 +3,7 @@ import redisClient from "../database/redis.config.js";
 import cacheGetOrSet from "../services/cache/caching.service.js";
 import bcrypt from "bcryptjs";
 import { sendNewEmail } from "../services/email/email.service.js";
+import crypto from "crypto";
 
 async function getAllAgents(req, res) {
   try {
@@ -164,4 +165,95 @@ async function toggleAgentStatus(req, res) {
   }
 }
 
-export { getAllAgents, addAgent, toggleAgentStatus };
+//------------------to be done-----------------------
+/* async function getDashboardData(req, res) {
+  try {
+    const key = "admin:dashboard:all"
+  } catch (error) {
+    console.log(
+      "CONTROLLER ERROR : admin.controller {getDashBoardData}",
+      error,
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Errro",
+    });
+  }
+} */
+
+async function newApiKey(req, res) {
+  let tempConn;
+  try {
+    tempConn = await dbConn.getConnection();
+    await tempConn.beginTransaction();
+
+    const { orgName, tier } = req.body;
+    const aid = req.user.userId;
+
+    let orgId = null;
+    if (orgName != null) {
+      const [orgData] = await tempConn.query(
+        "select orgId from org where orgName = ? ",
+        [orgName],
+      );
+
+      if (!orgData.length) {
+        await tempConn.rollback();
+        return res.status(409).json({
+          success: false,
+          message: `No Organization Named ${orgName} Found !!`,
+        });
+      }
+
+      orgId = orgData[0]["orgId"];
+    }
+
+    const newApiKey = crypto.randomUUID() + crypto.randomUUID();
+
+    const apiKeyHash = await bcrypt.hash(newApiKey, 12);
+
+    const apiPrefix =
+      newApiKey.substring(0, 5) +
+      "..." +
+      newApiKey.substring(newApiKey.length - 6, newApiKey.length - 1);
+
+    let expiry = Number(process.env.FREE_API_EXPIRY);
+    if (tier === "pro") {
+      expiry = Number(process.env.PRO_API_EXPIRY);
+    }
+
+    await tempConn.query(
+      `
+        insert into 
+        api_key(apikeyhash, apiprefix, apitier, isrevoked, expiry, createdAt, aid, orgId)
+        values( ? , ? , ? , 0 , now() + interval ? minute , now() , ?, ?);
+      `,
+      [apiKeyHash, apiPrefix, tier, expiry, aid, orgId],
+    );
+
+    await tempConn.commit();
+    return res.status(200).json({
+      success: true,
+      message: `New ${tier} API-KEY Generated`,
+      api_key: newApiKey,
+    });
+  } catch (error) {
+    if (tempConn) {
+      await tempConn.rollback();
+    }
+
+    console.log("CONTROLLER ERROR : admin.controller {newApiKey}", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  } finally {
+    if (tempConn) {
+      tempConn.release();
+    }
+  }
+}
+
+export { getAllAgents, addAgent, toggleAgentStatus, newApiKey };

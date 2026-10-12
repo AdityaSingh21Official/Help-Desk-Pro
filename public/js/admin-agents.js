@@ -146,8 +146,12 @@ addAgentBtn.addEventListener("click", async function (e) {
   });
 
   const data = await response.json();
-
-  return showToast(data.message, !data.success);
+  showToast(data.message, !data.success);
+  if (data.success) {
+    agentsTableBody.innerHTML = "";
+    showAllAgents();
+  }
+  return;
 });
 
 agentsTableBody.addEventListener("click", async function (e) {

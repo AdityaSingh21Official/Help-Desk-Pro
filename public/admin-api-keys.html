@@ -11,12 +11,348 @@
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
       rel="stylesheet"
     />
+    <style>
+      #appRoot {
+        transition: filter 220ms ease;
+      }
+      #appRoot.hd-blurred {
+        filter: blur(5px);
+      }
+
+      .hd-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        overflow-y: auto;
+        font-family: "Geist Mono", monospace;
+        color: #fff;
+      }
+      .hd-modal.is-open {
+        display: flex;
+      }
+
+      .hd-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 4, 6, 0.6);
+        -webkit-backdrop-filter: blur(14px) saturate(120%);
+        backdrop-filter: blur(14px) saturate(120%);
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      .hd-modal.is-visible .hd-backdrop {
+        opacity: 1;
+      }
+
+      .hd-panel {
+        position: relative;
+        width: 100%;
+        max-width: 460px;
+        margin: auto;
+        background: #020203;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+        transition:
+          opacity 220ms ease,
+          transform 220ms ease;
+      }
+      .hd-modal.is-visible .hd-panel {
+        opacity: 1;
+        transform: none;
+      }
+      .hd-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 7px 7px;
+        pointer-events: none;
+      }
+
+      .hd-corner {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border: 0 solid #feff7c;
+      }
+      .hd-corner.tl {
+        top: -1px;
+        left: -1px;
+        border-top-width: 1px;
+        border-left-width: 1px;
+      }
+      .hd-corner.tr {
+        top: -1px;
+        right: -1px;
+        border-top-width: 1px;
+        border-right-width: 1px;
+      }
+      .hd-corner.bl {
+        bottom: -1px;
+        left: -1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+      }
+      .hd-corner.br {
+        bottom: -1px;
+        right: -1px;
+        border-bottom-width: 1px;
+        border-right-width: 1px;
+      }
+
+      .hd-inner {
+        position: relative;
+        padding: 28px;
+      }
+
+      .hd-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .hd-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #feff7c;
+        color: #434302;
+      }
+      .hd-head-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .hd-eyebrow {
+        margin: 0 0 4px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: -0.2px;
+        color: #feff7c;
+      }
+      .hd-title {
+        margin: 0;
+        font-family: "Geist Pixel", sans-serif;
+        font-size: 28px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        font-weight: 400;
+      }
+      .hd-title span {
+        color: #feff7c;
+      }
+      .hd-org {
+        margin: 6px 0 0;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.4);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .hd-org:empty {
+        display: none;
+      }
+
+      .hd-close {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition:
+          color 150ms ease,
+          border-color 150ms ease;
+      }
+      .hd-close:hover {
+        color: #feff7c;
+        border-color: rgba(254, 255, 124, 0.5);
+      }
+
+      .hd-notice {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        padding: 12px 16px;
+        font-size: 12px;
+        line-height: 20px;
+        color: #ffb347;
+        background: rgba(255, 179, 71, 0.1);
+        border: 1px solid rgba(255, 179, 71, 0.3);
+      }
+
+      .hd-label {
+        margin: 24px 0 8px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: -0.2px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .hd-keybox {
+        display: flex;
+        align-items: stretch;
+        background: #080809;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .hd-key {
+        flex: 1;
+        min-width: 0;
+        padding: 16px;
+        font-family: "Geist Mono", monospace;
+        font-size: 14px;
+        line-height: 22px;
+        color: #fff;
+        word-break: break-all;
+        user-select: all;
+      }
+      .hd-toggle {
+        flex-shrink: 0;
+        padding: 0 16px;
+        background: transparent;
+        border: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+        font-family: inherit;
+        font-size: 11px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 150ms ease;
+      }
+      .hd-toggle:hover {
+        color: #feff7c;
+      }
+
+      .hd-copy {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+        padding: 14px;
+        background: #feff7c;
+        border: 0;
+        color: #434302;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        cursor: pointer;
+        transition: background 150ms ease;
+      }
+      .hd-copy:hover {
+        background: #ffff47;
+      }
+
+      .hd-hint {
+        margin: 12px 0 0;
+        min-height: 16px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: -0.2px;
+        color: rgba(255, 255, 255, 0.4);
+        transition: color 150ms ease;
+      }
+      .hd-hint.is-warn {
+        color: #ffb347;
+      }
+
+      .hd-done {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        font-family: inherit;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        cursor: pointer;
+        transition:
+          color 150ms ease,
+          border-color 150ms ease;
+      }
+      .hd-done:hover {
+        color: #feff7c;
+        border-color: #feff7c;
+      }
+
+      .hd-copy:focus-visible,
+      .hd-done:focus-visible,
+      .hd-toggle:focus-visible,
+      .hd-close:focus-visible {
+        outline: 1px solid #feff7c;
+        outline-offset: 2px;
+      }
+
+      @keyframes hd-shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-6px);
+        }
+        40% {
+          transform: translateX(6px);
+        }
+        60% {
+          transform: translateX(-4px);
+        }
+        80% {
+          transform: translateX(4px);
+        }
+      }
+      .hd-shake {
+        animation: hd-shake 0.35s ease-in-out;
+      }
+
+      @media (max-width: 480px) {
+        .hd-modal {
+          padding: 16px;
+        }
+        .hd-inner {
+          padding: 22px;
+        }
+        .hd-title {
+          font-size: 24px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hd-shake {
+          animation: none;
+        }
+        .hd-backdrop,
+        .hd-panel,
+        #appRoot {
+          transition: none;
+        }
+      }
+    </style>
+    <script src="./js/auth.js"></script>
   </head>
   <body
     class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
   >
-    <div class="flex min-h-screen flex-col lg:flex-row">
-      <!-- Sidebar -->
+    <div id="appRoot" class="flex min-h-screen flex-col lg:flex-row">
       <aside
         class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
       >
@@ -85,7 +421,6 @@
         </div>
       </aside>
 
-      <!-- Main -->
       <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
         <div class="mb-8">
           <p
@@ -100,46 +435,7 @@
           </h1>
         </div>
 
-        <!-- Newly created key banner (shown once right after creation) -->
-        <div
-          id="newKeyBanner"
-          class="hidden relative border border-[#feff7c]/40 bg-[#feff7c]/5 px-6 py-5 mb-6"
-        >
-          <span
-            class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-          ></span>
-
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
-          >
-            / Copy your new key now — you won't be able to see it again.
-          </p>
-          <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-            <code
-              id="newKeyValue"
-              class="text-sm bg-[#080809] text-white px-4 py-3 border border-white/10 flex-1 truncate min-w-0"
-              >hd_live_9f3a1c...redacted</code
-            >
-            <button
-              id="copyNewKeyBtn"
-              class="text-xs font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-5 py-3 shrink-0 cursor-pointer transition-colors"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
-          <!-- Keys table -->
           <div
             class="xl:col-span-2 relative border border-white/10 bg-[#020203]"
           >
@@ -301,7 +597,6 @@
             </div>
           </div>
 
-          <!-- Create key form -->
           <div class="relative border border-white/10 bg-[#020203] p-6">
             <span
               class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
@@ -331,7 +626,7 @@
                 <label
                   for="keyOrgName"
                   class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Organization name</label
+                  >Organization name - Skip if No Org</label
                 >
                 <input
                   type="text"
@@ -339,7 +634,6 @@
                   name="keyOrgName"
                   placeholder="Acme Inc."
                   class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                  required
                 />
               </div>
               <div>
@@ -369,5 +663,98 @@
         </div>
       </main>
     </div>
+
+    <div
+      id="toast"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+    ></div>
+
+    <div
+      id="apiKeyModal"
+      class="hd-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="apiKeyModalTitle"
+      aria-describedby="apiKeyModalDesc"
+    >
+      <div id="apiKeyModalBackdrop" class="hd-backdrop"></div>
+
+      <div id="apiKeyModalPanel" class="hd-panel">
+        <span class="hd-corner tl"></span>
+        <span class="hd-corner tr"></span>
+        <span class="hd-corner bl"></span>
+        <span class="hd-corner br"></span>
+
+        <div class="hd-inner">
+          <div class="hd-head">
+            <div class="hd-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="square"
+              >
+                <circle cx="8" cy="15" r="4" />
+                <path d="M11 12l9-9M16 7l3 3M14 9l2 2" />
+              </svg>
+            </div>
+            <div class="hd-head-text">
+              <p class="hd-eyebrow">/ New API key</p>
+              <h2 id="apiKeyModalTitle" class="hd-title">
+                Key <span>generated</span>
+              </h2>
+              <p id="apiKeyModalOrg" class="hd-org"></p>
+            </div>
+            <button
+              id="apiKeyModalClose"
+              type="button"
+              aria-label="Close"
+              class="hd-close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div id="apiKeyModalDesc" class="hd-notice">
+            <span aria-hidden="true">!</span>
+            <span
+              >Copy your key now. For security it is shown only once and cannot
+              be retrieved later.</span
+            >
+          </div>
+
+          <p class="hd-label">/ Your API key</p>
+
+          <div class="hd-keybox">
+            <code id="apiKeyModalValue" class="hd-key"></code>
+            <button
+              id="apiKeyModalToggleBtn"
+              type="button"
+              aria-pressed="false"
+              class="hd-toggle"
+            >
+              Show
+            </button>
+          </div>
+
+          <button id="apiKeyModalCopyBtn" type="button" class="hd-copy">
+            <span id="apiKeyModalCopyLabel">Copy key</span>
+          </button>
+
+          <p id="apiKeyModalHint" class="hd-hint" aria-live="polite">
+            / Store it somewhere safe, like a password manager.
+          </p>
+
+          <button id="apiKeyModalDoneBtn" type="button" class="hd-done">
+            I've saved it, close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/admin-api.js"></script>
   </body>
 </html>

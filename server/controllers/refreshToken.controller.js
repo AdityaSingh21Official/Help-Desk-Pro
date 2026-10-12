@@ -1,6 +1,7 @@
 import mainConn from "../database/db.config.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import dbConn from "../database/db.config.js";
 
 async function RefreshTokenVerification(req, res) {
   let tempConn;
@@ -122,4 +123,40 @@ async function RefreshTokenVerification(req, res) {
   }
 }
 
-export { RefreshTokenVerification };
+async function removeRefreshToken(req, res) {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(200);
+    }
+
+    const refreshTokenHash = crypto.hash("sha256", refreshToken, "hex");
+
+    await dbConn.query(
+      `
+      update refresh_token set revokedAt = now() where tokenHash = ?
+      `,
+      [refreshTokenHash],
+    );
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+    });
+
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    console.error("CONTROLLER ERROR : auth.controller {logout}", error);
+    return res.status(500).json({
+      success: false,
+      message: "Logout could not be completed, please retry",
+    });
+  }
+}
+
+export { RefreshTokenVerification, removeRefreshToken };

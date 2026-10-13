@@ -233,6 +233,7 @@ async function newApiKey(req, res) {
     );
 
     await tempConn.commit();
+    await redisClient.del("apikeys:list:orgs:data");
     return res.status(200).json({
       success: true,
       message: `New ${tier} API-KEY Generated`,

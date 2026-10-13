@@ -6,8 +6,20 @@ import {
   addAgent,
   toggleAgentStatus,
   newApiKey,
+  getOrgKeys,
+  getUserKeys,
+  revokeThisKey,
+  getOrgsData,
+  getOrgMembers,
+  addOrgs,
+  removeOrg,
+  addOrgMember,
+  removeOrgMember,
 } from "../controllers/admin.controller.js";
-import { validateAgentData } from "../middleware/data.middleware/registrationDataValidation.middleware.js";
+import {
+  validateAgentData,
+  validateNewMembertData,
+} from "../middleware/data.middleware/registrationDataValidation.middleware.js";
 import { validateApiCreationRequest } from "../middleware/data.middleware/apiDataValidation.middleware.js";
 
 const adminRouter = express.Router();
@@ -34,5 +46,32 @@ adminRouter.post(
   isAdminRole,
   validateApiCreationRequest,
   newApiKey,
+);
+
+adminRouter.get("/org-keys", verifyAccessToken, isAdminRole, getOrgKeys);
+adminRouter.get("/user-keys", verifyAccessToken, isAdminRole, getUserKeys);
+adminRouter.delete(
+  "/revoke-key",
+  verifyAccessToken,
+  isAdminRole,
+  revokeThisKey,
+);
+
+adminRouter.get("/orgs-data", verifyAccessToken, isAdminRole, getOrgsData);
+adminRouter.put("/orgs-members", verifyAccessToken, isAdminRole, getOrgMembers);
+adminRouter.post("/add-orgs", verifyAccessToken, isAdminRole, addOrgs);
+adminRouter.delete("/remove-orgs", verifyAccessToken, isAdminRole, removeOrg);
+adminRouter.post(
+  "/orgs/newMember",
+  verifyAccessToken,
+  isAdminRole,
+  validateNewMembertData,
+  addOrgMember,
+);
+adminRouter.delete(
+  "/orgs/remove-member",
+  verifyAccessToken,
+  isAdminRole,
+  removeOrgMember,
 );
 export default adminRouter;

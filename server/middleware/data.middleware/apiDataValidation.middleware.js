@@ -1,6 +1,8 @@
 function checkOrgName(orgName) {
-  if (typeof orgName !== "string" && orgName != null)
-    throw new Error("Bad Org Name");
+  if (typeof orgName !== "string") throw new Error("Bad Org Name");
+
+  const orgNameRegex = /^[a-zA-Z0-9._\-\s]{2,100}$/;
+  if (!orgNameRegex.test(orgName)) throw new Error("Bad Org Name");
 
   return;
 }

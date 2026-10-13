@@ -41,6 +41,11 @@ function validateOTP(otp) {
   return;
 }
 
+function validateOrgId(orgId) {
+  let oid = Number(orgId);
+  if (isNaN(oid) || oid < 900) throw new Error("INVALID ORG ID");
+}
+
 function validateStagingBody(data) {
   if (typeof data !== "object") throw new Error("INVALID BODY");
   if (Object.keys(data).length !== 3) throw new Error("INVALID BODY");
@@ -55,6 +60,15 @@ function validateNewAgentBody(data) {
   if (Object.keys(data).length !== 2) throw new Error("INVALID BODY");
   if (!("email" in data)) throw new Error("INVALID BODY");
   if (!("name" in data)) throw new Error("INVALID BODY");
+  return;
+}
+
+function validateNewMemberBody(data) {
+  if (typeof data !== "object") throw new Error("INVALID BODY");
+  if (Object.keys(data).length !== 3) throw new Error("INVALID BODY");
+  if (!("email" in data)) throw new Error("INVALID BODY");
+  if (!("name" in data)) throw new Error("INVALID BODY");
+  if (!("orgId" in data)) throw new Error("INVALID BODY");
   return;
 }
 
@@ -120,4 +134,31 @@ function validateAgentData(req, res, next) {
     });
   }
 }
-export { validateStagingData, validateVerficationOTPData, validateAgentData };
+
+function validateNewMembertData(req, res, next) {
+  try {
+    const data = req.body;
+    validateNewMemberBody(data);
+    const { email, name, orgId } = data;
+    req.body.email = isEmail(email);
+    validateOrgId(orgId);
+    validateName(name);
+
+    let tempPassword = generateRandomPassword(10);
+    req.body.orgId = Number(orgId);
+    req.body.password = tempPassword;
+
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+export {
+  validateStagingData,
+  validateVerficationOTPData,
+  validateAgentData,
+  validateNewMembertData,
+};

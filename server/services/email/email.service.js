@@ -55,6 +55,20 @@ async function sendNewEmail(emailType, data) {
       };
       break;
     }
+    case "newOrgMember": {
+      emailContent = {
+        body: {
+          name: data.userName,
+          intro: `Welcome to helpDeskPro!!`,
+          dictionary: {
+            "Temporary Password": data.password,
+            Note: "Reset the password for security",
+          },
+          outro: "Welcome to the HelpDeskPro We are glad to have you!!",
+        },
+      };
+      break;
+    }
     case "passwordResetEmail": {
       emailContent = {
         body: {},

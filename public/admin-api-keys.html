@@ -258,6 +258,18 @@
       .hd-copy:hover {
         background: #ffff47;
       }
+      .hd-copy.hd-danger {
+        background: #ff6b6b;
+        color: #2a0505;
+      }
+      .hd-copy.hd-danger:hover {
+        background: #ff8a8a;
+      }
+      .hd-copy:disabled,
+      .hd-done:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
 
       .hd-hint {
         margin: 12px 0 0;
@@ -387,6 +399,12 @@
             >Agents</a
           >
           <a
+            href="admin-organizations.html"
+            id="navOrganizations"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >Organizations</a
+          >
+          <a
             href="admin-api-keys.html"
             id="navApiKeys"
             class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
@@ -435,6 +453,25 @@
           </h1>
         </div>
 
+        <div class="flex gap-2 mb-6">
+          <button
+            id="viewOrgBtn"
+            type="button"
+            aria-pressed="true"
+            class="px-4 py-2.5 text-[11px] uppercase tracking-[-0.2px] border transition-colors cursor-pointer bg-[#feff7c] text-[#434302] border-[#feff7c]"
+          >
+            Organizations
+          </button>
+          <button
+            id="viewUserBtn"
+            type="button"
+            aria-pressed="false"
+            class="px-4 py-2.5 text-[11px] uppercase tracking-[-0.2px] border transition-colors cursor-pointer bg-transparent text-white/60 border-white/10 hover:text-white hover:border-white/30"
+          >
+            Single users
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
           <div
             class="xl:col-span-2 relative border border-white/10 bg-[#020203]"
@@ -458,7 +495,9 @@
                   <tr
                     class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
                   >
-                    <th class="px-6 py-3.5 font-normal">/ Organization</th>
+                    <th id="keyOwnerHead" class="px-6 py-3.5 font-normal">
+                      / Organization
+                    </th>
                     <th class="px-6 py-3.5 font-normal">/ Key</th>
                     <th class="px-6 py-3.5 font-normal">/ Tier</th>
                     <th class="px-6 py-3.5 font-normal">/ Usage today</th>
@@ -466,133 +505,10 @@
                     <th class="px-6 py-3.5 font-normal"></th>
                   </tr>
                 </thead>
-                <tbody id="apiKeysTableBody" class="divide-y divide-white/10">
-                  <tr
-                    class="api-key-row hover:bg-white/[0.03] transition-colors"
-                    data-key-id="1"
-                  >
-                    <td class="px-6 py-4 key-org-name">Northwind Retail</td>
-                    <td
-                      class="px-6 py-4 text-xs text-white/40 key-masked-value whitespace-nowrap"
-                    >
-                      hd_live_••••8a2f
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-tier-pill inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c]"
-                        >Pro</span
-                      >
-                    </td>
-                    <td class="px-6 py-4 key-usage-today">
-                      <div class="flex items-center gap-2">
-                        <div class="w-20 h-1.5 bg-white/10 overflow-hidden">
-                          <div
-                            class="h-full bg-[#feff7c]"
-                            style="width: 24%"
-                          ></div>
-                        </div>
-                        <span class="text-xs text-white/40 whitespace-nowrap"
-                          >144 / 600 req/min</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0]"
-                      >
-                        <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span>
-                        Active
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                      <button
-                        class="revokeKeyBtn text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] underline underline-offset-4 cursor-pointer transition-colors"
-                        data-key-id="1"
-                      >
-                        Revoke
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr
-                    class="api-key-row hover:bg-white/[0.03] transition-colors"
-                    data-key-id="2"
-                  >
-                    <td class="px-6 py-4 key-org-name">Loop Analytics</td>
-                    <td
-                      class="px-6 py-4 text-xs text-white/40 key-masked-value whitespace-nowrap"
-                    >
-                      hd_live_••••11c9
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-tier-pill inline-flex px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/60"
-                        >Free</span
-                      >
-                    </td>
-                    <td class="px-6 py-4 key-usage-today">
-                      <div class="flex items-center gap-2">
-                        <div class="w-20 h-1.5 bg-white/10 overflow-hidden">
-                          <div
-                            class="h-full bg-[#ffb347]"
-                            style="width: 88%"
-                          ></div>
-                        </div>
-                        <span class="text-xs text-white/40 whitespace-nowrap"
-                          >53 / 60 req/min</span
-                        >
-                      </div>
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0]"
-                      >
-                        <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span>
-                        Active
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                      <button
-                        class="revokeKeyBtn text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] underline underline-offset-4 cursor-pointer transition-colors"
-                        data-key-id="2"
-                      >
-                        Revoke
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr
-                    class="api-key-row hover:bg-white/[0.03] transition-colors"
-                    data-key-id="3"
-                  >
-                    <td class="px-6 py-4 key-org-name">Vantage CRM</td>
-                    <td
-                      class="px-6 py-4 text-xs text-white/40 key-masked-value whitespace-nowrap"
-                    >
-                      hd_live_••••7d40
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-tier-pill inline-flex px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/60"
-                        >Free</span
-                      >
-                    </td>
-                    <td class="px-6 py-4 key-usage-today text-xs text-white/40">
-                      —
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/40"
-                      >
-                        <span class="w-1.5 h-1.5 bg-white/30"></span>
-                        Revoked
-                      </span>
-                    </td>
-                    <td class="px-6 py-4 text-right text-xs text-white/20">
-                      —
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody
+                  id="apiKeysTableBody"
+                  class="divide-y divide-white/10"
+                ></tbody>
               </table>
             </div>
           </div>
@@ -626,7 +542,7 @@
                 <label
                   for="keyOrgName"
                   class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Organization name - Skip if No Org</label
+                  >Organization name - Required</label
                 >
                 <input
                   type="text"
@@ -750,6 +666,78 @@
 
           <button id="apiKeyModalDoneBtn" type="button" class="hd-done">
             I've saved it, close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="revokeModal"
+      class="hd-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="revokeModalTitle"
+    >
+      <div id="revokeModalBackdrop" class="hd-backdrop"></div>
+
+      <div id="revokeModalPanel" class="hd-panel">
+        <span class="hd-corner tl"></span>
+        <span class="hd-corner tr"></span>
+        <span class="hd-corner bl"></span>
+        <span class="hd-corner br"></span>
+
+        <div class="hd-inner">
+          <div class="hd-head">
+            <div class="hd-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="square"
+              >
+                <path d="M12 3l10 18H2z" />
+                <path d="M12 10v5M12 18v.5" />
+              </svg>
+            </div>
+            <div class="hd-head-text">
+              <p class="hd-eyebrow">/ Confirm action</p>
+              <h2 id="revokeModalTitle" class="hd-title">
+                Revoke <span>key?</span>
+              </h2>
+              <p id="revokeModalOwner" class="hd-org"></p>
+            </div>
+            <button
+              id="revokeModalClose"
+              type="button"
+              aria-label="Close"
+              class="hd-close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="hd-notice">
+            <span aria-hidden="true">!</span>
+            <span
+              >This key will stop working immediately. This action cannot be
+              undone.</span
+            >
+          </div>
+
+          <button
+            id="revokeModalConfirmBtn"
+            type="button"
+            class="hd-copy hd-danger"
+            style="margin-top: 24px"
+          >
+            Yes, revoke key
+          </button>
+
+          <button id="revokeModalCancelBtn" type="button" class="hd-done">
+            No, keep it
           </button>
         </div>
       </div>

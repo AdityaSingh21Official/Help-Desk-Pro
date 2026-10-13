@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organizations · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #appRoot {
+        transition: filter 220ms ease;
+      }
+      #appRoot.hd-blurred {
+        filter: blur(5px);
+      }
+
+      .hd-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        overflow-y: auto;
+        font-family: "Geist Mono", monospace;
+        color: #fff;
+      }
+      .hd-modal.is-open {
+        display: flex;
+      }
+
+      .hd-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 4, 6, 0.6);
+        -webkit-backdrop-filter: blur(14px) saturate(120%);
+        backdrop-filter: blur(14px) saturate(120%);
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      .hd-modal.is-visible .hd-backdrop {
+        opacity: 1;
+      }
+
+      .hd-panel {
+        position: relative;
+        width: 100%;
+        max-width: 460px;
+        margin: auto;
+        background: #020203;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+        transition:
+          opacity 220ms ease,
+          transform 220ms ease;
+      }
+      .hd-modal.is-visible .hd-panel {
+        opacity: 1;
+        transform: none;
+      }
+      .hd-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 7px 7px;
+        pointer-events: none;
+      }
+
+      .hd-corner {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border: 0 solid #feff7c;
+      }
+      .hd-corner.tl {
+        top: -1px;
+        left: -1px;
+        border-top-width: 1px;
+        border-left-width: 1px;
+      }
+      .hd-corner.tr {
+        top: -1px;
+        right: -1px;
+        border-top-width: 1px;
+        border-right-width: 1px;
+      }
+      .hd-corner.bl {
+        bottom: -1px;
+        left: -1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+      }
+      .hd-corner.br {
+        bottom: -1px;
+        right: -1px;
+        border-bottom-width: 1px;
+        border-right-width: 1px;
+      }
+
+      .hd-inner {
+        position: relative;
+        padding: 28px;
+      }
+
+      .hd-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .hd-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #feff7c;
+        color: #434302;
+      }
+      .hd-head-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .hd-eyebrow {
+        margin: 0 0 4px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: -0.2px;
+        color: #feff7c;
+      }
+      .hd-title {
+        margin: 0;
+        font-family: "Geist Pixel", sans-serif;
+        font-size: 28px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        font-weight: 400;
+      }
+      .hd-title span {
+        color: #feff7c;
+      }
+      .hd-org {
+        margin: 6px 0 0;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.4);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .hd-org:empty {
+        display: none;
+      }
+
+      .hd-close {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition:
+          color 150ms ease,
+          border-color 150ms ease;
+      }
+      .hd-close:hover {
+        color: #feff7c;
+        border-color: rgba(254, 255, 124, 0.5);
+      }
+
+      .hd-notice {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        padding: 12px 16px;
+        font-size: 12px;
+        line-height: 20px;
+        color: #ffb347;
+        background: rgba(255, 179, 71, 0.1);
+        border: 1px solid rgba(255, 179, 71, 0.3);
+      }
+
+      .hd-copy {
+        display: block;
+        width: 100%;
+        margin-top: 24px;
+        padding: 14px;
+        background: #feff7c;
+        border: 0;
+        color: #434302;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        cursor: pointer;
+        transition: background 150ms ease;
+      }
+      .hd-copy:hover {
+        background: #ffff47;
+      }
+      .hd-copy.hd-danger {
+        background: #ff6b6b;
+        color: #2a0505;
+      }
+      .hd-copy.hd-danger:hover {
+        background: #ff8a8a;
+      }
+      .hd-copy:disabled,
+      .hd-done:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .hd-done {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        font-family: inherit;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        cursor: pointer;
+        transition:
+          color 150ms ease,
+          border-color 150ms ease;
+      }
+      .hd-done:hover {
+        color: #feff7c;
+        border-color: #feff7c;
+      }
+
+      .hd-copy:focus-visible,
+      .hd-done:focus-visible,
+      .hd-close:focus-visible {
+        outline: 1px solid #feff7c;
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 480px) {
+        .hd-modal {
+          padding: 16px;
+        }
+        .hd-inner {
+          padding: 22px;
+        }
+        .hd-title {
+          font-size: 24px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hd-backdrop,
+        .hd-panel,
+        #appRoot {
+          transition: none;
+        }
+      }
+    </style>
+    <script src="./js/auth.js"></script>
+  </head>
+  <body
+    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
+  >
+    <div id="appRoot" class="flex min-h-screen flex-col lg:flex-row">
+      <aside
+        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
+        ></div>
+
+        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
+          <div
+            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
+          >
+            HD
+          </div>
+          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+            >HelpDesk Pro</span
+          >
+        </div>
+
+        <nav
+          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+        >
+          <a
+            href="admin-dashboard.html"
+            id="navDashboard"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >Dashboard</a
+          >
+          <a
+            href="admin-agents.html"
+            id="navAgents"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >Agents</a
+          >
+          <a
+            href="admin-organizations.html"
+            id="navOrganizations"
+            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            >Organizations</a
+          >
+          <a
+            href="admin-api-keys.html"
+            id="navApiKeys"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >API Keys</a
+          >
+          <a
+            href="agent-tickets.html"
+            id="navAllTickets"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >All Tickets</a
+          >
+        </nav>
+
+        <div
+          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
+          >
+            RM
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="adminName">Rita Mehta</p>
+            <p class="text-white/40 text-[11px] uppercase mt-0.5">Admin</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
+        <div class="mb-8">
+          <p
+            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
+          >
+            / Workspace
+          </p>
+          <h1
+            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+          >
+            Manage <span class="text-[#feff7c]">organizations</span>
+          </h1>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+          <div class="space-y-6">
+            <div class="relative border border-white/10 bg-[#020203]">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
+              ></span>
+
+              <div
+                class="flex items-center justify-between px-5 py-4 border-b border-white/10"
+              >
+                <h2
+                  class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                >
+                  Organizations
+                </h2>
+                <span id="orgCount" class="text-[11px] uppercase text-white/40"
+                  >— total</span
+                >
+              </div>
+
+              <div id="orgList" class="divide-y divide-white/10"></div>
+            </div>
+
+            <div class="relative border border-white/10 bg-[#020203] p-6">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
+              ></span>
+
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+              >
+                Add an <span class="text-[#feff7c]">organization</span>
+              </h2>
+              <p class="text-white/60 text-xs leading-5 mb-6">
+                / Create the organization first, then add people to it.
+              </p>
+
+              <form id="addOrgForm" class="space-y-4">
+                <div>
+                  <label
+                    for="orgName"
+                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                    >Organization name</label
+                  >
+                  <input
+                    type="text"
+                    id="orgName"
+                    name="orgName"
+                    placeholder="Acme Inc."
+                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  id="addOrgBtn"
+                  class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Add organization
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="xl:col-span-2 space-y-6 min-w-0">
+            <div
+              class="relative border border-white/10 bg-[#020203] p-6 flex flex-wrap items-center justify-between gap-4"
+            >
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
+              ></span>
+
+              <div class="min-w-0">
+                <p class="text-[11px] uppercase text-white/40 mb-2">
+                  / Selected organization
+                </p>
+                <h2
+                  id="selectedOrgName"
+                  class="font-['Geist_Pixel',sans-serif] text-2xl sm:text-3xl tracking-[-1.5px] truncate"
+                >
+                  No organization selected
+                </h2>
+                <p id="selectedOrgMeta" class="text-[11px] text-white/40 mt-2">
+                  / Pick one from the list
+                </p>
+              </div>
+              <button
+                id="removeOrgBtn"
+                type="button"
+                class="hidden text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] border border-[#ff6b6b]/30 hover:border-[#ff6b6b] bg-[#ff6b6b]/5 px-4 py-2.5 cursor-pointer transition-colors"
+                data-org-id=""
+              >
+                Remove organization
+              </button>
+            </div>
+
+            <div class="relative border border-white/10 bg-[#020203]">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
+              ></span>
+
+              <div
+                class="flex items-center justify-between px-6 py-4 border-b border-white/10"
+              >
+                <h3
+                  class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                >
+                  Members
+                </h3>
+                <span
+                  id="memberCount"
+                  class="text-[11px] uppercase text-white/40"
+                  >—</span
+                >
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm min-w-[420px]">
+                  <thead>
+                    <tr
+                      class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
+                    >
+                      <th class="px-6 py-3.5 font-normal">/ Person</th>
+                      <th class="px-6 py-3.5 font-normal"></th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="membersTableBody"
+                    class="divide-y divide-white/10"
+                  ></tbody>
+                </table>
+              </div>
+
+              <div
+                id="membersEmptyState"
+                class="px-6 py-12 text-center border-t border-white/10"
+              >
+                <p id="membersEmptyTitle" class="text-sm text-white/60">
+                  No organization selected
+                </p>
+                <p id="membersEmptyText" class="text-[11px] text-white/40 mt-2">
+                  / Click an organization on the left to view its members.
+                </p>
+              </div>
+            </div>
+
+            <div class="relative border border-white/10 bg-[#020203] p-6">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
+              ></span>
+
+              <h3
+                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+              >
+                Add a <span class="text-[#feff7c]">person</span>
+              </h3>
+              <p class="text-white/60 text-xs leading-5 mb-6">
+                / Creates a new member and emails them a temporary password.
+              </p>
+
+              <form
+                id="addMemberForm"
+                class="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-4 items-end"
+              >
+                <div>
+                  <label
+                    for="memberName"
+                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    id="memberName"
+                    name="memberName"
+                    placeholder="Jane Doe"
+                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="memberEmail"
+                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    id="memberEmail"
+                    name="memberEmail"
+                    placeholder="jane@company.com"
+                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  id="addMemberBtn"
+                  class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] px-6 py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Add person
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div
+      id="toast"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+    ></div>
+
+    <div
+      id="confirmModal"
+      class="hd-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmModalTitle"
+    >
+      <div id="confirmModalBackdrop" class="hd-backdrop"></div>
+
+      <div id="confirmModalPanel" class="hd-panel">
+        <span class="hd-corner tl"></span>
+        <span class="hd-corner tr"></span>
+        <span class="hd-corner bl"></span>
+        <span class="hd-corner br"></span>
+
+        <div class="hd-inner">
+          <div class="hd-head">
+            <div class="hd-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="square"
+              >
+                <path d="M12 3l10 18H2z" />
+                <path d="M12 10v5M12 18v.5" />
+              </svg>
+            </div>
+            <div class="hd-head-text">
+              <p class="hd-eyebrow">/ Confirm action</p>
+              <h2 id="confirmModalTitle" class="hd-title">
+                <span id="confirmTitleMain" style="color: inherit">Remove</span>
+                <span id="confirmTitleAccent">item?</span>
+              </h2>
+              <p id="confirmModalOwner" class="hd-org"></p>
+            </div>
+            <button
+              id="confirmModalClose"
+              type="button"
+              aria-label="Close"
+              class="hd-close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="hd-notice">
+            <span aria-hidden="true">!</span>
+            <span id="confirmNoticeText"></span>
+          </div>
+
+          <button
+            id="confirmModalYesBtn"
+            type="button"
+            class="hd-copy hd-danger"
+          >
+            Yes, remove
+          </button>
+
+          <button id="confirmModalNoBtn" type="button" class="hd-done">
+            No, keep it
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/admin-organizations.js"></script>
+  </body>
+</html>

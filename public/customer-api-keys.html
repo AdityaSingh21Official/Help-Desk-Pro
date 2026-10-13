@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My API Keys · HelpDesk Pro</title>
+    <link rel="stylesheet" href="../src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      rel="stylesheet"
+    />
+    <script src="./js/auth.js"></script>
+  </head>
+  <body
+    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
+  >
+    <div class="flex min-h-screen flex-col lg:flex-row">
+      <!-- Sidebar -->
+      <aside
+        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
+        ></div>
+
+        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
+          <div
+            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
+          >
+            HD
+          </div>
+          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+            >HelpDesk Pro</span
+          >
+        </div>
+
+        <nav
+          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+        >
+          <a
+            href="customer-tickets.html"
+            id="navMyTickets"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >My Tickets</a
+          >
+          <a
+            href="new-ticket.html"
+            id="navNewTicket"
+            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            >New Ticket</a
+          >
+          <a
+            href="customer-api-keys.html"
+            id="navMyApiKeys"
+            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            >API Keys</a
+          >
+        </nav>
+
+        <div
+          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
+        >
+          <div
+            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
+          >
+            SV
+          </div>
+          <div class="text-sm leading-tight">
+            <p id="customerName">Sana Vora</p>
+            <p class="text-white/40 text-[11px] uppercase mt-0.5">Customer</p>
+          </div>
+          <button
+            id="logoutBtn"
+            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
+        <div class="mb-8">
+          <p
+            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
+          >
+            / Developers
+          </p>
+          <h1
+            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+          >
+            My API <span class="text-[#feff7c]">keys</span>
+          </h1>
+          <p class="text-white/60 text-sm mt-3">
+            / Create keys to submit tickets from your own apps and scripts.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+          <!-- Left: keys + usage guide -->
+          <div class="xl:col-span-2 space-y-6 min-w-0">
+            <!-- Keys table -->
+            <div class="relative border border-white/10 bg-[#020203]">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
+              ></span>
+
+              <div
+                class="flex items-center justify-between px-6 py-4 border-b border-white/10"
+              >
+                <h2
+                  class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                >
+                  Your keys
+                </h2>
+                <span id="keyCount" class="text-[11px] uppercase text-white/40"
+                  >2 keys</span
+                >
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm min-w-[760px]">
+                  <thead>
+                    <tr
+                      class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
+                    >
+                      <th class="px-6 py-3.5 font-normal">/ Label</th>
+                      <th class="px-6 py-3.5 font-normal">/ Key</th>
+                      <th class="px-6 py-3.5 font-normal">/ Usage today</th>
+                      <th class="px-6 py-3.5 font-normal">/ Created</th>
+                      <th class="px-6 py-3.5 font-normal">/ Status</th>
+                      <th class="px-6 py-3.5 font-normal"></th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="myApiKeysTableBody"
+                    class="divide-y divide-white/10"
+                  >
+                    <tr
+                      class="api-key-row hover:bg-white/[0.03] transition-colors"
+                      data-key-id="1"
+                    >
+                      <td class="px-6 py-4 key-label">Production server</td>
+                      <td
+                        class="px-6 py-4 text-xs text-white/40 key-masked-value whitespace-nowrap"
+                      >
+                        hd_live_••••8a2f
+                      </td>
+                      <td class="px-6 py-4 key-usage-today">
+                        <div class="flex items-center gap-2">
+                          <div class="w-20 h-1.5 bg-white/10 overflow-hidden">
+                            <div
+                              class="h-full bg-[#feff7c]"
+                              style="width: 40%"
+                            ></div>
+                          </div>
+                          <span class="text-xs text-white/40 whitespace-nowrap"
+                            >24 / 60 req/min</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        class="px-6 py-4 text-xs text-white/40 whitespace-nowrap key-created-at"
+                      >
+                        Sep 02, 2026
+                      </td>
+                      <td class="px-6 py-4">
+                        <span
+                          class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0]"
+                        >
+                          <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span>
+                          Active
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <button
+                          class="revokeKeyBtn text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] underline underline-offset-4 cursor-pointer transition-colors"
+                          data-key-id="1"
+                        >
+                          Revoke
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr
+                      class="api-key-row hover:bg-white/[0.03] transition-colors"
+                      data-key-id="2"
+                    >
+                      <td class="px-6 py-4 key-label">Local testing</td>
+                      <td
+                        class="px-6 py-4 text-xs text-white/40 key-masked-value whitespace-nowrap"
+                      >
+                        hd_live_••••11c9
+                      </td>
+                      <td
+                        class="px-6 py-4 key-usage-today text-xs text-white/40"
+                      >
+                        —
+                      </td>
+                      <td
+                        class="px-6 py-4 text-xs text-white/40 whitespace-nowrap key-created-at"
+                      >
+                        Aug 21, 2026
+                      </td>
+                      <td class="px-6 py-4">
+                        <span
+                          class="key-status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/40"
+                        >
+                          <span class="w-1.5 h-1.5 bg-white/30"></span>
+                          Revoked
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 text-right text-xs text-white/20">
+                        —
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Empty state (unhide when the customer has no keys) -->
+              <div
+                id="keysEmptyState"
+                class="hidden px-6 py-12 text-center border-t border-white/10"
+              >
+                <p class="text-sm text-white/60">You have no API keys yet</p>
+                <p class="text-[11px] text-white/40 mt-2">
+                  / Generate your first key with the form.
+                </p>
+              </div>
+            </div>
+
+            <!-- Usage guide -->
+            <div class="relative border border-white/10 bg-[#020203] p-6">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
+              ></span>
+
+              <h3
+                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px] mb-2"
+              >
+                Using your <span class="text-[#feff7c]">key</span>
+              </h3>
+              <p class="text-white/60 text-xs leading-5 mb-4">
+                / Send the key in the Authorization header when you submit a
+                ticket.
+              </p>
+              <pre
+                class="bg-[#080809] border border-white/10 text-xs text-white/80 leading-6 p-4 overflow-x-auto"
+              ><code>curl -X POST https://your-domain.com/api/tickets \
+  -H "Authorization: Bearer hd_live_xxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{"subject":"Issue","description":"Details"}'</code></pre>
+            </div>
+          </div>
+
+          <!-- Right: create key -->
+          <div class="space-y-6">
+            <div class="relative border border-white/10 bg-[#020203] p-6">
+              <span
+                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
+              ></span>
+              <span
+                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
+              ></span>
+
+              <h2
+                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+              >
+                Create a <span class="text-[#feff7c]">new key</span>
+              </h2>
+              <p class="text-white/60 text-xs leading-5 mb-6">
+                / Give the key a label so you can tell your keys apart.
+              </p>
+
+              <form id="createMyApiKeyForm" class="space-y-4">
+                <div>
+                  <label
+                    for="keyLabel"
+                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                    >Key label</label
+                  >
+                  <input
+                    type="text"
+                    id="keyLabel"
+                    name="keyLabel"
+                    placeholder="Production server"
+                    maxlength="40"
+                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    required
+                  />
+                </div>
+
+                <div class="border border-white/10 bg-[#080809] px-4 py-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] uppercase text-white/40"
+                      >Tier</span
+                    >
+                    <span
+                      class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/60"
+                      >Free</span
+                    >
+                  </div>
+                  <p class="text-[11px] text-white/40 mt-2">
+                    / 60 requests per minute per key
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  id="createMyApiKeyBtn"
+                  class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Generate key
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- New key modal (hidden by default) -->
+    <div
+      id="apiKeyModal"
+      class="hidden fixed inset-0 z-[1000] overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="apiKeyModalTitle"
+    >
+      <div
+        id="apiKeyModalBackdrop"
+        class="fixed inset-0 bg-[#080809]/40 backdrop-blur-md"
+      ></div>
+
+      <div
+        class="relative min-h-full flex items-center justify-center p-4 pointer-events-none"
+      >
+        <div
+          class="pointer-events-auto relative w-full max-w-lg border border-white/10 bg-[#020203] p-6 sm:p-8 font-['Geist_Mono',monospace] shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+        >
+          <span
+            class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
+          ></span>
+          <span
+            class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
+          ></span>
+          <span
+            class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
+          ></span>
+          <span
+            class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
+          ></span>
+
+          <button
+            id="apiKeyModalClose"
+            type="button"
+            aria-label="Close"
+            class="absolute top-4 right-4 w-8 h-8 border border-white/10 text-white/60 hover:text-[#feff7c] hover:border-[#feff7c]/50 flex items-center justify-center text-sm cursor-pointer transition-colors"
+          >
+            ✕
+          </button>
+
+          <p
+            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
+          >
+            / New API key
+          </p>
+          <h2
+            id="apiKeyModalTitle"
+            class="font-['Geist_Pixel',sans-serif] text-2xl sm:text-3xl tracking-[-1px] pr-10"
+          >
+            Key <span class="text-[#feff7c]">generated</span>
+          </h2>
+          <p id="apiKeyModalLabel" class="text-white/40 text-xs mt-2"></p>
+
+          <div
+            class="mt-6 border border-[#ffb347]/30 bg-[#ffb347]/10 text-[#ffb347] text-xs leading-5 px-4 py-3"
+          >
+            Copy your key now. For security it is shown only once and cannot be
+            retrieved later.
+          </div>
+
+          <div class="mt-5">
+            <label
+              class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+              >Your API key</label
+            >
+            <div class="flex flex-col sm:flex-row gap-3">
+              <code
+                id="apiKeyModalValue"
+                class="flex-1 min-w-0 bg-[#080809] border border-white/10 text-sm text-white px-4 py-3 break-all select-all"
+              ></code>
+              <button
+                id="apiKeyModalCopyBtn"
+                type="button"
+                class="shrink-0 bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-xs font-medium uppercase tracking-[-0.5px] px-5 py-3 cursor-pointer transition-colors"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <button
+            id="apiKeyModalDoneBtn"
+            type="button"
+            class="mt-6 w-full border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] text-white/80 text-xs uppercase tracking-[-0.5px] py-3.5 cursor-pointer transition-colors"
+          >
+            I've saved it, close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="toast"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+    ></div>
+  </body>
+  <script type="module" src="./js/customer-api-keys.js"></script>
+</html>

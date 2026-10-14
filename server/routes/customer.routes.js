@@ -1,9 +1,35 @@
 import express from "express";
 import { verifyAccessToken } from "../middleware/authorization.middleware/accessToken.verification.middleware.js";
 import { isCustomerRole } from "../middleware/role.middleware.js/roleChecker.middleware.js";
+import {
+  getMyKeys,
+  newPresonalApiKey,
+  revokeMyKey,
+} from "../controllers/customer.controller.js";
 
 const customerRouter = express.Router();
 
 // customerRouter.post("/customer/newTicket", verifyAccessToken, isCustomerRole);
+
+customerRouter.post(
+  "/customer/newApiKey",
+  verifyAccessToken,
+  isCustomerRole,
+  newPresonalApiKey,
+);
+
+customerRouter.get(
+  "/customer/myKeys",
+  verifyAccessToken,
+  isCustomerRole,
+  getMyKeys,
+);
+
+customerRouter.delete(
+  "/customer/revokeApi",
+  verifyAccessToken,
+  isCustomerRole,
+  revokeMyKey,
+);
 
 export default customerRouter;

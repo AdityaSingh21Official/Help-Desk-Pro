@@ -128,7 +128,7 @@ async function revokeMyKey(req, res) {
   let tempConn;
   try {
     const userId = req.user.userId;
-    const apiKeyId = Number(req.user.apiKeyId);
+    const apiKeyId = Number(req.body.apiKeyId);
 
     if (!apiKeyId || isNaN(apiKeyId) || apiKeyId < 10000) {
       return res.status(422).json({

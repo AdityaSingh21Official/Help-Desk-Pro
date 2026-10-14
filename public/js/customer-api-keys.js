@@ -526,6 +526,8 @@ async function confirmRevoke() {
       wait(MIN_LOADING_MS),
     ]);
 
+    console.log("revoke payload:", { apiKeyId: keyId }, typeof keyId);
+
     const data = await response.json();
     const ok = data.success ?? data.status;
 
@@ -569,7 +571,13 @@ tableBody?.addEventListener("click", (e) => {
   const btn = e.target.closest(".revokeKeyBtn");
   if (!btn) return;
 
-  const keyId = btn.dataset.keyId;
+  const raw = btn.dataset.keyId;
+  if (!raw) {
+    showToast("Key ID missing on this row", true);
+    return;
+  }
+
+  const keyId = !isNaN(Number(raw)) ? Number(raw) : raw;
   const row = btn.closest("tr");
   const labelEl = row ? row.querySelector(".key-label") : null;
 

@@ -3,233 +3,251 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Ticket · HelpDesk Pro</title>
+    <title>New Ticket · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --raised:
+          9px 9px 18px rgba(150, 150, 150, 0.5),
+          -9px -9px 18px rgba(255, 255, 255, 0.92);
+        --raised-sm:
+          5px 5px 10px rgba(150, 150, 150, 0.5),
+          -5px -5px 10px rgba(255, 255, 255, 0.92);
+        --raised-xs:
+          3px 3px 6px rgba(150, 150, 150, 0.5),
+          -3px -3px 6px rgba(255, 255, 255, 0.92);
+        --inset-sm:
+          inset 3px 3px 6px rgba(150, 150, 150, 0.5),
+          inset -3px -3px 6px rgba(255, 255, 255, 0.92);
+      }
+    </style>
   </head>
   <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
+    class="antialiased min-h-screen bg-[#e0e0e0] text-[#555] font-['Montserrat',system-ui,sans-serif]"
   >
-    <div class="flex min-h-screen flex-col lg:flex-row">
-      <!-- Sidebar -->
-      <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+    <div
+      class="w-full max-w-6xl mx-auto px-4 pt-4 pb-14 sm:px-8 sm:pt-6 sm:pb-[72px]"
+    >
+      <!-- Top bar -->
+      <header
+        class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-[32px] bg-[#e0e0e0] py-3 pl-5 pr-4 [box-shadow:var(--raised)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
+        <div class="flex items-center gap-3">
+          <span
+            class="w-10 h-10 rounded-full bg-[#4f86c6] text-white flex items-center justify-center text-[13px] font-semibold [box-shadow:var(--raised-xs)]"
+            >CK</span
           >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          aria-label="Main"
+          class="order-3 w-full flex items-center gap-1.5 overflow-x-auto px-1 pt-1 pb-2 md:order-none md:w-auto md:overflow-visible md:p-0"
         >
           <a
             href="customer-tickets.html"
             id="navMyTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="flex items-center whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-[#555] transition-[box-shadow,color] duration-150 hover:text-[#3d3d3d] hover:[box-shadow:var(--raised-xs)] active:[box-shadow:var(--inset-sm)]"
             >My Tickets</a
           >
           <a
             href="new-ticket.html"
             id="navNewTicket"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="flex items-center whitespace-nowrap rounded-full bg-[#4f86c6] px-5 py-2.5 text-sm font-medium text-white [box-shadow:var(--raised-sm)]"
             >New Ticket</a
           >
           <a
             href="customer-api-keys.html"
             id="navMyApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="flex items-center whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-[#555] transition-[box-shadow,color] duration-150 hover:text-[#3d3d3d] hover:[box-shadow:var(--raised-xs)] active:[box-shadow:var(--inset-sm)]"
             >API Keys</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
+        <div class="flex items-center gap-3">
           <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
+            class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#3f74b3] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
           >
             SV
           </div>
-          <div class="text-sm leading-tight">
-            <p id="customerName">Sana Vora</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Customer</p>
-          </div>
+          <p
+            id="customerName"
+            class="hidden sm:block text-sm font-medium text-[#3d3d3d]"
+          >
+            Sana Vora
+          </p>
           <button
             id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
+            type="button"
+            class="cursor-pointer rounded-full bg-[#e0e0e0] px-4 py-2 text-xs font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
           >
             Log out
           </button>
         </div>
-      </aside>
+      </header>
 
-      <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 flex justify-center min-w-0">
-        <div class="w-full max-w-2xl">
-          <div class="mb-8">
-            <p
-              class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
+      <main>
+        <!-- Heading -->
+        <div class="mt-14 mb-10">
+          <h1
+            class="text-[clamp(34px,5.5vw,56px)] leading-[1.08] tracking-[-2px] font-normal text-[#3d3d3d]"
+          >
+            Open a
+            <b class="block font-semibold">new ticket.</b>
+          </h1>
+          <p
+            class="mt-6 max-w-[460px] text-[15px] leading-[1.8] text-[#6f6f6f]"
+          >
+            Tell us what's going wrong and we'll route it to the right agent.
+          </p>
+        </div>
+
+        <!-- Form -->
+        <form
+          id="newTicketForm"
+          class="flex max-w-[760px] flex-col gap-7 rounded-[32px] bg-[#e0e0e0] p-7 sm:p-10 [box-shadow:var(--raised)]"
+        >
+          <div>
+            <label
+              for="ticketSubject"
+              class="block mb-2.5 pl-1.5 text-[13px] font-medium text-[#6f6f6f]"
+              >Subject</label
             >
-              / Support
-            </p>
-            <h1
-              class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
-            >
-              Open a <span class="text-[#feff7c]">new ticket</span>
-            </h1>
-            <p class="text-white/60 text-sm mt-3">
-              / Tell us what's going wrong — we'll route it to the right agent.
-            </p>
+            <input
+              type="text"
+              id="ticketSubject"
+              name="ticketSubject"
+              placeholder="Brief summary of the issue"
+              required
+              class="w-full rounded-full border-0 bg-[#e0e0e0] px-5 py-3.5 text-sm text-[#3d3d3d] placeholder:text-[#9a9a9a] [box-shadow:var(--inset-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#4f86c6]"
+            />
           </div>
 
-          <form
-            id="newTicketForm"
-            class="relative border border-white/10 bg-[#020203] p-6 sm:p-8 space-y-6"
-          >
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-            ></span>
+          <div>
+            <label
+              for="ticketDescription"
+              class="block mb-2.5 pl-1.5 text-[13px] font-medium text-[#6f6f6f]"
+              >Description</label
+            >
+            <textarea
+              id="ticketDescription"
+              name="ticketDescription"
+              rows="6"
+              placeholder="What happened? Steps to reproduce, if any."
+              required
+              class="w-full resize-none rounded-3xl border-0 bg-[#e0e0e0] px-5 py-3.5 text-sm leading-[1.7] text-[#3d3d3d] placeholder:text-[#9a9a9a] [box-shadow:var(--inset-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#4f86c6]"
+            ></textarea>
+          </div>
 
-            <div>
-              <label
-                for="ticketSubject"
-                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                >Subject</label
-              >
-              <input
-                type="text"
-                id="ticketSubject"
-                name="ticketSubject"
-                placeholder="Brief summary of the issue"
-                class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                required
-              />
-            </div>
+          <fieldset class="m-0 min-w-0 border-0 p-0">
+            <legend
+              class="block mb-2.5 pl-1.5 text-[13px] font-medium text-[#6f6f6f]"
+            >
+              Priority
+            </legend>
+            <div
+              id="prioritySelector"
+              class="grid grid-cols-2 gap-3.5 p-1 sm:grid-cols-4"
+            >
+              <label class="block cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="low"
+                  class="peer sr-only"
+                />
+                <span
+                  class="flex items-center justify-center gap-2 rounded-full bg-[#e0e0e0] px-3.5 py-3 text-[13px] font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3d3d3d] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[3px] peer-focus-visible:outline-[#4f86c6] peer-checked:font-semibold peer-checked:text-[#6f6f6f] peer-checked:[box-shadow:var(--inset-sm)]"
+                >
+                  <span
+                    class="h-[7px] w-[7px] rounded-full bg-[#9a9a9a]"
+                  ></span>
+                  Low
+                </span>
+              </label>
 
-            <div>
-              <label
-                for="ticketDescription"
-                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                >Description</label
-              >
-              <textarea
-                id="ticketDescription"
-                name="ticketDescription"
-                rows="6"
-                placeholder="What happened? Steps to reproduce, if any."
-                class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] resize-none focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                required
-              ></textarea>
-            </div>
+              <label class="block cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="medium"
+                  class="peer sr-only"
+                  checked
+                />
+                <span
+                  class="flex items-center justify-center gap-2 rounded-full bg-[#e0e0e0] px-3.5 py-3 text-[13px] font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3d3d3d] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[3px] peer-focus-visible:outline-[#4f86c6] peer-checked:font-semibold peer-checked:text-[#3f74b3] peer-checked:[box-shadow:var(--inset-sm)]"
+                >
+                  <span
+                    class="h-[7px] w-[7px] rounded-full bg-[#4f86c6]"
+                  ></span>
+                  Medium
+                </span>
+              </label>
 
-            <div>
-              <label
-                class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                >Priority</label
-              >
-              <div
-                id="prioritySelector"
-                class="grid grid-cols-2 sm:grid-cols-4 gap-3"
-              >
-                <label class="priority-option cursor-pointer">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="low"
-                    class="peer sr-only"
-                  />
-                  <div
-                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-white/60 peer-checked:bg-white/10 peer-checked:text-white hover:border-white/30 transition-colors"
-                  >
-                    Low
-                  </div>
-                </label>
-                <label class="priority-option cursor-pointer">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="medium"
-                    class="peer sr-only"
-                    checked
-                  />
-                  <div
-                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#feff7c] peer-checked:bg-[#feff7c]/10 peer-checked:text-[#feff7c] hover:border-white/30 transition-colors"
-                  >
-                    Medium
-                  </div>
-                </label>
-                <label class="priority-option cursor-pointer">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="high"
-                    class="peer sr-only"
-                  />
-                  <div
-                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#ffb347] peer-checked:bg-[#ffb347]/10 peer-checked:text-[#ffb347] hover:border-white/30 transition-colors"
-                  >
-                    High
-                  </div>
-                </label>
-                <label class="priority-option cursor-pointer">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="critical"
-                    class="peer sr-only"
-                  />
-                  <div
-                    class="text-center px-3 py-3 border border-white/10 bg-[#080809] text-[11px] uppercase text-white/60 peer-checked:border-[#ff6b6b] peer-checked:bg-[#ff6b6b]/10 peer-checked:text-[#ff8a8a] hover:border-white/30 transition-colors"
-                  >
-                    Critical
-                  </div>
-                </label>
-              </div>
-            </div>
+              <label class="block cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="high"
+                  class="peer sr-only"
+                />
+                <span
+                  class="flex items-center justify-center gap-2 rounded-full bg-[#e0e0e0] px-3.5 py-3 text-[13px] font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3d3d3d] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[3px] peer-focus-visible:outline-[#4f86c6] peer-checked:font-semibold peer-checked:text-[#9a6a1f] peer-checked:[box-shadow:var(--inset-sm)]"
+                >
+                  <span
+                    class="h-[7px] w-[7px] rounded-full bg-[#d9973b]"
+                  ></span>
+                  High
+                </span>
+              </label>
 
-            <div class="flex items-center gap-3 pt-2">
-              <button
-                type="submit"
-                id="submitTicketBtn"
-                class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-xs font-medium uppercase tracking-[-0.5px] px-6 py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                Submit ticket
-              </button>
-              <a
-                href="customer-tickets.html"
-                id="cancelTicketBtn"
-                class="text-[11px] uppercase tracking-[-0.2px] text-white/60 hover:text-[#feff7c] px-4 py-3 transition-colors"
-                >Cancel</a
-              >
+              <label class="block cursor-pointer">
+                <input
+                  type="radio"
+                  name="priority"
+                  value="critical"
+                  class="peer sr-only"
+                />
+                <span
+                  class="flex items-center justify-center gap-2 rounded-full bg-[#e0e0e0] px-3.5 py-3 text-[13px] font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3d3d3d] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[3px] peer-focus-visible:outline-[#4f86c6] peer-checked:font-semibold peer-checked:text-[#d4605a] peer-checked:[box-shadow:var(--inset-sm)]"
+                >
+                  <span
+                    class="h-[7px] w-[7px] rounded-full bg-[#d4605a]"
+                  ></span>
+                  Critical
+                </span>
+              </label>
             </div>
-          </form>
-        </div>
+          </fieldset>
+
+          <div class="flex flex-wrap items-center gap-4 pt-1">
+            <button
+              type="submit"
+              id="submitTicketBtn"
+              class="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-0 bg-[#4f86c6] px-7 py-3.5 text-sm font-semibold text-white transition-[box-shadow,background] duration-150 [box-shadow:var(--raised-sm)] hover:bg-[#3f74b3] active:[box-shadow:var(--inset-sm)] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Submit ticket
+            </button>
+            <a
+              href="customer-tickets.html"
+              id="cancelTicketBtn"
+              class="inline-flex items-center justify-center rounded-full bg-[#e0e0e0] px-6 py-3.5 text-sm font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
+              >Cancel</a
+            >
+          </div>
+        </form>
       </main>
     </div>
   </body>
+  <script type="module" src="./js/utils.js"></script>
 </html>

@@ -3,210 +3,547 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Tickets · HelpDesk Pro</title>
+    <title>My Tickets · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-  </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div class="flex min-h-screen flex-col lg:flex-row">
-      <!-- Sidebar -->
-      <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
-      >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --amber: #d9973b;
+        --grey: #b5b5b5;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
 
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
-          >
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 16px 16px 56px;
+      }
+      @media (min-width: 640px) {
+        .wrap {
+          padding: 24px 32px 72px;
+        }
+      }
+
+      /* ---------- Top bar ---------- */
+      .navbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 16px;
+        padding: 12px 16px 12px 20px;
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .brand-name {
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.4px;
+        color: var(--ink-strong);
+      }
+      .nav {
+        order: 3;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 4px 4px 8px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      @media (min-width: 768px) {
+        .nav {
+          order: 0;
+          width: auto;
+          padding: 0;
+          overflow: visible;
+        }
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+      .user-name {
+        display: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-strong);
+      }
+      @media (min-width: 640px) {
+        .user-name {
+          display: block;
+        }
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px 26px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        box-shadow: var(--raised-sm);
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Heading ---------- */
+      .page-head {
+        margin: 56px 0 40px;
+      }
+      .page-title {
+        font-size: clamp(34px, 5.5vw, 56px);
+        line-height: 1.08;
+        letter-spacing: -2px;
+        font-weight: 400;
+        color: var(--ink-strong);
+      }
+      .page-title b {
+        display: block;
+        font-weight: 600;
+      }
+
+      /* ---------- Toolbar + filters ---------- */
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+      }
+      .filter-pill {
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .filter-pill:hover {
+        color: var(--ink-strong);
+      }
+      .filter-pill:active {
+        box-shadow: var(--inset-sm);
+      }
+      .filter-pill.active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+
+      /* ---------- Ticket list ---------- */
+      .panel {
+        padding: 14px 0;
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .ticket-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin: 0 14px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        color: inherit;
+        transition: box-shadow 160ms ease;
+      }
+      .ticket-row + .ticket-row {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      .ticket-row:hover {
+        box-shadow: var(--inset-sm);
+      }
+      .ticket-row:hover + .ticket-row {
+        box-shadow: none;
+      }
+      .priority-bar {
+        width: 6px;
+        height: 38px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+        box-shadow: var(--raised-xs);
+      }
+      .p-high {
+        background: var(--red);
+      }
+      .p-medium {
+        background: var(--amber);
+      }
+      .p-low {
+        background: var(--grey);
+      }
+      .ticket-id {
+        display: none;
+        width: 84px;
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      @media (min-width: 640px) {
+        .ticket-id {
+          display: block;
+        }
+      }
+      .grow-min {
+        flex: 1;
+        min-width: 0;
+      }
+      .tk-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-strong);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tk-meta {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--blue-ink);
+        font-size: 12px;
+        font-weight: 500;
+        flex-shrink: 0;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+      }
+      .status-pill > span {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .status-open {
+        background: var(--blue);
+        color: #fff;
+      }
+      .status-progress {
+        background: var(--surface);
+        color: var(--blue-ink);
+      }
+      .status-closed {
+        background: var(--surface);
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      /* Fallback for rows the JS may inject with the old dark-theme classes */
+      #myTicketsList [class*="text-white"] {
+        color: var(--ink);
+      }
+      #myTicketsList [class*="text-white/4"],
+      #myTicketsList [class*="text-white/3"] {
+        color: var(--muted);
+      }
+      #myTicketsList .priority-bar[class*="ff6b6b"] {
+        background: var(--red);
+      }
+      #myTicketsList .priority-bar[class*="ffb347"] {
+        background: var(--amber);
+      }
+      #myTicketsList .priority-bar[class*="white"] {
+        background: var(--grey);
+      }
+      #myTicketsList .status-pill[class*="ff6b6b"] {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      #myTicketsList .status-pill[class*="ffb347"] {
+        background: var(--surface);
+        color: var(--blue-ink);
+        box-shadow: var(--raised-xs);
+      }
+      #myTicketsList .status-pill[class*="border-white"] {
+        background: var(--surface);
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+      #myTicketsList .status-pill > span {
+        background: currentColor;
+      }
+
+      @media (max-width: 639px) {
+        .ticket-row {
+          margin: 0 8px;
+          padding: 14px 12px;
+          gap: 12px;
+        }
+        .panel {
+          border-radius: 28px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .nav-item,
+        .btn-soft,
+        .btn-primary,
+        .filter-pill,
+        .ticket-row {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="wrap">
+      <header class="navbar">
+        <div class="brand">
+          <span class="brand-mark">CK</span>
+          <span class="brand-name">craftkel.ai</span>
         </div>
 
-        <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
-        >
+        <nav class="nav" aria-label="Main">
           <a
             href="customer-tickets.html"
             id="navMyTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >My Tickets</a
           >
-          <a
-            href="new-ticket.html"
-            id="navNewTicket"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="new-ticket.html" id="navNewTicket" class="nav-item"
             >New Ticket</a
           >
-          <a
-            href="customer-api-keys.html"
-            id="navMyApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="customer-api-keys.html" id="navMyApiKeys" class="nav-item"
             >API Keys</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-          >
-            SV
-          </div>
-          <div class="text-sm leading-tight">
-            <p id="customerName">Sana Vora</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Customer</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
-            Log out
-          </button>
+        <div class="user">
+          <div class="avatar">SV</div>
+          <p id="customerName" class="user-name">Sana Vora</p>
+          <button id="logoutBtn" type="button" class="btn-soft">Log out</button>
         </div>
-      </aside>
+      </header>
 
-      <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <div>
-            <p
-              class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-            >
-              / Support
-            </p>
-            <h1
-              class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
-            >
-              My <span class="text-[#feff7c]">tickets</span>
-            </h1>
-          </div>
-          <a
-            href="new-ticket.html"
-            id="newTicketBtn"
-            class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-xs font-medium uppercase tracking-[-0.5px] px-5 py-3 transition-colors"
-          >
-            + New ticket
-          </a>
+      <main>
+        <div class="page-head">
+          <h1 class="page-title">
+            My tickets
+            <b>in one place.</b>
+          </h1>
         </div>
 
-        <!-- Filter pills -->
-        <div class="flex flex-wrap items-center gap-2 mb-6">
-          <button
-            class="filter-pill active px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#feff7c] text-[#434302] border border-[#feff7c] cursor-pointer transition-colors"
-            data-filter="all"
+        <div class="toolbar">
+          <div class="filters">
+            <button class="filter-pill active" data-filter="all">
+              All · 5
+            </button>
+            <button class="filter-pill" data-filter="open">Open · 2</button>
+            <button class="filter-pill" data-filter="resolved">
+              Resolved · 3
+            </button>
+          </div>
+
+          <a href="new-ticket.html" id="newTicketBtn" class="btn-primary"
+            >+ New ticket</a
           >
-            All · 5
-          </button>
-          <button
-            class="filter-pill px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#020203] border border-white/10 text-white/60 hover:border-[#feff7c]/50 hover:text-white cursor-pointer transition-colors"
-            data-filter="open"
-          >
-            Open · 2
-          </button>
-          <button
-            class="filter-pill px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#020203] border border-white/10 text-white/60 hover:border-[#feff7c]/50 hover:text-white cursor-pointer transition-colors"
-            data-filter="resolved"
-          >
-            Resolved · 3
-          </button>
         </div>
 
-        <!-- Ticket list -->
-        <div class="relative border border-white/10 bg-[#020203]">
-          <span
-            class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-          ></span>
-
-          <div id="myTicketsList" class="divide-y divide-white/10">
+        <section class="panel">
+          <div id="myTicketsList">
             <a
               href="ticket-detail.html"
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
+              class="ticket-row"
               data-ticket-id="1042"
             >
-              <span class="priority-bar w-1 h-10 bg-[#ff6b6b] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1042</span
-              >
-              <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">
-                  Payment webhook failing intermittently
-                </p>
-                <p class="text-[11px] text-white/40 mt-1">Opened 2h ago</p>
+              <span class="priority-bar p-high"></span>
+              <span class="ticket-id">#TCK-1042</span>
+              <div class="grow-min">
+                <p class="tk-title">Payment webhook failing intermittently</p>
+                <p class="tk-meta">Opened 2h ago</p>
               </div>
-              <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] shrink-0"
-              >
-                <span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span> Open
-              </span>
+              <span class="status-pill status-open"><span></span>Open</span>
             </a>
 
             <a
               href="ticket-detail.html"
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
+              class="ticket-row"
               data-ticket-id="1035"
             >
-              <span class="priority-bar w-1 h-10 bg-[#ffb347] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1035</span
-              >
-              <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">Invoice shows wrong tax amount</p>
-                <p class="text-[11px] text-white/40 mt-1">Opened 3d ago</p>
+              <span class="priority-bar p-medium"></span>
+              <span class="ticket-id">#TCK-1035</span>
+              <div class="grow-min">
+                <p class="tk-title">Invoice shows wrong tax amount</p>
+                <p class="tk-meta">Opened 3d ago</p>
               </div>
-              <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] shrink-0"
+              <span class="status-pill status-progress"
+                ><span></span>In progress</span
               >
-                <span class="w-1.5 h-1.5 bg-[#feff7c]"></span> In progress
-              </span>
             </a>
 
             <a
               href="ticket-detail.html"
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
+              class="ticket-row"
               data-ticket-id="1018"
             >
-              <span class="priority-bar w-1 h-10 bg-[#41412b] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1018</span
-              >
-              <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">
-                  How do I add a second seat to my plan?
-                </p>
-                <p class="text-[11px] text-white/40 mt-1">Opened 2w ago</p>
+              <span class="priority-bar p-low"></span>
+              <span class="ticket-id">#TCK-1018</span>
+              <div class="grow-min">
+                <p class="tk-title">How do I add a second seat to my plan?</p>
+                <p class="tk-meta">Opened 2w ago</p>
               </div>
-              <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-white/10 bg-white/5 text-white/40 shrink-0"
-              >
-                <span class="w-1.5 h-1.5 bg-white/30"></span> Closed
-              </span>
+              <span class="status-pill status-closed"><span></span>Closed</span>
             </a>
           </div>
-        </div>
+        </section>
       </main>
     </div>
   </body>
+  <script type="module" src="./js/utils.js"></script>
 </html>

@@ -3,15 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Organizations · HelpDesk Pro</title>
+    <title>Organizations · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --amber: #9a6a1f;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
       #appRoot {
         transition: filter 220ms ease;
       }
@@ -19,6 +54,384 @@
         filter: blur(5px);
       }
 
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-danger-soft {
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--red);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition: box-shadow 160ms ease;
+      }
+      .btn-danger-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 14px 24px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        box-shadow: var(--raised-sm);
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* ---------- Panels ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 28px 14px;
+      }
+      .count-chip {
+        padding: 6px 14px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Organization list (rendered by JS) ---------- */
+      #orgList {
+        padding: 0 14px 18px;
+      }
+      #orgList > * {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        margin: 0;
+        padding: 14px 18px;
+        border: 0;
+        border-radius: 22px;
+        background: transparent;
+        color: var(--ink-strong);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: normal;
+        cursor: pointer;
+        transition: box-shadow 160ms ease;
+      }
+      #orgList > * + * {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      #orgList > *:hover {
+        box-shadow: var(--inset-sm);
+      }
+      #orgList > *:hover + * {
+        box-shadow: none;
+      }
+      /* selected row */
+      #orgList > [aria-selected="true"],
+      #orgList > [aria-current="true"],
+      #orgList > .is-active,
+      #orgList > .is-selected,
+      #orgList > .selected,
+      #orgList > [class*="feff7c" i] {
+        color: var(--blue-ink);
+        box-shadow: var(--inset-sm);
+      }
+      #orgList * {
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      #orgList [class*="text-white"] {
+        color: inherit;
+      }
+      #orgList [class*="text-white/4"],
+      #orgList [class*="text-white/3"],
+      #orgList [class*="text-white/5"] {
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      #orgList [class*="text-[#feff7c" i] {
+        color: var(--blue-ink);
+      }
+
+      /* ---------- Members table ---------- */
+      .table-wrap {
+        margin: 0 14px;
+        overflow-x: auto;
+      }
+      .data-table {
+        width: 100%;
+        min-width: 420px;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+      }
+      .data-table thead th {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+      }
+      .data-table thead th:first-child {
+        border-radius: 9999px 0 0 9999px;
+        padding-left: 26px;
+      }
+      .data-table thead th:last-child {
+        border-radius: 0 9999px 9999px 0;
+      }
+      .data-table tbody td {
+        padding: 18px;
+        color: var(--ink);
+        vertical-align: middle;
+      }
+      .data-table tbody td:first-child {
+        padding-left: 26px;
+        font-weight: 500;
+        color: var(--ink-strong);
+      }
+      .data-table tbody tr + tr td {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      #membersTableBody * {
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      #membersTableBody [class*="text-white"] {
+        color: var(--ink);
+      }
+      #membersTableBody [class*="text-white/4"],
+      #membersTableBody [class*="text-white/3"],
+      #membersTableBody [class*="text-white/5"] {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 400;
+      }
+      #membersTableBody [class*="text-[#feff7c" i],
+      #membersTableBody [class*="text-yellow"],
+      #membersTableBody [style*="feff7c" i] {
+        color: var(--blue-ink) !important;
+      }
+      #membersTableBody [class*="text-red"],
+      #membersTableBody [class*="text-[#ff" i] {
+        color: var(--red);
+      }
+      /* Badges in member rows (role, status) */
+      #membersTableBody span[class*="border"],
+      #membersTableBody span[class*="bg-"] {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+      }
+      #membersTableBody span[class] > span,
+      #membersTableBody span > span[class] {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 7px;
+        height: 7px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: none;
+      }
+      /* Row actions (Remove) */
+      #membersTableBody button {
+        padding: 8px 18px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--red);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition: box-shadow 160ms ease;
+      }
+      #membersTableBody button:hover {
+        background: var(--surface);
+        color: var(--red);
+      }
+      #membersTableBody button:active {
+        box-shadow: var(--inset-sm);
+      }
+      #membersTableBody button:disabled {
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+        cursor: not-allowed;
+      }
+
+      #membersEmptyState {
+        margin: 10px 28px 28px;
+        padding: 36px 24px;
+        border-radius: 24px;
+        text-align: center;
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Form ---------- */
+      .field-label {
+        display: block;
+        margin-bottom: 10px;
+        padding-left: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .field {
+        width: 100%;
+        padding: 14px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: var(--inset-sm);
+      }
+      .field::placeholder {
+        color: #9a9a9a;
+      }
+
+      /* ---------- Toast ---------- */
+      #toast {
+        background: var(--surface);
+        color: var(--blue-ink);
+        border-radius: 9999px;
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised);
+      }
+
+      /* ---------- Confirm modal ---------- */
       .hd-modal {
         position: fixed;
         inset: 0;
@@ -28,34 +441,32 @@
         justify-content: center;
         padding: 24px;
         overflow-y: auto;
-        font-family: "Geist Mono", monospace;
-        color: #fff;
+        font-family: "Montserrat", system-ui, sans-serif;
+        color: var(--ink);
       }
       .hd-modal.is-open {
         display: flex;
       }
-
       .hd-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(4, 4, 6, 0.6);
-        -webkit-backdrop-filter: blur(14px) saturate(120%);
-        backdrop-filter: blur(14px) saturate(120%);
+        background: rgba(224, 224, 224, 0.55);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
         opacity: 0;
         transition: opacity 220ms ease;
       }
       .hd-modal.is-visible .hd-backdrop {
         opacity: 1;
       }
-
       .hd-panel {
         position: relative;
         width: 100%;
-        max-width: 460px;
+        max-width: 480px;
         margin: auto;
-        background: #020203;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
         opacity: 0;
         transform: translateY(14px) scale(0.98);
         transition:
@@ -66,68 +477,29 @@
         opacity: 1;
         transform: none;
       }
-      .hd-panel::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: radial-gradient(
-          rgba(255, 255, 255, 0.04) 1px,
-          transparent 1px
-        );
-        background-size: 7px 7px;
-        pointer-events: none;
-      }
-
       .hd-corner {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border: 0 solid #feff7c;
+        display: none;
       }
-      .hd-corner.tl {
-        top: -1px;
-        left: -1px;
-        border-top-width: 1px;
-        border-left-width: 1px;
-      }
-      .hd-corner.tr {
-        top: -1px;
-        right: -1px;
-        border-top-width: 1px;
-        border-right-width: 1px;
-      }
-      .hd-corner.bl {
-        bottom: -1px;
-        left: -1px;
-        border-bottom-width: 1px;
-        border-left-width: 1px;
-      }
-      .hd-corner.br {
-        bottom: -1px;
-        right: -1px;
-        border-bottom-width: 1px;
-        border-right-width: 1px;
-      }
-
       .hd-inner {
         position: relative;
-        padding: 28px;
+        padding: 32px;
       }
-
       .hd-head {
         display: flex;
         align-items: flex-start;
         gap: 16px;
       }
       .hd-icon {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #feff7c;
-        color: #434302;
+        border-radius: 50%;
+        background: var(--surface);
+        color: var(--red);
+        box-shadow: var(--raised-sm);
       }
       .hd-head-text {
         flex: 1;
@@ -135,26 +507,28 @@
       }
       .hd-eyebrow {
         margin: 0 0 4px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: -0.2px;
-        color: #feff7c;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
       }
       .hd-title {
         margin: 0;
-        font-family: "Geist Pixel", sans-serif;
-        font-size: 28px;
-        line-height: 1.1;
+        font-size: 26px;
+        line-height: 1.15;
         letter-spacing: -1px;
         font-weight: 400;
+        color: var(--ink-strong);
       }
       .hd-title span {
-        color: #feff7c;
+        color: inherit;
+      }
+      #confirmTitleAccent {
+        font-weight: 600;
       }
       .hd-org {
         margin: 6px 0 0;
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.4);
+        font-size: 13px;
+        color: var(--muted);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -162,115 +536,127 @@
       .hd-org:empty {
         display: none;
       }
-
       .hd-close {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
+        border: 0;
+        border-radius: 50%;
+        background: var(--surface);
+        color: var(--ink);
         font-family: inherit;
         font-size: 13px;
         cursor: pointer;
+        box-shadow: var(--raised-xs);
         transition:
-          color 150ms ease,
-          border-color 150ms ease;
+          box-shadow 160ms ease,
+          color 160ms ease;
       }
       .hd-close:hover {
-        color: #feff7c;
-        border-color: rgba(254, 255, 124, 0.5);
+        color: var(--blue-ink);
       }
-
+      .hd-close:active {
+        box-shadow: var(--inset-sm);
+      }
       .hd-notice {
         display: flex;
         gap: 12px;
         margin-top: 24px;
-        padding: 12px 16px;
-        font-size: 12px;
+        padding: 14px 20px;
+        border-radius: 22px;
+        font-size: 13px;
         line-height: 20px;
-        color: #ffb347;
-        background: rgba(255, 179, 71, 0.1);
-        border: 1px solid rgba(255, 179, 71, 0.3);
+        color: var(--amber);
+        box-shadow: var(--inset-sm);
       }
-
+      .hd-notice > span:first-child {
+        font-weight: 700;
+      }
       .hd-copy {
         display: block;
         width: 100%;
         margin-top: 24px;
         padding: 14px;
-        background: #feff7c;
         border: 0;
-        color: #434302;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
         font-family: inherit;
         font-size: 14px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
+        font-weight: 600;
         cursor: pointer;
-        transition: background 150ms ease;
+        box-shadow: var(--raised-sm);
+        transition:
+          background 160ms ease,
+          box-shadow 160ms ease;
       }
       .hd-copy:hover {
-        background: #ffff47;
+        background: var(--blue-ink);
+      }
+      .hd-copy:active {
+        box-shadow: var(--inset-sm);
       }
       .hd-copy.hd-danger {
-        background: #ff6b6b;
-        color: #2a0505;
+        background: var(--red);
       }
       .hd-copy.hd-danger:hover {
-        background: #ff8a8a;
+        background: #bf4e48;
       }
       .hd-copy:disabled,
       .hd-done:disabled {
         opacity: 0.6;
         cursor: not-allowed;
       }
-
       .hd-done {
         display: block;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 18px;
         padding: 14px;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.7);
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
         font-family: inherit;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
+        box-shadow: var(--raised-xs);
         transition:
-          color 150ms ease,
-          border-color 150ms ease;
+          box-shadow 160ms ease,
+          color 160ms ease;
       }
       .hd-done:hover {
-        color: #feff7c;
-        border-color: #feff7c;
+        color: var(--blue-ink);
+      }
+      .hd-done:active {
+        box-shadow: var(--inset-sm);
       }
 
-      .hd-copy:focus-visible,
-      .hd-done:focus-visible,
-      .hd-close:focus-visible {
-        outline: 1px solid #feff7c;
-        outline-offset: 2px;
-      }
-
-      @media (max-width: 480px) {
+      @media (max-width: 639px) {
+        .sidebar {
+          border-radius: 28px;
+        }
+        .table-wrap {
+          margin: 0 8px;
+        }
         .hd-modal {
           padding: 16px;
         }
         .hd-inner {
-          padding: 22px;
+          padding: 24px;
         }
         .hd-title {
-          font-size: 24px;
+          font-size: 22px;
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
+        .nav-item,
+        .btn-soft,
+        .btn-primary,
         .hd-backdrop,
         .hd-panel,
         #appRoot {
@@ -280,158 +666,102 @@
     </style>
     <script src="./js/auth.js"></script>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div id="appRoot" class="flex min-h-screen flex-col lg:flex-row">
+  <body class="antialiased">
+    <div
+      id="appRoot"
+      class="flex min-h-screen flex-col lg:flex-row gap-6 p-4 sm:p-6 lg:p-8"
+    >
+      <!-- Sidebar -->
       <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+        class="sidebar w-full lg:w-64 shrink-0 flex flex-col p-6 lg:sticky lg:top-8 lg:self-start lg:min-h-[calc(100vh-4rem)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+        <div class="flex items-center gap-3 mb-8 lg:mb-10">
+          <div class="brand-mark">CK</div>
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0"
         >
-          <a
-            href="admin-dashboard.html"
-            id="navDashboard"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-dashboard.html" id="navDashboard" class="nav-item"
             >Dashboard</a
           >
-          <a
-            href="admin-agents.html"
-            id="navAgents"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
-            >Agents</a
-          >
+          <a href="admin-agents.html" id="navAgents" class="nav-item">Agents</a>
           <a
             href="admin-organizations.html"
             id="navOrganizations"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >Organizations</a
           >
-          <a
-            href="admin-api-keys.html"
-            id="navApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-api-keys.html" id="navApiKeys" class="nav-item"
             >API Keys</a
           >
-          <a
-            href="agent-tickets.html"
-            id="navAllTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="agent-tickets.html" id="navAllTickets" class="nav-item"
             >All Tickets</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-          >
-            RM
+        <div class="mt-6 lg:mt-auto pt-6 flex items-center gap-3">
+          <div class="avatar" id="userAvatar">RM</div>
+          <div class="min-w-0 leading-tight">
+            <p
+              id="adminName"
+              class="text-sm font-medium text-[#3d3d3d] truncate"
+            >
+              Rita Mehta
+            </p>
+            <p class="text-[12px] text-[#6f6f6f] mt-0.5">Admin</p>
           </div>
-          <div class="text-sm leading-tight">
-            <p id="adminName">Rita Mehta</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Admin</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
+          <button id="logoutBtn" type="button" class="btn-soft ml-auto">
             Log out
           </button>
         </div>
       </aside>
 
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="mb-8">
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-          >
-            / Workspace
-          </p>
+      <!-- Main -->
+      <main class="flex-1 min-w-0 py-2 lg:py-4 lg:pr-2">
+        <div class="mb-10">
+          <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">Workspace</p>
           <h1
-            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            class="text-3xl sm:text-4xl tracking-[-1.2px] text-[#3d3d3d] leading-tight"
           >
-            Manage <span class="text-[#feff7c]">organizations</span>
+            <span class="font-normal">Manage</span>
+            <span class="font-semibold">organizations</span>
           </h1>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
-          <div class="space-y-6">
-            <div class="relative border border-white/10 bg-[#020203]">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-              ></span>
-
-              <div
-                class="flex items-center justify-between px-5 py-4 border-b border-white/10"
-              >
+          <!-- Left column -->
+          <div class="space-y-8 min-w-0">
+            <section class="panel">
+              <div class="panel-head">
                 <h2
-                  class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                  class="text-xl font-semibold tracking-[-0.5px] text-[#3d3d3d]"
                 >
                   Organizations
                 </h2>
-                <span id="orgCount" class="text-[11px] uppercase text-white/40"
-                  >— total</span
-                >
+                <span id="orgCount" class="count-chip">— total</span>
               </div>
+              <div id="orgList"></div>
+            </section>
 
-              <div id="orgList" class="divide-y divide-white/10"></div>
-            </div>
-
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
+            <section class="panel p-8">
               <h2
-                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+                class="text-xl tracking-[-0.5px] text-[#3d3d3d] mb-2 font-semibold"
               >
-                Add an <span class="text-[#feff7c]">organization</span>
+                Add an organization
               </h2>
-              <p class="text-white/60 text-xs leading-5 mb-6">
-                / Create the organization first, then add people to it.
+              <p class="text-[13px] leading-5 text-[#6f6f6f] mb-8">
+                Create the organization first, then add people to it.
               </p>
 
-              <form id="addOrgForm" class="space-y-4">
+              <form id="addOrgForm" class="space-y-6">
                 <div>
-                  <label
-                    for="orgName"
-                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
+                  <label for="orgName" class="field-label"
                     >Organization name</label
                   >
                   <input
@@ -439,187 +769,125 @@
                     id="orgName"
                     name="orgName"
                     placeholder="Acme Inc."
-                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    class="field"
                     required
                   />
                 </div>
-                <button
-                  type="submit"
-                  id="addOrgBtn"
-                  class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-                >
+                <button type="submit" id="addOrgBtn" class="btn-primary">
                   Add organization
                 </button>
               </form>
-            </div>
+            </section>
           </div>
 
-          <div class="xl:col-span-2 space-y-6 min-w-0">
-            <div
-              class="relative border border-white/10 bg-[#020203] p-6 flex flex-wrap items-center justify-between gap-4"
+          <!-- Right column -->
+          <div class="xl:col-span-2 space-y-8 min-w-0">
+            <section
+              class="panel p-8 flex flex-wrap items-center justify-between gap-4"
             >
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
               <div class="min-w-0">
-                <p class="text-[11px] uppercase text-white/40 mb-2">
-                  / Selected organization
+                <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">
+                  Selected organization
                 </p>
                 <h2
                   id="selectedOrgName"
-                  class="font-['Geist_Pixel',sans-serif] text-2xl sm:text-3xl tracking-[-1.5px] truncate"
+                  class="text-2xl sm:text-3xl font-semibold tracking-[-1px] text-[#3d3d3d] truncate"
                 >
                   No organization selected
                 </h2>
-                <p id="selectedOrgMeta" class="text-[11px] text-white/40 mt-2">
-                  / Pick one from the list
+                <p id="selectedOrgMeta" class="text-[13px] text-[#6f6f6f] mt-2">
+                  Pick one from the list
                 </p>
               </div>
               <button
                 id="removeOrgBtn"
                 type="button"
-                class="hidden text-[11px] uppercase text-[#ff8a8a] hover:text-[#ff6b6b] border border-[#ff6b6b]/30 hover:border-[#ff6b6b] bg-[#ff6b6b]/5 px-4 py-2.5 cursor-pointer transition-colors"
+                class="hidden btn-danger-soft"
                 data-org-id=""
               >
                 Remove organization
               </button>
-            </div>
+            </section>
 
-            <div class="relative border border-white/10 bg-[#020203]">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-              ></span>
-
-              <div
-                class="flex items-center justify-between px-6 py-4 border-b border-white/10"
-              >
+            <section class="panel pb-4">
+              <div class="panel-head">
                 <h3
-                  class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+                  class="text-xl font-semibold tracking-[-0.5px] text-[#3d3d3d]"
                 >
                   Members
                 </h3>
-                <span
-                  id="memberCount"
-                  class="text-[11px] uppercase text-white/40"
-                  >—</span
-                >
+                <span id="memberCount" class="count-chip">—</span>
               </div>
 
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm min-w-[420px]">
+              <div class="table-wrap">
+                <table class="data-table">
                   <thead>
-                    <tr
-                      class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
-                    >
-                      <th class="px-6 py-3.5 font-normal">/ Person</th>
-                      <th class="px-6 py-3.5 font-normal"></th>
+                    <tr>
+                      <th>Person</th>
+                      <th></th>
                     </tr>
                   </thead>
-                  <tbody
-                    id="membersTableBody"
-                    class="divide-y divide-white/10"
-                  ></tbody>
+                  <tbody id="membersTableBody"></tbody>
                 </table>
               </div>
 
-              <div
-                id="membersEmptyState"
-                class="px-6 py-12 text-center border-t border-white/10"
-              >
-                <p id="membersEmptyTitle" class="text-sm text-white/60">
+              <div id="membersEmptyState">
+                <p
+                  id="membersEmptyTitle"
+                  class="text-sm font-medium text-[#3d3d3d]"
+                >
                   No organization selected
                 </p>
-                <p id="membersEmptyText" class="text-[11px] text-white/40 mt-2">
-                  / Click an organization on the left to view its members.
+                <p
+                  id="membersEmptyText"
+                  class="text-[13px] text-[#6f6f6f] mt-2"
+                >
+                  Click an organization on the left to view its members.
                 </p>
               </div>
-            </div>
+            </section>
 
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
+            <section class="panel p-8">
               <h3
-                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+                class="text-xl tracking-[-0.5px] text-[#3d3d3d] mb-2 font-semibold"
               >
-                Add a <span class="text-[#feff7c]">person</span>
+                Add a person
               </h3>
-              <p class="text-white/60 text-xs leading-5 mb-6">
-                / Creates a new member and emails them a temporary password.
+              <p class="text-[13px] leading-5 text-[#6f6f6f] mb-8">
+                Creates a new member and emails them a temporary password.
               </p>
 
               <form
                 id="addMemberForm"
-                class="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-4 items-end"
+                class="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-6 items-end"
               >
                 <div>
-                  <label
-                    for="memberName"
-                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                    >Name</label
-                  >
+                  <label for="memberName" class="field-label">Name</label>
                   <input
                     type="text"
                     id="memberName"
                     name="memberName"
                     placeholder="Jane Doe"
-                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    class="field"
                     required
                   />
                 </div>
                 <div>
-                  <label
-                    for="memberEmail"
-                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                    >Email</label
-                  >
+                  <label for="memberEmail" class="field-label">Email</label>
                   <input
                     type="email"
                     id="memberEmail"
                     name="memberEmail"
                     placeholder="jane@company.com"
-                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                    class="field"
                     required
                   />
                 </div>
-                <button
-                  type="submit"
-                  id="addMemberBtn"
-                  class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] px-6 py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-                >
+                <button type="submit" id="addMemberBtn" class="btn-primary">
                   Add person
                 </button>
               </form>
-            </div>
+            </section>
           </div>
         </div>
       </main>
@@ -627,9 +895,10 @@
 
     <div
       id="toast"
-      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 transition-[top] duration-400 ease-out z-[1001]"
     ></div>
 
+    <!-- Confirm modal -->
     <div
       id="confirmModal"
       class="hd-modal"
@@ -655,16 +924,17 @@
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="square"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
                 <path d="M12 3l10 18H2z" />
                 <path d="M12 10v5M12 18v.5" />
               </svg>
             </div>
             <div class="hd-head-text">
-              <p class="hd-eyebrow">/ Confirm action</p>
+              <p class="hd-eyebrow">Confirm action</p>
               <h2 id="confirmModalTitle" class="hd-title">
-                <span id="confirmTitleMain" style="color: inherit">Remove</span>
+                <span id="confirmTitleMain">Remove</span>
                 <span id="confirmTitleAccent">item?</span>
               </h2>
               <p id="confirmModalOwner" class="hd-org"></p>
@@ -700,5 +970,6 @@
     </div>
 
     <script type="module" src="./js/admin-organizations.js"></script>
+    <script type="module" src="./js/utils.js"></script>
   </body>
 </html>

@@ -3,15 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API Keys · HelpDesk Pro</title>
+    <title>API Keys · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --amber: #9a6a1f;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
       #appRoot {
         transition: filter 220ms ease;
       }
@@ -19,6 +55,389 @@
         filter: blur(5px);
       }
 
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--raised-sm);
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* ---------- Segmented switch (Organizations / Single users) ---------- */
+      .seg-wrap {
+        display: inline-flex;
+        gap: 6px;
+        padding: 6px;
+        border-radius: 9999px;
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+      }
+      .seg {
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: transparent;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .seg:hover {
+        color: var(--ink-strong);
+      }
+      .seg[aria-pressed="true"] {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+
+      /* ---------- Panels ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+
+      /* ---------- Table ---------- */
+      .table-wrap {
+        margin: 0 14px;
+        overflow-x: auto;
+      }
+      .keys-table {
+        width: 100%;
+        min-width: 780px;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+      }
+      .keys-table thead th {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+      }
+      .keys-table thead th:first-child {
+        border-radius: 9999px 0 0 9999px;
+        padding-left: 26px;
+      }
+      .keys-table thead th:last-child {
+        border-radius: 0 9999px 9999px 0;
+      }
+      .keys-table tbody td {
+        padding: 18px;
+        color: var(--ink);
+        vertical-align: middle;
+      }
+      .keys-table tbody td:first-child {
+        padding-left: 26px;
+        font-weight: 500;
+        color: var(--ink-strong);
+      }
+      .keys-table tbody tr + tr td {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+
+      /* Fallback so rows injected by admin-api.js with the old dark-theme
+         utility classes still read correctly on the light surface. */
+      #apiKeysTableBody * {
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      #apiKeysTableBody [class*="text-white"] {
+        color: var(--ink);
+      }
+      #apiKeysTableBody [class*="text-white/4"],
+      #apiKeysTableBody [class*="text-white/3"],
+      #apiKeysTableBody [class*="text-white/5"] {
+        color: var(--muted);
+      }
+
+      /* Tier + status badges (any span the JS renders with a border/bg) */
+      #apiKeysTableBody span[class*="border"],
+      #apiKeysTableBody span[class*="bg-"] {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+      }
+      /* yellow / green / "active" style badges -> blue pill */
+      #apiKeysTableBody span[class*="feff7c"],
+      #apiKeysTableBody span[class*="green"],
+      #apiKeysTableBody span[class*="emerald"] {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      /* red / "revoked" style badges -> inset with red text */
+      #apiKeysTableBody span[class*="red"],
+      #apiKeysTableBody span[class*="ff6b6b"] {
+        background: var(--surface);
+        color: var(--red);
+        box-shadow: var(--inset-sm);
+      }
+      /* Status dot: a span nested inside a badge. Must stay a small circle
+         that takes the badge's text colour (white on active, red on revoked). */
+      #apiKeysTableBody span[class] > span,
+      #apiKeysTableBody span > span[class],
+      #apiKeysTableBody .status-pill > span {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 7px;
+        height: 7px;
+        min-width: 7px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: none;
+      }
+      /* plain coloured text (no badge box) */
+      #apiKeysTableBody [class*="text-[#feff7c]"],
+      #apiKeysTableBody [class*="text-green"],
+      #apiKeysTableBody [class*="text-emerald"] {
+        color: var(--blue-ink);
+      }
+      #apiKeysTableBody [class*="text-red"],
+      #apiKeysTableBody [class*="text-[#ff6b6b]"] {
+        color: var(--red);
+      }
+
+      /* Revoke (and any other row action) */
+      #apiKeysTableBody button {
+        padding: 8px 18px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--red);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+        transition: box-shadow 160ms ease;
+      }
+      #apiKeysTableBody button:hover {
+        color: var(--red);
+        background: var(--surface);
+      }
+      #apiKeysTableBody button:active {
+        box-shadow: var(--inset-sm);
+      }
+      #apiKeysTableBody button:disabled {
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+        cursor: not-allowed;
+      }
+      #apiKeysTableBody code,
+      #apiKeysTableBody .font-mono {
+        font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+        font-size: 12px;
+      }
+
+      /* Reusable pills / row actions for the JS-rendered rows */
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        background: var(--surface);
+      }
+      .status-pill > span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .status-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      .status-revoked {
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+      .btn-danger-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--red);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+      }
+      .btn-danger-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Form ---------- */
+      .field-label {
+        display: block;
+        margin-bottom: 10px;
+        padding-left: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .field {
+        width: 100%;
+        padding: 14px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: var(--inset-sm);
+      }
+      .field::placeholder {
+        color: #9a9a9a;
+      }
+      select.field {
+        cursor: pointer;
+      }
+
+      /* ---------- Toast ---------- */
+      #toast {
+        background: var(--surface);
+        color: var(--blue-ink);
+        border-radius: 9999px;
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised);
+      }
+
+      /* ---------- Modals ---------- */
       .hd-modal {
         position: fixed;
         inset: 0;
@@ -28,34 +447,32 @@
         justify-content: center;
         padding: 24px;
         overflow-y: auto;
-        font-family: "Geist Mono", monospace;
-        color: #fff;
+        font-family: "Montserrat", system-ui, sans-serif;
+        color: var(--ink);
       }
       .hd-modal.is-open {
         display: flex;
       }
-
       .hd-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(4, 4, 6, 0.6);
-        -webkit-backdrop-filter: blur(14px) saturate(120%);
-        backdrop-filter: blur(14px) saturate(120%);
+        background: rgba(224, 224, 224, 0.55);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
         opacity: 0;
         transition: opacity 220ms ease;
       }
       .hd-modal.is-visible .hd-backdrop {
         opacity: 1;
       }
-
       .hd-panel {
         position: relative;
         width: 100%;
-        max-width: 460px;
+        max-width: 480px;
         margin: auto;
-        background: #020203;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
         opacity: 0;
         transform: translateY(14px) scale(0.98);
         transition:
@@ -66,68 +483,30 @@
         opacity: 1;
         transform: none;
       }
-      .hd-panel::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: radial-gradient(
-          rgba(255, 255, 255, 0.04) 1px,
-          transparent 1px
-        );
-        background-size: 7px 7px;
-        pointer-events: none;
-      }
-
+      /* Corner marks from the old design are no longer used */
       .hd-corner {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border: 0 solid #feff7c;
+        display: none;
       }
-      .hd-corner.tl {
-        top: -1px;
-        left: -1px;
-        border-top-width: 1px;
-        border-left-width: 1px;
-      }
-      .hd-corner.tr {
-        top: -1px;
-        right: -1px;
-        border-top-width: 1px;
-        border-right-width: 1px;
-      }
-      .hd-corner.bl {
-        bottom: -1px;
-        left: -1px;
-        border-bottom-width: 1px;
-        border-left-width: 1px;
-      }
-      .hd-corner.br {
-        bottom: -1px;
-        right: -1px;
-        border-bottom-width: 1px;
-        border-right-width: 1px;
-      }
-
       .hd-inner {
         position: relative;
-        padding: 28px;
+        padding: 32px;
       }
-
       .hd-head {
         display: flex;
         align-items: flex-start;
         gap: 16px;
       }
       .hd-icon {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #feff7c;
-        color: #434302;
+        border-radius: 50%;
+        background: var(--surface);
+        color: var(--blue-ink);
+        box-shadow: var(--raised-sm);
       }
       .hd-head-text {
         flex: 1;
@@ -135,26 +514,25 @@
       }
       .hd-eyebrow {
         margin: 0 0 4px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: -0.2px;
-        color: #feff7c;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
       }
       .hd-title {
         margin: 0;
-        font-family: "Geist Pixel", sans-serif;
-        font-size: 28px;
-        line-height: 1.1;
+        font-size: 26px;
+        line-height: 1.15;
         letter-spacing: -1px;
         font-weight: 400;
+        color: var(--ink-strong);
       }
       .hd-title span {
-        color: #feff7c;
+        font-weight: 600;
       }
       .hd-org {
         margin: 6px 0 0;
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.4);
+        font-size: 13px;
+        color: var(--muted);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -162,108 +540,116 @@
       .hd-org:empty {
         display: none;
       }
-
       .hd-close {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
+        border: 0;
+        border-radius: 50%;
+        background: var(--surface);
+        color: var(--ink);
         font-family: inherit;
         font-size: 13px;
         cursor: pointer;
+        box-shadow: var(--raised-xs);
         transition:
-          color 150ms ease,
-          border-color 150ms ease;
+          box-shadow 160ms ease,
+          color 160ms ease;
       }
       .hd-close:hover {
-        color: #feff7c;
-        border-color: rgba(254, 255, 124, 0.5);
+        color: var(--blue-ink);
+      }
+      .hd-close:active {
+        box-shadow: var(--inset-sm);
       }
 
       .hd-notice {
         display: flex;
         gap: 12px;
         margin-top: 24px;
-        padding: 12px 16px;
-        font-size: 12px;
+        padding: 14px 20px;
+        border-radius: 22px;
+        font-size: 13px;
         line-height: 20px;
-        color: #ffb347;
-        background: rgba(255, 179, 71, 0.1);
-        border: 1px solid rgba(255, 179, 71, 0.3);
+        color: var(--amber);
+        box-shadow: var(--inset-sm);
+      }
+      .hd-notice > span:first-child {
+        font-weight: 700;
       }
 
       .hd-label {
-        margin: 24px 0 8px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: -0.2px;
-        color: rgba(255, 255, 255, 0.6);
+        margin: 24px 0 10px 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
       }
-
       .hd-keybox {
         display: flex;
         align-items: stretch;
-        background: #080809;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 22px;
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+        overflow: hidden;
       }
       .hd-key {
         flex: 1;
         min-width: 0;
-        padding: 16px;
-        font-family: "Geist Mono", monospace;
-        font-size: 14px;
+        padding: 16px 20px;
+        font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+        font-size: 13px;
         line-height: 22px;
-        color: #fff;
+        color: var(--ink-strong);
         word-break: break-all;
         user-select: all;
       }
       .hd-toggle {
         flex-shrink: 0;
-        padding: 0 16px;
+        padding: 0 20px;
         background: transparent;
         border: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--blue-ink);
         font-family: inherit;
-        font-size: 11px;
-        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 600;
         cursor: pointer;
-        transition: color 150ms ease;
       }
       .hd-toggle:hover {
-        color: #feff7c;
+        color: var(--ink-strong);
       }
 
       .hd-copy {
         display: block;
         width: 100%;
-        margin-top: 12px;
+        margin-top: 16px;
         padding: 14px;
-        background: #feff7c;
         border: 0;
-        color: #434302;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
         font-family: inherit;
         font-size: 14px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
+        font-weight: 600;
         cursor: pointer;
-        transition: background 150ms ease;
+        box-shadow: var(--raised-sm);
+        transition:
+          background 160ms ease,
+          box-shadow 160ms ease;
       }
       .hd-copy:hover {
-        background: #ffff47;
+        background: var(--blue-ink);
+      }
+      .hd-copy:active {
+        box-shadow: var(--inset-sm);
       }
       .hd-copy.hd-danger {
-        background: #ff6b6b;
-        color: #2a0505;
+        background: var(--red);
       }
       .hd-copy.hd-danger:hover {
-        background: #ff8a8a;
+        background: #bf4e48;
       }
       .hd-copy:disabled,
       .hd-done:disabled {
@@ -272,46 +658,39 @@
       }
 
       .hd-hint {
-        margin: 12px 0 0;
+        margin: 14px 0 0 6px;
         min-height: 16px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: -0.2px;
-        color: rgba(255, 255, 255, 0.4);
+        font-size: 12px;
+        color: var(--muted);
         transition: color 150ms ease;
       }
       .hd-hint.is-warn {
-        color: #ffb347;
+        color: var(--amber);
       }
 
       .hd-done {
         display: block;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 18px;
         padding: 14px;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.7);
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
         font-family: inherit;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
+        box-shadow: var(--raised-xs);
         transition:
-          color 150ms ease,
-          border-color 150ms ease;
+          box-shadow 160ms ease,
+          color 160ms ease;
       }
       .hd-done:hover {
-        color: #feff7c;
-        border-color: #feff7c;
+        color: var(--blue-ink);
       }
-
-      .hd-copy:focus-visible,
-      .hd-done:focus-visible,
-      .hd-toggle:focus-visible,
-      .hd-close:focus-visible {
-        outline: 1px solid #feff7c;
-        outline-offset: 2px;
+      .hd-done:active {
+        box-shadow: var(--inset-sm);
       }
 
       @keyframes hd-shake {
@@ -336,15 +715,21 @@
         animation: hd-shake 0.35s ease-in-out;
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: 639px) {
+        .sidebar {
+          border-radius: 28px;
+        }
         .hd-modal {
           padding: 16px;
         }
         .hd-inner {
-          padding: 22px;
+          padding: 24px;
         }
         .hd-title {
-          font-size: 24px;
+          font-size: 22px;
+        }
+        .table-wrap {
+          margin: 0 8px;
         }
       }
 
@@ -352,6 +737,9 @@
         .hd-shake {
           animation: none;
         }
+        .nav-item,
+        .btn-soft,
+        .btn-primary,
         .hd-backdrop,
         .hd-panel,
         #appRoot {
@@ -361,230 +749,160 @@
     </style>
     <script src="./js/auth.js"></script>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div id="appRoot" class="flex min-h-screen flex-col lg:flex-row">
+  <body class="antialiased">
+    <div
+      id="appRoot"
+      class="flex min-h-screen flex-col lg:flex-row gap-6 p-4 sm:p-6 lg:p-8"
+    >
+      <!-- Sidebar -->
       <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+        class="sidebar w-full lg:w-64 shrink-0 flex flex-col p-6 lg:sticky lg:top-8 lg:self-start lg:min-h-[calc(100vh-4rem)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+        <div class="flex items-center gap-3 mb-8 lg:mb-10">
+          <div class="brand-mark">CK</div>
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0"
         >
-          <a
-            href="admin-dashboard.html"
-            id="navDashboard"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-dashboard.html" id="navDashboard" class="nav-item"
             >Dashboard</a
           >
-          <a
-            href="admin-agents.html"
-            id="navAgents"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
-            >Agents</a
-          >
+          <a href="admin-agents.html" id="navAgents" class="nav-item">Agents</a>
           <a
             href="admin-organizations.html"
             id="navOrganizations"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="nav-item"
             >Organizations</a
           >
           <a
             href="admin-api-keys.html"
             id="navApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >API Keys</a
           >
-          <a
-            href="agent-tickets.html"
-            id="navAllTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="agent-tickets.html" id="navAllTickets" class="nav-item"
             >All Tickets</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-          >
-            RM
+        <div class="mt-6 lg:mt-auto pt-6 flex items-center gap-3">
+          <div class="avatar" id="userAvatar">RM</div>
+          <div class="min-w-0 leading-tight">
+            <p
+              id="adminName"
+              class="text-sm font-medium text-[#3d3d3d] truncate"
+            >
+              Rita Mehta
+            </p>
+            <p class="text-[12px] text-[#6f6f6f] mt-0.5">Admin</p>
           </div>
-          <div class="text-sm leading-tight">
-            <p id="adminName">Rita Mehta</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Admin</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
+          <button id="logoutBtn" type="button" class="btn-soft ml-auto">
             Log out
           </button>
         </div>
       </aside>
 
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="mb-8">
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-          >
-            / Integrations
+      <!-- Main -->
+      <main class="flex-1 min-w-0 py-2 lg:py-4 lg:pr-2">
+        <div class="mb-10">
+          <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">
+            Integrations
           </p>
           <h1
-            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            class="text-3xl sm:text-4xl tracking-[-1.2px] text-[#3d3d3d] leading-tight"
           >
-            API <span class="text-[#feff7c]">keys</span>
+            <span class="font-normal">API</span>
+            <span class="font-semibold">keys</span>
           </h1>
         </div>
 
-        <div class="flex gap-2 mb-6">
-          <button
-            id="viewOrgBtn"
-            type="button"
-            aria-pressed="true"
-            class="px-4 py-2.5 text-[11px] uppercase tracking-[-0.2px] border transition-colors cursor-pointer bg-[#feff7c] text-[#434302] border-[#feff7c]"
-          >
+        <div class="seg-wrap mb-8" role="group" aria-label="Key owner type">
+          <button id="viewOrgBtn" type="button" aria-pressed="true" class="seg">
             Organizations
           </button>
           <button
             id="viewUserBtn"
             type="button"
             aria-pressed="false"
-            class="px-4 py-2.5 text-[11px] uppercase tracking-[-0.2px] border transition-colors cursor-pointer bg-transparent text-white/60 border-white/10 hover:text-white hover:border-white/30"
+            class="seg"
           >
             Single users
           </button>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
-          <div
-            class="xl:col-span-2 relative border border-white/10 bg-[#020203]"
-          >
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-            ></span>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm min-w-[820px]">
+          <!-- Keys table -->
+          <section class="panel xl:col-span-2 pb-4 pt-4 min-w-0">
+            <div class="table-wrap">
+              <table class="keys-table">
                 <thead>
-                  <tr
-                    class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
-                  >
-                    <th id="keyOwnerHead" class="px-6 py-3.5 font-normal">
-                      / Organization
-                    </th>
-                    <th class="px-6 py-3.5 font-normal">/ Key</th>
-                    <th class="px-6 py-3.5 font-normal">/ Tier</th>
-                    <th class="px-6 py-3.5 font-normal">/ Usage today</th>
-                    <th class="px-6 py-3.5 font-normal">/ Status</th>
-                    <th class="px-6 py-3.5 font-normal"></th>
+                  <tr>
+                    <th id="keyOwnerHead">Organization</th>
+                    <th>Key</th>
+                    <th>Tier</th>
+                    <th>Usage today</th>
+                    <th>Status</th>
+                    <th></th>
                   </tr>
                 </thead>
-                <tbody
-                  id="apiKeysTableBody"
-                  class="divide-y divide-white/10"
-                ></tbody>
+                <tbody id="apiKeysTableBody"></tbody>
               </table>
             </div>
-          </div>
+          </section>
 
-          <div class="relative border border-white/10 bg-[#020203] p-6">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-
+          <!-- Create key -->
+          <section class="panel p-8">
             <h2
-              class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+              class="text-xl tracking-[-0.5px] text-[#3d3d3d] mb-2 font-semibold"
             >
-              Create a <span class="text-[#feff7c]">new key</span>
+              Create a new key
             </h2>
-            <p class="text-white/60 text-xs leading-5 mb-6">
-              / Each key belongs to one organization and is rate-limited by its
+            <p class="text-[13px] leading-5 text-[#6f6f6f] mb-8">
+              Each key belongs to one organization and is rate-limited by its
               tier.
             </p>
 
-            <form id="createApiKeyForm" class="space-y-4">
+            <form id="createApiKeyForm" class="space-y-6">
               <div>
-                <label
-                  for="keyOrgName"
-                  class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Organization name - Required</label
+                <label for="keyOrgName" class="field-label"
+                  >Organization name (required)</label
                 >
                 <input
                   type="text"
                   id="keyOrgName"
                   name="keyOrgName"
                   placeholder="Acme Inc."
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                  class="field"
                 />
               </div>
               <div>
-                <label
-                  for="keyTier"
-                  class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Tier</label
-                >
-                <select
-                  id="keyTier"
-                  name="keyTier"
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors cursor-pointer"
-                >
+                <label for="keyTier" class="field-label">Tier</label>
+                <select id="keyTier" name="keyTier" class="field">
                   <option value="free">Free — 60 req/min</option>
                   <option value="pro">Pro — 600 req/min</option>
                 </select>
               </div>
-              <button
-                type="submit"
-                id="createApiKeyBtn"
-                class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-              >
+              <button type="submit" id="createApiKeyBtn" class="btn-primary">
                 Generate key
               </button>
             </form>
-          </div>
+          </section>
         </div>
       </main>
     </div>
 
     <div
       id="toast"
-      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 transition-[top] duration-400 ease-out z-[1001]"
     ></div>
 
+    <!-- New key modal -->
     <div
       id="apiKeyModal"
       class="hd-modal"
@@ -611,14 +929,15 @@
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="square"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
                 <circle cx="8" cy="15" r="4" />
                 <path d="M11 12l9-9M16 7l3 3M14 9l2 2" />
               </svg>
             </div>
             <div class="hd-head-text">
-              <p class="hd-eyebrow">/ New API key</p>
+              <p class="hd-eyebrow">New API key</p>
               <h2 id="apiKeyModalTitle" class="hd-title">
                 Key <span>generated</span>
               </h2>
@@ -642,7 +961,7 @@
             >
           </div>
 
-          <p class="hd-label">/ Your API key</p>
+          <p class="hd-label">Your API key</p>
 
           <div class="hd-keybox">
             <code id="apiKeyModalValue" class="hd-key"></code>
@@ -661,7 +980,7 @@
           </button>
 
           <p id="apiKeyModalHint" class="hd-hint" aria-live="polite">
-            / Store it somewhere safe, like a password manager.
+            Store it somewhere safe, like a password manager.
           </p>
 
           <button id="apiKeyModalDoneBtn" type="button" class="hd-done">
@@ -671,6 +990,7 @@
       </div>
     </div>
 
+    <!-- Revoke modal -->
     <div
       id="revokeModal"
       class="hd-modal"
@@ -688,7 +1008,7 @@
 
         <div class="hd-inner">
           <div class="hd-head">
-            <div class="hd-icon" aria-hidden="true">
+            <div class="hd-icon" aria-hidden="true" style="color: var(--red)">
               <svg
                 width="20"
                 height="20"
@@ -696,14 +1016,15 @@
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="square"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
                 <path d="M12 3l10 18H2z" />
                 <path d="M12 10v5M12 18v.5" />
               </svg>
             </div>
             <div class="hd-head-text">
-              <p class="hd-eyebrow">/ Confirm action</p>
+              <p class="hd-eyebrow">Confirm action</p>
               <h2 id="revokeModalTitle" class="hd-title">
                 Revoke <span>key?</span>
               </h2>
@@ -744,5 +1065,6 @@
     </div>
 
     <script type="module" src="./js/admin-api.js"></script>
+    <script type="module" src="./js/utils.js"></script>
   </body>
 </html>

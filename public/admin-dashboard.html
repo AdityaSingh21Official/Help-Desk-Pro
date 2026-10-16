@@ -3,315 +3,450 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard · HelpDesk Pro</title>
+    <title>Dashboard · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Stat cards ---------- */
+      .stat-card {
+        position: relative;
+        padding: 24px;
+        border-radius: 28px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .stat-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .stat-value {
+        margin-top: 14px;
+        font-size: 44px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: -1.5px;
+        color: var(--ink-strong);
+      }
+      .stat-value.is-alert {
+        color: var(--red);
+      }
+      .stat-value.is-blue {
+        color: var(--blue-ink);
+      }
+      .stat-well {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--inset-sm);
+      }
+      .stat-well::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--dot, var(--blue));
+      }
+
+      /* ---------- Tickets panel ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 32px 20px;
+      }
+
+      .ticket-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin: 0 14px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        transition: box-shadow 160ms ease;
+      }
+      .ticket-row + .ticket-row {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      .ticket-row:hover {
+        box-shadow: var(--inset-sm);
+      }
+      .ticket-row:hover + .ticket-row {
+        box-shadow: none;
+      }
+
+      .priority-bar {
+        width: 6px;
+        height: 38px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+        box-shadow: var(--raised-xs);
+      }
+      .ticket-id {
+        width: 84px;
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .status-pill > span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .status-open {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      .status-progress {
+        background: var(--surface);
+        color: var(--blue-ink);
+        box-shadow: var(--raised-xs);
+      }
+      .status-resolved {
+        background: var(--surface);
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      @media (max-width: 639px) {
+        .panel-head {
+          padding: 22px 22px 16px;
+        }
+        .ticket-row {
+          margin: 0 8px;
+          padding: 14px 12px;
+          gap: 12px;
+        }
+        .sidebar {
+          border-radius: 28px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nav-item,
+        .btn-soft,
+        .ticket-row {
+          transition: none;
+        }
+      }
+    </style>
     <script src="./js/auth.js"></script>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div class="flex min-h-screen flex-col lg:flex-row">
+  <body class="antialiased">
+    <div class="flex min-h-screen flex-col lg:flex-row gap-6 p-4 sm:p-6 lg:p-8">
       <!-- Sidebar -->
       <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+        class="sidebar w-full lg:w-64 shrink-0 flex flex-col p-6 lg:sticky lg:top-8 lg:self-start lg:min-h-[calc(100vh-4rem)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+        <div class="flex items-center gap-3 mb-8 lg:mb-10">
+          <div class="brand-mark">CK</div>
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0"
         >
           <a
             href="admin-dashboard.html"
             id="navDashboard"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >Dashboard</a
           >
-          <a
-            href="admin-agents.html"
-            id="navAgents"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
-            >Agents</a
-          >
+          <a href="admin-agents.html" id="navAgents" class="nav-item">Agents</a>
           <a
             href="admin-organizations.html"
             id="navOrganizations"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="nav-item"
             >Organizations</a
           >
-          <a
-            href="admin-api-keys.html"
-            id="navApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-api-keys.html" id="navApiKeys" class="nav-item"
             >API Keys</a
           >
-          <a
-            href="agent-tickets.html"
-            id="navAllTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="agent-tickets.html" id="navAllTickets" class="nav-item"
             >All Tickets</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-            id="userAvatar"
-          >
-            RM
+        <div class="mt-6 lg:mt-auto pt-6 flex items-center gap-3">
+          <div class="avatar" id="userAvatar">RM</div>
+          <div class="min-w-0 leading-tight">
+            <p
+              id="adminName"
+              class="text-sm font-medium text-[#3d3d3d] truncate"
+            >
+              Rita Mehta
+            </p>
+            <p class="text-[12px] text-[#6f6f6f] mt-0.5">Admin</p>
           </div>
-          <div class="text-sm leading-tight">
-            <p id="adminName">Rita Mehta</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Admin</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
+          <button id="logoutBtn" type="button" class="btn-soft ml-auto">
             Log out
           </button>
         </div>
       </aside>
 
       <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="mb-8">
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-          >
-            / Overview
-          </p>
+      <main class="flex-1 min-w-0 py-2 lg:py-4 lg:pr-2">
+        <div class="mb-10">
+          <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">Overview</p>
           <h1
-            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            class="text-3xl sm:text-4xl tracking-[-1.2px] text-[#3d3d3d] leading-tight"
           >
-            Good morning, <span class="text-[#feff7c]">Rita</span>
+            <span class="font-normal">Good morning,</span>
+            <span class="font-semibold">Rita</span>
           </h1>
         </div>
 
         <!-- Stat cards -->
-        <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
-          <div class="relative border border-white/10 bg-[#020203] p-5">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-            <p class="text-white/60 text-[11px] uppercase tracking-[-0.2px]">
-              / Open tickets
-            </p>
-            <p
-              id="statOpenTickets"
-              class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] mt-3"
-            >
-              42
-            </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+          <div class="stat-card">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">Open tickets</p>
+            <p id="statOpenTickets" class="stat-value">42</p>
           </div>
-          <div class="relative border border-white/10 bg-[#020203] p-5">
+
+          <div class="stat-card">
             <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
+              class="stat-well"
+              style="--dot: var(--red)"
+              aria-hidden="true"
             ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-            <p class="text-white/60 text-[11px] uppercase tracking-[-0.2px]">
-              / SLA breached
-            </p>
-            <p
-              id="statSlaBreached"
-              class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] mt-3 text-[#ff6b6b]"
-            >
-              3
-            </p>
+            <p class="stat-label">SLA breached</p>
+            <p id="statSlaBreached" class="stat-value is-alert">3</p>
           </div>
-          <div class="relative border border-white/10 bg-[#020203] p-5">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-            <p class="text-white/60 text-[11px] uppercase tracking-[-0.2px]">
-              / Active agents
-            </p>
-            <p
-              id="statActiveAgents"
-              class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] mt-3"
-            >
-              8
-            </p>
+
+          <div class="stat-card">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">Active agents</p>
+            <p id="statActiveAgents" class="stat-value">8</p>
           </div>
-          <div class="relative border border-white/10 bg-[#020203] p-5">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-            <p class="text-white/60 text-[11px] uppercase tracking-[-0.2px]">
-              / Avg first response
-            </p>
-            <p
-              id="statAvgResponse"
-              class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] mt-3 text-[#feff7c]"
-            >
-              4m
-            </p>
+
+          <div class="stat-card">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">Avg first response</p>
+            <p id="statAvgResponse" class="stat-value is-blue">4m</p>
           </div>
         </div>
 
         <!-- Recent tickets -->
-        <div class="relative border border-white/10 bg-[#020203]">
-          <span
-            class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-          ></span>
-
-          <div
-            class="flex items-center justify-between px-6 py-5 border-b border-white/10"
-          >
-            <h2 class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px]">
+        <section class="panel pb-4">
+          <div class="panel-head">
+            <h2 class="text-xl font-semibold tracking-[-0.5px] text-[#3d3d3d]">
               Recent tickets
             </h2>
-            <a
-              href="agent-tickets.html"
-              class="text-[#feff7c] hover:text-[#ffff47] text-xs uppercase tracking-[-0.2px] transition-colors"
-              >View all →</a
-            >
+            <a href="agent-tickets.html" class="btn-soft">View all</a>
           </div>
 
-          <div id="recentTicketsList" class="divide-y divide-white/10">
-            <!-- Ticket row -->
-            <div
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
-              data-ticket-id="1042"
-            >
-              <span class="priority-bar w-1 h-10 bg-[#ff6b6b] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1042</span
-              >
+          <div id="recentTicketsList">
+            <div class="ticket-row" data-ticket-id="1042">
+              <span class="priority-bar bg-[#d4605a]"></span>
+              <span class="ticket-id hidden sm:block">#TCK-1042</span>
               <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">
+                <p class="text-sm font-medium text-[#3d3d3d] truncate">
                   Payment webhook failing intermittently
                 </p>
-                <p class="text-[11px] text-white/40 mt-1">Sana Vora · 2h ago</p>
+                <p class="text-xs text-[#6f6f6f] mt-1">Sana Vora · 2h ago</p>
               </div>
+              <span class="status-pill status-open"><span></span>Open</span>
               <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] shrink-0"
-              >
-                <span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span> Open
-              </span>
-              <span
-                class="text-xs text-white/40 w-24 text-right shrink-0 hidden md:block"
+                class="text-xs text-[#6f6f6f] w-24 text-right shrink-0 hidden md:block"
                 >Unassigned</span
               >
             </div>
 
-            <div
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
-              data-ticket-id="1041"
-            >
-              <span class="priority-bar w-1 h-10 bg-[#feff7c] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1041</span
-              >
+            <div class="ticket-row" data-ticket-id="1041">
+              <span class="priority-bar bg-[#4f86c6]"></span>
+              <span class="ticket-id hidden sm:block">#TCK-1041</span>
               <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">Unable to export report as CSV</p>
-                <p class="text-[11px] text-white/40 mt-1">
-                  Kabir Nair · 5h ago
+                <p class="text-sm font-medium text-[#3d3d3d] truncate">
+                  Unable to export report as CSV
                 </p>
+                <p class="text-xs text-[#6f6f6f] mt-1">Kabir Nair · 5h ago</p>
               </div>
-              <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] shrink-0"
+              <span class="status-pill status-progress"
+                ><span></span>In progress</span
               >
-                <span class="w-1.5 h-1.5 bg-[#feff7c]"></span> In progress
-              </span>
               <span
-                class="text-xs text-white/40 w-24 text-right shrink-0 hidden md:block"
+                class="text-xs text-[#6f6f6f] w-24 text-right shrink-0 hidden md:block"
                 >Aarav S.</span
               >
             </div>
 
-            <div
-              class="ticket-row flex items-center gap-4 px-6 py-4 hover:bg-white/[0.03] transition-colors"
-              data-ticket-id="1039"
-            >
-              <span class="priority-bar w-1 h-10 bg-[#41412b] shrink-0"></span>
-              <span class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                >#TCK-1039</span
-              >
+            <div class="ticket-row" data-ticket-id="1039">
+              <span class="priority-bar bg-[#b5b5b5]"></span>
+              <span class="ticket-id hidden sm:block">#TCK-1039</span>
               <div class="flex-1 min-w-0">
-                <p class="text-sm truncate">Feature request: dark mode</p>
-                <p class="text-[11px] text-white/40 mt-1">
-                  Meera Iyer · 1d ago
+                <p class="text-sm font-medium text-[#3d3d3d] truncate">
+                  Feature request: dark mode
                 </p>
+                <p class="text-xs text-[#6f6f6f] mt-1">Meera Iyer · 1d ago</p>
               </div>
-              <span
-                class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] shrink-0"
+              <span class="status-pill status-resolved"
+                ><span></span>Resolved</span
               >
-                <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span> Resolved
-              </span>
               <span
-                class="text-xs text-white/40 w-24 text-right shrink-0 hidden md:block"
+                class="text-xs text-[#6f6f6f] w-24 text-right shrink-0 hidden md:block"
                 >Priya K.</span
               >
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
+
+    <script type="module" src="./js/utils.js"></script>
   </body>
-  <script type="module" src="./js/utils.js"></script>
 </html>

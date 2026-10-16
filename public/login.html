@@ -3,224 +3,431 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign in · HelpDesk Pro</title>
+    <title>Sign in · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Layout ---------- */
+      .auth {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 16px;
+      }
+      @media (min-width: 640px) {
+        .auth {
+          padding: 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .auth {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 32px;
+          padding: 32px;
+        }
+      }
+
+      /* ---------- Brand panel (desktop) ---------- */
+      .brand-panel {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 48px;
+        padding: 56px;
+        border-radius: 36px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      @media (min-width: 1024px) {
+        .brand-panel {
+          display: flex;
+        }
+      }
+      .brand-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 40px;
+        padding: 9px 18px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+      .status-chip i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .brand-title {
+        margin-top: 28px;
+        max-width: 460px;
+        font-size: 48px;
+        line-height: 1.08;
+        letter-spacing: -2px;
+        font-weight: 400;
+        color: var(--ink-strong);
+      }
+      .brand-title b {
+        font-weight: 600;
+      }
+      .brand-lead {
+        margin-top: 24px;
+        max-width: 400px;
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+      }
+      .stat-card {
+        position: relative;
+        min-width: 0;
+        padding: 20px;
+        border-radius: 24px;
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+      .stat-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .stat-value {
+        margin-top: 10px;
+        font-size: 30px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: -1px;
+        color: var(--ink-strong);
+      }
+      .stat-value.is-blue {
+        color: var(--blue-ink);
+      }
+
+      /* ---------- Form side ---------- */
+      .form-side {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 0;
+      }
+      .form-wrap {
+        width: 100%;
+        max-width: 420px;
+      }
+      .mobile-mark {
+        margin-bottom: 28px;
+      }
+      @media (min-width: 1024px) {
+        .mobile-mark {
+          display: none;
+        }
+      }
+      .card {
+        padding: 32px 28px;
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      @media (min-width: 640px) {
+        .card {
+          padding: 40px;
+        }
+      }
+      .card-title {
+        font-size: 32px;
+        line-height: 1.1;
+        letter-spacing: -1.2px;
+        font-weight: 400;
+        color: var(--ink-strong);
+      }
+      .card-title b {
+        font-weight: 600;
+      }
+      .card-lead {
+        margin: 10px 0 32px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .login-error {
+        display: block;
+        margin-bottom: 24px;
+        padding: 14px 20px;
+        border-radius: 22px;
+        font-size: 13px;
+        line-height: 20px;
+        color: var(--red);
+        box-shadow: var(--inset-sm);
+      }
+      .login-error.hidden {
+        display: none;
+      }
+
+      .form-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .field-label {
+        display: block;
+        margin-bottom: 10px;
+        padding-left: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .field {
+        width: 100%;
+        padding: 14px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: var(--inset-sm);
+      }
+      .field::placeholder {
+        color: #9a9a9a;
+      }
+      .btn-primary {
+        display: block;
+        width: 100%;
+        margin-top: 8px;
+        padding: 15px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--raised-sm);
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .below {
+        margin-top: 28px;
+        text-align: center;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .below a {
+        margin-left: 4px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .below a:hover {
+        color: var(--ink-strong);
+      }
+      .below-note {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      /* ---------- Toast ---------- */
+      #toast {
+        background: var(--surface);
+        color: var(--blue-ink);
+        border-radius: 9999px;
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .status-chip i {
+          animation: none;
+        }
+        .btn-primary {
+          transition: none;
+        }
+      }
+    </style>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div class="min-h-screen flex">
-      <!-- Left dotted gutter (desktop only) -->
-      <div
-        class="hidden xl:block w-[77px] shrink-0 border-r border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
-      ></div>
+  <body class="antialiased">
+    <div class="auth">
+      <!-- Left: brand / product panel -->
+      <section class="brand-panel">
+        <div>
+          <div class="brand-mark">CK</div>
 
-      <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- Left: brand / product panel -->
-        <div
-          class="hidden lg:flex flex-col justify-between p-16 relative overflow-hidden border-r border-white/10 bg-[#0b0b06]"
-        >
-          <!-- faint dot grid -->
-          <div
-            class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:7px_7px]"
-          ></div>
+          <div class="status-chip"><i></i>All systems operational</div>
 
-          <div class="relative z-10">
-            <!-- Logo mark -->
-            <div
-              class="w-11 h-11 bg-[#feff7c] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-lg text-[#434302] mb-10"
-            >
-              HD
-            </div>
-
-            <div
-              class="inline-flex items-center gap-2 border border-white/10 bg-[#080809] px-3 py-1.5 mb-8"
-            >
-              <span class="w-1.5 h-1.5 bg-[#feff7c] animate-pulse"></span>
-              <span
-                class="text-[11px] uppercase tracking-[-0.2px] text-white/60"
-                >All systems operational</span
-              >
-            </div>
-
-            <h1
-              class="font-['Geist_Pixel',sans-serif] text-5xl leading-[1.1] tracking-[-2px] max-w-md"
-            >
-              Every ticket, tracked.
-              <span class="text-[#feff7c]">Every SLA, watched.</span>
-            </h1>
-            <p class="text-white/60 text-sm leading-6 mt-6 max-w-sm">
-              / Agents work the queue, customers track their tickets, and
-              integrators submit tickets through a rate-limited API — one
-              system, one source of truth.
-            </p>
-          </div>
-
-          <!-- Stats -->
-          <div class="relative z-10 mt-12 border border-white/10 bg-[#020203]">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-            ></span>
-
-            <div class="grid grid-cols-3 divide-x divide-white/10">
-              <div class="p-5">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-3xl tracking-[-1px]"
-                >
-                  128
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-2">
-                  / Open tickets
-                </p>
-              </div>
-              <div class="p-5">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-3xl tracking-[-1px] text-[#feff7c]"
-                >
-                  99.2%
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-2">
-                  / SLA met (30d)
-                </p>
-              </div>
-              <div class="p-5">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-3xl tracking-[-1px]"
-                >
-                  4m
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-2">
-                  / Avg first response
-                </p>
-              </div>
-            </div>
-          </div>
+          <h1 class="brand-title">
+            Every ticket, tracked. <b>Every SLA, watched.</b>
+          </h1>
+          <p class="brand-lead">
+            Agents work the queue, customers track their tickets, and
+            integrators submit tickets through a rate-limited API. One system,
+            one source of truth.
+          </p>
         </div>
 
-        <!-- Right: login form -->
-        <div class="flex items-center justify-center p-6 sm:p-8">
-          <div class="w-full max-w-sm">
-            <div
-              class="lg:hidden w-10 h-10 bg-[#feff7c] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-[#434302] mb-8"
-            >
-              HD
-            </div>
-
-            <!-- Card -->
-            <div
-              class="relative border border-white/10 bg-[#020203] p-7 sm:p-8"
-            >
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
-              <h2
-                class="font-['Geist_Pixel',sans-serif] text-3xl tracking-[-1px]"
-              >
-                Welcome <span class="text-[#feff7c]">back</span>
-              </h2>
-              <p class="text-white/60 text-sm mt-2 mb-8">
-                / Sign in to your HelpDesk Pro account.
-              </p>
-
-              <p
-                id="loginError"
-                class="hidden border border-[#ff5d5d]/30 bg-[#ff5d5d]/10 text-[#ff8a8a] text-xs px-4 py-3 mb-5"
-              >
-                That email and password don't match our records.
-              </p>
-
-              <form id="loginForm" class="space-y-5">
-                <div>
-                  <label
-                    for="email"
-                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                    >Email</label
-                  >
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="you@company.com"
-                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    for="password"
-                    class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="••••••••"
-                    class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  id="loginBtn"
-                  class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  Sign in
-                </button>
-              </form>
-            </div>
-
-            <p class="text-center text-sm text-white/60 mt-6">
-              New customer?
-              <a
-                href="signup.html"
-                id="goToSignup"
-                class="text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4 decoration-[#feff7c]/40"
-                >Create an account</a
-              >
-            </p>
-            <p class="text-center text-[11px] text-white/40 mt-3">
-              / Agents and admins are provisioned by an administrator.
-            </p>
+        <div class="stat-row">
+          <div class="stat-card">
+            <p class="stat-label">Open tickets</p>
+            <p class="stat-value">128</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">SLA met (30d)</p>
+            <p class="stat-value is-blue">99.2%</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Avg first response</p>
+            <p class="stat-value">4m</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Right dotted gutter (desktop only) -->
-      <div
-        class="hidden xl:block w-[77px] shrink-0 border-l border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
-      ></div>
+      <!-- Right: login form -->
+      <section class="form-side">
+        <div class="form-wrap">
+          <div class="brand-mark mobile-mark">CK</div>
+
+          <div class="card">
+            <h2 class="card-title">Welcome <b>back</b></h2>
+            <p class="card-lead">Sign in to your craftkel.ai account.</p>
+
+            <p id="loginError" class="login-error hidden" role="alert">
+              That email and password don't match our records.
+            </p>
+
+            <form id="loginForm" class="form-stack">
+              <div>
+                <label for="email" class="field-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="you@company.com"
+                  autocomplete="email"
+                  class="field"
+                />
+              </div>
+
+              <div>
+                <label for="password" class="field-label">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  class="field"
+                />
+              </div>
+
+              <button type="submit" id="loginBtn" class="btn-primary">
+                Sign in
+              </button>
+            </form>
+          </div>
+
+          <p class="below">
+            New customer?
+            <a href="signup.html" id="goToSignup">Create an account</a>
+          </p>
+          <p class="below-note">
+            Agents and admins are provisioned by an administrator.
+          </p>
+        </div>
+      </section>
     </div>
 
     <div
       id="toast"
-      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 transition-[top] duration-400 ease-out z-[1001]"
     ></div>
+
+    <script type="module" src="./js/index.js"></script>
   </body>
-  <script type="module" src="./js/index.js"></script>
 </html>

@@ -8,135 +8,142 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --raised:
+          9px 9px 18px rgba(150, 150, 150, 0.5),
+          -9px -9px 18px rgba(255, 255, 255, 0.92);
+        --raised-sm:
+          5px 5px 10px rgba(150, 150, 150, 0.5),
+          -5px -5px 10px rgba(255, 255, 255, 0.92);
+        --raised-xs:
+          3px 3px 6px rgba(150, 150, 150, 0.5),
+          -3px -3px 6px rgba(255, 255, 255, 0.92);
+        --inset-sm:
+          inset 3px 3px 6px rgba(150, 150, 150, 0.5),
+          inset -3px -3px 6px rgba(255, 255, 255, 0.92);
+      }
+    </style>
   </head>
   <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
+    class="antialiased min-h-screen bg-[#e0e0e0] text-[#555] font-['Montserrat',system-ui,sans-serif]"
   >
-    <div class="flex min-h-screen flex-col lg:flex-row">
-      <!-- Sidebar -->
-      <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+    <div
+      class="w-full max-w-6xl mx-auto px-4 pt-4 pb-14 sm:px-8 sm:pt-6 sm:pb-[72px]"
+    >
+      <!-- Top bar -->
+      <header
+        class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-[32px] bg-[#e0e0e0] py-3 pl-5 pr-4 [box-shadow:var(--raised)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
+        <div class="flex items-center gap-3">
+          <span
+            class="w-10 h-10 rounded-full bg-[#4f86c6] text-white flex items-center justify-center text-[13px] font-semibold [box-shadow:var(--raised-xs)]"
+            >HD</span
           >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
             >HelpDesk Pro</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          aria-label="Main"
+          class="order-3 w-full flex items-center gap-1.5 overflow-x-auto px-1 pt-1 pb-2 md:order-none md:w-auto md:overflow-visible md:p-0"
         >
           <a
             href="agent-tickets.html"
             id="navQueue"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="flex items-center whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-[#555] transition-[box-shadow,color] duration-150 hover:text-[#3d3d3d] hover:[box-shadow:var(--raised-xs)] active:[box-shadow:var(--inset-sm)]"
             >My Queue</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
+        <div class="flex items-center gap-3">
           <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
+            class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#3f74b3] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
           >
             AS
           </div>
-          <div class="text-sm leading-tight">
-            <p id="agentName">Aarav Shah</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Agent</p>
+          <div class="hidden sm:block leading-tight">
+            <p id="agentName" class="text-sm font-medium text-[#3d3d3d]">
+              Aarav Shah
+            </p>
+            <p class="text-[11px] font-medium text-[#6f6f6f] mt-0.5">Agent</p>
           </div>
           <button
             id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
+            type="button"
+            class="cursor-pointer rounded-full bg-[#e0e0e0] px-4 py-2 text-xs font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
           >
             Log out
           </button>
         </div>
-      </aside>
+      </header>
 
-      <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
+      <main class="min-w-0">
         <a
           href="agent-tickets.html"
           id="backToQueueBtn"
-          class="text-[11px] uppercase tracking-[-0.2px] text-white/60 hover:text-[#feff7c] mb-6 inline-flex items-center gap-1.5 transition-colors"
+          class="mt-10 mb-6 inline-flex items-center gap-1.5 rounded-full bg-[#e0e0e0] px-4 py-2 text-xs font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
           >← Back to queue</a
         >
 
-        <div class="flex flex-wrap items-start justify-between gap-4 mb-8">
+        <!-- Ticket heading -->
+        <div class="flex flex-wrap items-start justify-between gap-4 mb-10">
           <div>
-            <div class="flex flex-wrap items-center gap-3 mb-3">
-              <span class="text-sm text-white/40" id="ticketIdBadge"
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <span
+                class="text-sm font-medium text-[#6f6f6f]"
+                id="ticketIdBadge"
                 >#TCK-1042</span
               >
               <span
                 id="priorityBadge"
-                class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a]"
+                class="inline-flex items-center rounded-full bg-[#e0e0e0] px-4 py-1.5 text-xs font-medium text-[#d4605a] [box-shadow:var(--inset-sm)]"
                 >Critical priority</span
               >
             </div>
             <h1
               id="ticketSubjectHeading"
-              class="font-['Geist_Pixel',sans-serif] text-2xl sm:text-3xl tracking-[-1.5px] max-w-xl"
+              class="max-w-xl text-[clamp(28px,4vw,44px)] leading-[1.1] tracking-[-1.5px] font-semibold text-[#3d3d3d]"
             >
               Payment webhook failing intermittently
             </h1>
           </div>
           <span
             id="currentStatusPill"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] shrink-0"
+            class="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#e0e0e0] px-4 py-2 text-xs font-medium text-[#d4605a] [box-shadow:var(--inset-sm)]"
           >
-            <span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span> Open
+            <span class="h-[7px] w-[7px] rounded-full bg-[#d4605a]"></span> Open
           </span>
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
           <!-- Main column -->
-          <div class="xl:col-span-2 space-y-6 min-w-0">
+          <div class="xl:col-span-2 space-y-8 min-w-0">
             <!-- Description -->
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
-              <div class="flex items-center gap-3 mb-4">
+            <div
+              class="rounded-[32px] bg-[#e0e0e0] p-6 sm:p-8 [box-shadow:var(--raised)]"
+            >
+              <div class="flex items-center gap-3 mb-5">
                 <div
-                  class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs shrink-0"
+                  class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#3f74b3] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
                 >
                   SV
                 </div>
                 <div>
-                  <p class="text-sm">Sana Vora</p>
-                  <p class="text-[11px] text-white/40 mt-0.5">
+                  <p class="text-sm font-medium text-[#3d3d3d]">Sana Vora</p>
+                  <p class="text-[11px] text-[#6f6f6f] mt-0.5">
                     Opened 2 hours ago
                   </p>
                 </div>
               </div>
               <p
                 id="ticketDescriptionText"
-                class="text-sm text-white/60 leading-6"
+                class="text-sm text-[#6f6f6f] leading-7"
               >
                 We're seeing our payment webhook fail roughly 1 in 20 times with
                 a 504 from your end. It doesn't seem tied to load — happens even
@@ -147,39 +154,30 @@
             </div>
 
             <!-- Comment thread -->
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-              ></span>
-
+            <div
+              class="rounded-[32px] bg-[#e0e0e0] p-6 sm:p-8 [box-shadow:var(--raised)]"
+            >
               <h2
-                class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-5"
+                class="text-xl font-semibold tracking-[-0.5px] text-[#3d3d3d] mb-6"
               >
                 Activity
               </h2>
 
-              <div id="commentsList" class="space-y-5">
+              <div id="commentsList" class="space-y-6">
                 <div class="comment-item flex gap-3" data-comment-id="1">
                   <div
-                    class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs shrink-0"
+                    class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#3f74b3] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
                   >
                     AS
                   </div>
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
-                      <p class="text-sm">Aarav Shah</p>
-                      <span class="text-[11px] text-white/40">1h ago</span>
+                      <p class="text-sm font-medium text-[#3d3d3d]">
+                        Aarav Shah
+                      </p>
+                      <span class="text-[11px] text-[#6f6f6f]">1h ago</span>
                     </div>
-                    <p class="text-sm text-white/60 leading-6">
+                    <p class="text-sm text-[#6f6f6f] leading-6">
                       Looking into the delivery logs now — can you confirm the
                       endpoint URL you have registered?
                     </p>
@@ -187,24 +185,30 @@
                 </div>
 
                 <div
-                  class="comment-item internal flex gap-3 border border-[#ffb347]/30 bg-[#ffb347]/5 -mx-3 px-3 py-3"
+                  class="comment-item internal flex gap-3 rounded-3xl bg-[#e0e0e0] px-4 py-4 sm:px-5 [box-shadow:var(--inset-sm)]"
                   data-comment-id="2"
                 >
                   <div
-                    class="w-9 h-9 border border-[#ffb347]/40 bg-[#ffb347]/10 text-[#ffb347] flex items-center justify-center text-xs shrink-0"
+                    class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#9a6a1f] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
                   >
                     AS
                   </div>
                   <div class="flex-1 min-w-0">
                     <div class="flex flex-wrap items-center gap-2 mb-1">
-                      <p class="text-sm">Aarav Shah</p>
+                      <p class="text-sm font-medium text-[#3d3d3d]">
+                        Aarav Shah
+                      </p>
                       <span
-                        class="internal-badge inline-flex px-2 py-0.5 text-[10px] uppercase border border-[#ffb347]/40 bg-[#ffb347]/10 text-[#ffb347]"
+                        class="internal-badge inline-flex items-center gap-1.5 rounded-full bg-[#e0e0e0] px-3 py-1 text-[10px] font-semibold text-[#9a6a1f] [box-shadow:var(--raised-xs)]"
+                      >
+                        <span
+                          class="h-[6px] w-[6px] rounded-full bg-[#d9973b]"
+                        ></span
                         >Internal note</span
                       >
-                      <span class="text-[11px] text-white/40">45m ago</span>
+                      <span class="text-[11px] text-[#6f6f6f]">45m ago</span>
                     </div>
-                    <p class="text-sm text-white/60 leading-6">
+                    <p class="text-sm text-[#6f6f6f] leading-6">
                       Their webhook endpoint is timing out at ~28s — looks like
                       it's our retry queue backing up, not their config.
                       Escalating to platform team.
@@ -214,16 +218,18 @@
 
                 <div class="comment-item flex gap-3" data-comment-id="3">
                   <div
-                    class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs shrink-0"
+                    class="w-10 h-10 shrink-0 rounded-full bg-[#e0e0e0] text-[#3f74b3] flex items-center justify-center text-xs font-semibold [box-shadow:var(--raised-sm)]"
                   >
                     SV
                   </div>
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
-                      <p class="text-sm">Sana Vora</p>
-                      <span class="text-[11px] text-white/40">30m ago</span>
+                      <p class="text-sm font-medium text-[#3d3d3d]">
+                        Sana Vora
+                      </p>
+                      <span class="text-[11px] text-[#6f6f6f]">30m ago</span>
                     </div>
-                    <p class="text-sm text-white/60 leading-6 break-words">
+                    <p class="text-sm text-[#6f6f6f] leading-6 break-words">
                       https://api.northwind.co/webhooks/payments — thanks for
                       looking into it.
                     </p>
@@ -231,32 +237,32 @@
                 </div>
               </div>
 
-              <form id="commentForm" class="mt-6 pt-6 border-t border-white/10">
+              <form id="commentForm" class="mt-8">
                 <textarea
                   id="commentText"
                   name="commentText"
                   rows="3"
                   placeholder="Write a reply…"
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] resize-none focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                  class="w-full resize-none rounded-3xl border-0 bg-[#e0e0e0] px-5 py-3.5 text-sm leading-[1.7] text-[#3d3d3d] placeholder:text-[#9a9a9a] [box-shadow:var(--inset-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#4f86c6]"
                 ></textarea>
                 <div
-                  class="flex flex-wrap items-center justify-between gap-3 mt-3"
+                  class="flex flex-wrap items-center justify-between gap-4 mt-5"
                 >
                   <label
-                    class="flex items-center gap-2 text-[11px] uppercase text-white/60 cursor-pointer"
+                    class="flex cursor-pointer items-center gap-3 text-xs font-medium text-[#6f6f6f]"
                   >
                     <input
                       type="checkbox"
                       id="internalNoteToggle"
                       name="internalNoteToggle"
-                      class="appearance-none w-4 h-4 border border-white/20 bg-[#080809] checked:bg-[#ffb347] checked:border-[#ffb347] cursor-pointer"
+                      class="h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-full bg-[#e0e0e0] [box-shadow:var(--inset-sm)] checked:bg-[#d9973b] checked:[box-shadow:var(--raised-xs)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#4f86c6]"
                     />
                     Internal note (agents only)
                   </label>
                   <button
                     type="submit"
                     id="postCommentBtn"
-                    class="bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-xs font-medium uppercase tracking-[-0.5px] px-5 py-3 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                    class="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-full border-0 bg-[#4f86c6] px-7 py-3.5 text-sm font-semibold text-white transition-[box-shadow,background] duration-150 [box-shadow:var(--raised-sm)] hover:bg-[#3f74b3] active:[box-shadow:var(--inset-sm)] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     Post reply
                   </button>
@@ -266,38 +272,34 @@
           </div>
 
           <!-- Right sidebar -->
-          <div class="space-y-6">
+          <div class="space-y-8">
             <!-- Details -->
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
+            <div
+              class="rounded-[32px] bg-[#e0e0e0] p-6 sm:p-8 [box-shadow:var(--raised)]"
+            >
               <h3
-                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px] mb-4"
+                class="text-lg font-semibold tracking-[-0.5px] text-[#3d3d3d] mb-5"
               >
                 Details
               </h3>
-              <dl class="space-y-3 text-sm">
+              <dl class="space-y-4 text-sm">
                 <div class="flex justify-between gap-4">
-                  <dt class="text-white/40 text-xs uppercase">Requester</dt>
-                  <dd id="ticketRequesterName">Sana Vora</dd>
+                  <dt class="text-xs font-medium text-[#6f6f6f]">Requester</dt>
+                  <dd
+                    id="ticketRequesterName"
+                    class="font-medium text-[#3d3d3d]"
+                  >
+                    Sana Vora
+                  </dd>
                 </div>
                 <div class="flex justify-between items-center gap-4">
-                  <dt class="text-white/40 text-xs uppercase">Assigned to</dt>
+                  <dt class="text-xs font-medium text-[#6f6f6f]">
+                    Assigned to
+                  </dt>
                   <dd>
                     <select
                       id="assignAgentSelect"
-                      class="text-sm bg-[#080809] text-white border border-white/10 px-2 py-1 text-right font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] cursor-pointer"
+                      class="cursor-pointer rounded-full border-0 bg-[#e0e0e0] px-4 py-2 text-sm font-medium text-[#3d3d3d] [box-shadow:var(--inset-sm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#4f86c6]"
                     >
                       <option>Unassigned</option>
                       <option selected>Aarav Shah</option>
@@ -306,107 +308,92 @@
                   </dd>
                 </div>
                 <div class="flex justify-between gap-4">
-                  <dt class="text-white/40 text-xs uppercase">Priority</dt>
-                  <dd id="ticketPriorityText" class="text-[#ff8a8a]">
+                  <dt class="text-xs font-medium text-[#6f6f6f]">Priority</dt>
+                  <dd
+                    id="ticketPriorityText"
+                    class="font-semibold text-[#d4605a]"
+                  >
                     Critical
                   </dd>
                 </div>
                 <div class="flex justify-between gap-4">
-                  <dt class="text-white/40 text-xs uppercase">Created</dt>
-                  <dd id="ticketCreatedAt">Sep 18, 10:14 AM</dd>
+                  <dt class="text-xs font-medium text-[#6f6f6f]">Created</dt>
+                  <dd id="ticketCreatedAt" class="font-medium text-[#3d3d3d]">
+                    Sep 18, 10:14 AM
+                  </dd>
                 </div>
               </dl>
             </div>
 
             <!-- SLA -->
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
+            <div
+              class="rounded-[32px] bg-[#e0e0e0] p-6 sm:p-8 [box-shadow:var(--raised)]"
+            >
               <h3
-                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px] mb-3"
+                class="text-lg font-semibold tracking-[-0.5px] text-[#3d3d3d] mb-4"
               >
                 SLA
               </h3>
-              <div class="w-full h-2 bg-white/10 overflow-hidden mb-2">
+              <div
+                class="mb-3 h-2 w-full overflow-hidden rounded-full bg-[#e0e0e0] [box-shadow:var(--inset-sm)]"
+              >
                 <div
                   id="slaProgressBar"
-                  class="h-full bg-[#ff6b6b]"
+                  class="h-full rounded-full bg-[#d4605a]"
                   style="width: 100%"
                 ></div>
               </div>
-              <p id="slaTimeText" class="text-sm text-[#ff8a8a]">
+              <p id="slaTimeText" class="text-sm font-semibold text-[#d4605a]">
                 Breached 12 minutes ago
               </p>
-              <p class="text-[11px] text-white/40 mt-1.5">
-                / Response due within 30 min for critical priority
+              <p class="text-[11px] text-[#6f6f6f] mt-1.5">
+                Response due within 30 min for critical priority
               </p>
             </div>
 
             <!-- Status transition -->
-            <div class="relative border border-white/10 bg-[#020203] p-6">
-              <span
-                class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-              ></span>
-              <span
-                class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-              ></span>
-
+            <div
+              class="rounded-[32px] bg-[#e0e0e0] p-6 sm:p-8 [box-shadow:var(--raised)]"
+            >
               <h3
-                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px] mb-2"
+                class="text-lg font-semibold tracking-[-0.5px] text-[#3d3d3d] mb-2"
               >
                 Change status
               </h3>
-              <p class="text-[11px] text-white/40 leading-5 mb-4">
-                / Only valid transitions from the current state should be
-                enabled — enforce this per your state machine.
+              <p class="text-[11px] text-[#6f6f6f] leading-5 mb-5">
+                Only valid transitions from the current state should be enabled
+                — enforce this per your state machine.
               </p>
-              <div id="statusTransitionGroup" class="flex flex-col gap-2">
+              <div id="statusTransitionGroup" class="flex flex-col gap-3.5 p-1">
                 <button
-                  class="status-option-btn text-left px-4 py-2.5 border border-[#ff6b6b] bg-[#ff6b6b]/10 text-[#ff8a8a] text-xs uppercase"
+                  class="status-option-btn rounded-full bg-[#e0e0e0] px-5 py-3 text-left text-xs font-semibold text-[#d4605a] [box-shadow:var(--inset-sm)]"
                   data-status="open"
                   disabled
                 >
                   Open
-                  <span class="text-[11px] normal-case opacity-70"
+                  <span class="text-[11px] font-medium opacity-70"
                     >(current)</span
                   >
                 </button>
                 <button
-                  class="status-option-btn text-left px-4 py-2.5 border border-white/10 text-xs uppercase text-white/80 hover:border-[#feff7c] hover:bg-[#feff7c]/10 hover:text-[#feff7c] cursor-pointer transition-colors"
+                  class="status-option-btn cursor-pointer rounded-full bg-[#e0e0e0] px-5 py-3 text-left text-xs font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
                   data-status="in_progress"
                 >
                   Start progress
                 </button>
                 <button
-                  class="status-option-btn text-left px-4 py-2.5 border border-white/10 text-xs uppercase text-white/80 hover:border-[#6ee7a0] hover:bg-[#6ee7a0]/10 hover:text-[#6ee7a0] cursor-pointer transition-colors"
+                  class="status-option-btn cursor-pointer rounded-full bg-[#e0e0e0] px-5 py-3 text-left text-xs font-medium text-[#555] transition-[box-shadow,color] duration-150 [box-shadow:var(--raised-xs)] hover:text-[#3f74b3] active:[box-shadow:var(--inset-sm)]"
                   data-status="resolved"
                 >
                   Mark resolved
                 </button>
                 <button
-                  class="status-option-btn text-left px-4 py-2.5 border border-white/10 text-xs uppercase text-white/30 cursor-not-allowed"
+                  class="status-option-btn cursor-not-allowed rounded-full bg-[#e0e0e0] px-5 py-3 text-left text-xs font-medium text-[#9a9a9a] [box-shadow:var(--inset-sm)]"
                   data-status="closed"
                   disabled
                 >
                   Close
-                  <span class="text-[11px] normal-case">(resolve first)</span>
+                  <span class="text-[11px]">(resolve first)</span>
                 </button>
               </div>
             </div>

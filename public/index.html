@@ -3,758 +3,1304 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HelpDesk Pro · Every ticket, tracked</title>
+    <title>craftkel.ai · Every ticket, tracked</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-  </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased scroll-smooth"
-  >
-    <div class="flex min-h-screen">
-      <div
-        class="hidden xl:block w-[77px] shrink-0 border-r border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
-      ></div>
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
 
-      <div class="flex-1 min-w-0">
-        <!-- Nav -->
-        <header
-          class="sticky top-0 z-50 bg-[#080809]/90 backdrop-blur border-b border-white/10"
-        >
-          <div class="flex items-center justify-between px-5 sm:px-8 py-4">
-            <a href="#top" class="flex items-center gap-2.5">
-              <span
-                class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-                >HD</span
-              >
-              <span
-                class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-                >HelpDesk Pro</span
-              >
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+      section[id] {
+        scroll-margin-top: 110px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      @media (min-width: 640px) {
+        .wrap {
+          padding: 0 32px;
+        }
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn-primary,
+      .btn-soft {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 0;
+        border-radius: 9999px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease,
+          color 160ms ease;
+      }
+      .btn-primary {
+        padding: 14px 30px;
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-soft {
+        padding: 14px 30px;
+        background: var(--surface);
+        color: var(--ink);
+        font-weight: 500;
+        box-shadow: var(--raised-xs);
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-sm {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+
+      /* ---------- Header ---------- */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding: 16px 0 0;
+      }
+      .navbar {
+        background: var(--surface);
+        border-radius: 32px;
+        box-shadow: var(--raised);
+      }
+      .navbar-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px 12px 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .nav-link {
+        padding: 10px 18px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-link:hover {
+        color: var(--ink-strong);
+        box-shadow: var(--raised-xs);
+      }
+      .nav-link:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      .menu-btn {
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--surface);
+        box-shadow: var(--raised-xs);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .menu-btn:active,
+      .menu-btn.is-open {
+        box-shadow: var(--inset-sm);
+      }
+      .menu-btn span {
+        width: 18px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--ink-strong);
+        transition:
+          transform 250ms ease,
+          opacity 250ms ease;
+      }
+      .menu-btn.is-open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .menu-btn.is-open span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-btn.is-open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 300ms ease;
+      }
+      .mobile-menu.is-open {
+        grid-template-rows: 1fr;
+      }
+      .mobile-menu > div {
+        overflow: hidden;
+      }
+      .mobile-links {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 4px 16px 20px;
+      }
+      .mobile-links a.nav-link {
+        display: block;
+      }
+
+      /* ---------- Reveal + split headline ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 700ms ease,
+          transform 700ms ease;
+        transition-delay: var(--d, 0ms);
+      }
+      .reveal.is-in {
+        opacity: 1;
+        transform: none;
+      }
+      .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .letter {
+        display: inline-block;
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(8px);
+        transition:
+          opacity 500ms ease,
+          filter 500ms ease,
+          transform 500ms ease;
+      }
+      .letter.is-in {
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+
+      /* ---------- Hero ---------- */
+      .live-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 18px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+      .live-chip i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+
+      /* ---------- Panels ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 32px 20px;
+      }
+      .ticket-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin: 0 14px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        transition: box-shadow 160ms ease;
+      }
+      .ticket-row + .ticket-row {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      .ticket-row:hover {
+        box-shadow: var(--inset-sm);
+      }
+      .ticket-row:hover + .ticket-row {
+        box-shadow: none;
+      }
+      .priority-bar {
+        width: 6px;
+        height: 38px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+        box-shadow: var(--raised-xs);
+      }
+      .ticket-id {
+        width: 84px;
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .status-pill > span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .status-open {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      .status-progress {
+        background: var(--surface);
+        color: var(--blue-ink);
+        box-shadow: var(--raised-xs);
+      }
+      .status-resolved {
+        background: var(--surface);
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Stats ---------- */
+      .stat-card {
+        position: relative;
+        padding: 24px;
+        border-radius: 28px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .stat-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .stat-value {
+        margin-top: 14px;
+        font-size: 44px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: -1.5px;
+        color: var(--ink-strong);
+      }
+      .stat-value.is-blue {
+        color: var(--blue-ink);
+      }
+      .stat-well {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--inset-sm);
+      }
+      .stat-well::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+      }
+
+      /* ---------- Sections ---------- */
+      .section-title {
+        font-size: clamp(30px, 4.4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -1.4px;
+        color: var(--ink-strong);
+        font-weight: 400;
+      }
+      .section-title b {
+        font-weight: 600;
+      }
+      .section-lead {
+        margin-top: 16px;
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .feature-card,
+      .role-card,
+      .step-card {
+        padding: 28px;
+        border-radius: 28px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .icon-well {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--blue-ink);
+        box-shadow: var(--inset-sm);
+        margin-bottom: 22px;
+      }
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.4px;
+        color: var(--ink-strong);
+        margin-bottom: 10px;
+      }
+      .card-text {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .step-num {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 22px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+
+      .role-chip {
+        display: inline-flex;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        margin-bottom: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .role-customer {
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+      .role-agent {
+        color: var(--blue-ink);
+        box-shadow: var(--raised-xs);
+      }
+      .role-admin {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+
+      .avatar-lg {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+
+      .footer-link {
+        color: var(--muted);
+        transition: color 160ms ease;
+      }
+      .footer-link:hover {
+        color: var(--blue-ink);
+      }
+
+      /* ---------- Layout (self-contained, no Tailwind needed) ---------- */
+      .sec {
+        padding-bottom: 88px;
+      }
+      .sec-hero {
+        padding-top: 56px;
+        padding-bottom: 72px;
+      }
+      @media (min-width: 640px) {
+        .sec {
+          padding-bottom: 120px;
+        }
+        .sec-hero {
+          padding-top: 88px;
+          padding-bottom: 104px;
+        }
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 56px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+          gap: 64px;
+        }
+      }
+      .hero-chip {
+        margin-bottom: 32px;
+      }
+      .hero-title {
+        font-size: 40px;
+        line-height: 1.08;
+        letter-spacing: -1.5px;
+        font-weight: 400;
+        color: var(--ink-strong);
+      }
+      .hero-title b {
+        font-weight: 600;
+      }
+      @media (min-width: 640px) {
+        .hero-title {
+          font-size: 60px;
+          letter-spacing: -2.5px;
+        }
+      }
+      .hero-lead {
+        max-width: 440px;
+        margin-top: 32px;
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .btn-row {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .btn-row.center {
+        justify-content: center;
+        align-items: center;
+      }
+      .hero-actions {
+        margin-top: 40px;
+      }
+      .btn-row-top {
+        margin-top: 36px;
+      }
+      @media (min-width: 640px) {
+        .btn-row {
+          flex-direction: row;
+        }
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+      .cards.tight {
+        gap: 24px;
+      }
+      @media (min-width: 640px) {
+        .cards.c3,
+        .cards.c4 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        .cards.c3,
+        .cards.c3r {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .cards.c4 {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .section-head {
+        max-width: 560px;
+        margin-bottom: 56px;
+      }
+      .role-text {
+        margin-bottom: 28px;
+      }
+      .role-card .btn-soft,
+      .role-card .btn-primary {
+        align-self: flex-start;
+      }
+
+      .creator-panel {
+        max-width: 768px;
+        padding: 28px;
+      }
+      .creator-row {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      .creator-name {
+        margin-bottom: 8px;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.8px;
+        color: var(--ink-strong);
+      }
+      @media (min-width: 640px) {
+        .creator-panel {
+          padding: 40px;
+        }
+        .creator-row {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+      .gh-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .cta-panel {
+        padding: 64px 24px;
+        text-align: center;
+      }
+      .cta-title {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      @media (min-width: 640px) {
+        .cta-panel {
+          padding: 80px 24px;
+        }
+      }
+
+      .footer-wrap {
+        padding-bottom: 40px;
+      }
+      .footer-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .footer-links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      @media (min-width: 640px) {
+        .footer-row {
+          flex-direction: row;
+        }
+      }
+
+      /* Header */
+      .brand-name {
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -0.4px;
+        color: var(--ink-strong);
+      }
+      .nav-desktop,
+      .actions-desktop {
+        display: none;
+        align-items: center;
+      }
+      .nav-desktop {
+        gap: 4px;
+      }
+      .actions-desktop {
+        gap: 12px;
+      }
+      .menu-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding-top: 12px;
+      }
+      @media (min-width: 768px) {
+        .nav-desktop,
+        .actions-desktop {
+          display: flex;
+        }
+        .menu-btn,
+        .mobile-menu {
+          display: none;
+        }
+      }
+
+      /* Ticket preview rows */
+      .grow-min {
+        flex: 1;
+        min-width: 0;
+      }
+      .tk-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-strong);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tk-meta {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .panel-title {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        color: var(--ink-strong);
+      }
+      .ticket-id {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        .ticket-id {
+          display: block;
+        }
+      }
+
+      /* Cards: equal height, content stacked */
+      .feature-card,
+      .role-card,
+      .step-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .stat-card {
+        min-width: 0;
+      }
+
+      .preview-panel {
+        padding-bottom: 16px;
+      }
+      .footer-under {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .reveal,
+        .letter {
+          opacity: 1;
+          transform: none;
+          filter: none;
+          transition: none;
+        }
+        .live-chip i {
+          animation: none;
+        }
+        .mobile-menu,
+        .menu-btn span {
+          transition: none;
+        }
+      }
+
+      @media (max-width: 639px) {
+        .panel-head {
+          padding: 22px 22px 16px;
+        }
+        .ticket-row {
+          margin: 0 8px;
+          padding: 14px 12px;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="wrap">
+        <div class="navbar">
+          <div class="navbar-row">
+            <a href="#top" class="brand">
+              <span class="brand-mark">CK</span>
+              <span class="brand-name">craftkel.ai</span>
             </a>
 
-            <nav
-              class="hidden md:flex items-center gap-8 text-xs uppercase tracking-[-0.2px] text-white/60"
-            >
-              <a href="#features" class="hover:text-[#feff7c] transition-colors"
-                >Features</a
-              >
-              <a href="#process" class="hover:text-[#feff7c] transition-colors"
-                >Process</a
-              >
-              <a href="#roles" class="hover:text-[#feff7c] transition-colors"
-                >Roles</a
-              >
-              <a href="#creator" class="hover:text-[#feff7c] transition-colors"
-                >Creator</a
-              >
+            <nav class="nav-desktop">
+              <a href="#features" class="nav-link">Features</a>
+              <a href="#process" class="nav-link">Process</a>
+              <a href="#roles" class="nav-link">Roles</a>
+              <a href="#creator" class="nav-link">Creator</a>
             </nav>
 
-            <div class="hidden md:flex items-center gap-3">
-              <a
-                href="login.html"
-                class="text-xs uppercase tracking-[-0.2px] text-white/80 border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-4 py-2.5 transition-colors"
-                >Log in</a
-              >
-              <a
-                href="signup.html"
-                class="text-xs font-medium uppercase tracking-[-0.2px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-4 py-2.5 transition-colors"
-                >Sign up</a
-              >
+            <div class="actions-desktop">
+              <a href="login.html" class="btn-soft btn-sm">Log in</a>
+              <a href="signup.html" class="btn-primary btn-sm">Sign up</a>
             </div>
 
             <button
               id="menuBtn"
+              type="button"
               aria-label="Toggle menu"
-              class="md:hidden w-10 h-10 border border-white/10 flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+              aria-expanded="false"
+              aria-controls="mobileMenu"
+              class="menu-btn"
             >
-              <span
-                class="w-5 h-0.5 bg-white transition-transform duration-300"
-              ></span>
-              <span
-                class="w-5 h-0.5 bg-white transition-opacity duration-300"
-              ></span>
-              <span
-                class="w-5 h-0.5 bg-white transition-transform duration-300"
-              ></span>
+              <span></span>
+              <span></span>
+              <span></span>
             </button>
           </div>
 
-          <div
-            id="mobileMenu"
-            class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300"
-          >
-            <div class="overflow-hidden">
-              <div
-                class="flex flex-col gap-4 px-5 pb-6 pt-2 text-xs uppercase tracking-[-0.2px] text-white/60"
-              >
-                <a href="#features">Features</a>
-                <a href="#process">Process</a>
-                <a href="#roles">Roles</a>
-                <a href="#creator">Creator</a>
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                  <a
-                    href="login.html"
-                    class="text-center text-white/80 border border-white/10 py-3"
-                    >Log in</a
-                  >
-                  <a
-                    href="signup.html"
-                    class="text-center font-medium bg-[#feff7c] text-[#434302] py-3"
-                    >Sign up</a
-                  >
+          <div id="mobileMenu" class="mobile-menu">
+            <div>
+              <div class="mobile-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#process" class="nav-link">Process</a>
+                <a href="#roles" class="nav-link">Roles</a>
+                <a href="#creator" class="nav-link">Creator</a>
+                <div class="menu-actions">
+                  <a href="login.html" class="btn-soft btn-sm">Log in</a>
+                  <a href="signup.html" class="btn-primary btn-sm">Sign up</a>
                 </div>
               </div>
             </div>
           </div>
-        </header>
+        </div>
+      </div>
+    </header>
 
-        <main id="top">
-          <!-- Hero -->
-          <section
-            class="px-5 sm:px-8 pt-16 sm:pt-24 pb-16 relative overflow-hidden"
-          >
-            <div
-              class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-            ></div>
-            <div class="relative max-w-5xl">
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 inline-flex items-center gap-2 border border-white/10 bg-[#020203] px-3 py-1.5 mb-8"
-              >
-                <span class="w-1.5 h-1.5 bg-[#feff7c] animate-pulse"></span>
-                <span
-                  class="text-[11px] uppercase tracking-[-0.2px] text-white/60"
-                  >Support desk · SLA aware</span
-                >
-              </div>
-
-              <h1
-                data-split
-                class="font-['Geist_Pixel',sans-serif] text-[40px] leading-[1.05] sm:text-6xl lg:text-7xl tracking-[-2px] sm:tracking-[-3px]"
-              >
-                Every ticket, tracked.
-                <span class="text-[#feff7c]">Every SLA, watched.</span>
-              </h1>
-
-              <p
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-500 text-white/60 text-sm sm:text-base leading-7 mt-8 max-w-xl"
-              >
-                / Agents work the queue, customers track their tickets, and
-                integrators submit through a rate-limited API. One system, one
-                source of truth.
-              </p>
-
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-700 flex flex-col sm:flex-row gap-3 mt-10"
-              >
-                <a
-                  href="signup.html"
-                  class="text-center text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-7 py-3.5 transition-colors"
-                  >Create an account</a
-                >
-                <a
-                  href="login.html"
-                  class="text-center text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-7 py-3.5 transition-colors"
-                  >Log in</a
-                >
-              </div>
+    <main id="top">
+      <!-- Hero -->
+      <section class="wrap sec-hero">
+        <div class="hero-grid">
+          <div>
+            <div class="reveal live-chip hero-chip">
+              <i></i>Support desk, SLA aware
             </div>
 
-            <!-- Product preview -->
-            <div
-              data-reveal
-              class="opacity-0 translate-y-10 transition-all duration-1000 delay-300 relative mt-16 max-w-5xl"
-            >
-              <div
-                data-corners="y"
-                class="relative border border-white/10 bg-[#020203]"
-              >
-                <div
-                  class="flex items-center justify-between px-5 py-4 border-b border-white/10"
+            <h1 data-split class="hero-title">
+              Every ticket, tracked.
+              <b>Every SLA, watched.</b>
+            </h1>
+
+            <p class="reveal hero-lead" style="--d: 500ms">
+              Agents work the queue, customers track their tickets, and
+              integrators submit through a rate-limited API. One system, one
+              source of truth.
+            </p>
+
+            <div class="reveal btn-row hero-actions" style="--d: 650ms">
+              <a href="signup.html" class="btn-primary">Create an account</a>
+              <a href="login.html" class="btn-soft">Log in</a>
+            </div>
+          </div>
+
+          <!-- Product preview -->
+          <div class="reveal" style="--d: 300ms">
+            <div class="panel preview-panel">
+              <div class="panel-head">
+                <h2 class="panel-title">Recent tickets</h2>
+                <span class="live-chip" style="padding: 7px 16px"
+                  ><i></i>Live queue</span
                 >
-                  <span
-                    class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-                    >Recent tickets</span
-                  >
-                  <span class="text-[11px] uppercase text-[#feff7c]"
-                    >Live queue</span
-                  >
+              </div>
+
+              <div class="ticket-row">
+                <span
+                  class="priority-bar"
+                  style="background: var(--red)"
+                ></span>
+                <span class="ticket-id">#TCK-1042</span>
+                <div class="grow-min">
+                  <p class="tk-title">Payment webhook failing intermittently</p>
+                  <p class="tk-meta">Sana Vora · 2h ago</p>
                 </div>
-                <div class="divide-y divide-white/10">
-                  <div class="flex items-center gap-4 px-5 py-4">
-                    <span class="w-1 h-10 bg-[#ff6b6b] shrink-0"></span>
-                    <span
-                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                      >#TCK-1042</span
-                    >
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm truncate">
-                        Payment webhook failing intermittently
-                      </p>
-                      <p class="text-[11px] text-white/40 mt-1">
-                        Sana Vora · 2h ago
-                      </p>
-                    </div>
-                    <span
-                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] shrink-0"
-                      ><span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span>Open</span
-                    >
-                  </div>
-                  <div class="flex items-center gap-4 px-5 py-4">
-                    <span class="w-1 h-10 bg-[#feff7c] shrink-0"></span>
-                    <span
-                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                      >#TCK-1041</span
-                    >
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm truncate">
-                        Unable to export report as CSV
-                      </p>
-                      <p class="text-[11px] text-white/40 mt-1">
-                        Kabir Nair · 5h ago
-                      </p>
-                    </div>
-                    <span
-                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] shrink-0"
-                      ><span class="w-1.5 h-1.5 bg-[#feff7c]"></span>In
-                      progress</span
-                    >
-                  </div>
-                  <div class="flex items-center gap-4 px-5 py-4">
-                    <span class="w-1 h-10 bg-[#41412b] shrink-0"></span>
-                    <span
-                      class="text-xs text-white/40 w-20 shrink-0 hidden sm:block"
-                      >#TCK-1039</span
-                    >
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm truncate">Feature request: dark mode</p>
-                      <p class="text-[11px] text-white/40 mt-1">
-                        Meera Iyer · 1d ago
-                      </p>
-                    </div>
-                    <span
-                      class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] shrink-0"
-                      ><span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span
-                      >Resolved</span
-                    >
-                  </div>
+                <span class="status-pill status-open"><span></span>Open</span>
+              </div>
+
+              <div class="ticket-row">
+                <span
+                  class="priority-bar"
+                  style="background: var(--blue)"
+                ></span>
+                <span class="ticket-id">#TCK-1041</span>
+                <div class="grow-min">
+                  <p class="tk-title">Unable to export report as CSV</p>
+                  <p class="tk-meta">Kabir Nair · 5h ago</p>
                 </div>
+                <span class="status-pill status-progress"
+                  ><span></span>In progress</span
+                >
               </div>
-            </div>
-          </section>
 
-          <!-- Stats -->
-          <section class="border-y border-white/10 bg-[#0b0b06]">
-            <div
-              class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10"
-            >
-              <div class="p-6 sm:p-8 border-b lg:border-b-0 border-white/10">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px]"
-                >
-                  <span data-count="99.2" data-decimals="1">0</span>%
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-3">
-                  / SLA met (30d)
-                </p>
-              </div>
-              <div class="p-6 sm:p-8 border-b lg:border-b-0 border-white/10">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] text-[#feff7c]"
-                >
-                  <span data-count="4">0</span>m
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-3">
-                  / Avg first response
-                </p>
-              </div>
-              <div class="p-6 sm:p-8">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px]"
-                >
-                  <span data-count="600">0</span>
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-3">
-                  / API req/min on Pro
-                </p>
-              </div>
-              <div class="p-6 sm:p-8">
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl tracking-[-1px] text-[#feff7c]"
-                >
-                  <span data-count="3">0</span>
-                </p>
-                <p class="text-white/40 text-[11px] uppercase mt-3">
-                  / Roles, one platform
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Features -->
-          <section id="features" class="px-5 sm:px-8 py-20">
-            <div
-              data-reveal
-              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
-            >
-              <p
-                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
-              >
-                / Features
-              </p>
-              <h2
-                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
-              >
-                Built for the <span class="text-[#feff7c]">whole desk</span>
-              </h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">01</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  SLA tracking
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Live countdowns and breach alerts on every ticket, by
-                  priority.
-                </p>
-              </div>
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">02</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  Agent queue
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Filter by mine, unassigned or breached, and assign in one
-                  click.
-                </p>
-              </div>
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">03</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  Internal notes
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Agents collaborate privately, customers only see the replies.
-                </p>
-              </div>
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">04</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  Status workflow
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Open, in progress, resolved, closed. Only valid transitions
-                  allowed.
-                </p>
-              </div>
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">05</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  Rate-limited API
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Per-organization keys with Free and Pro tiers and daily usage.
-                </p>
-              </div>
-              <div
-                data-reveal
-                data-corners="o"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-6 hover:border-[#feff7c]/40"
-              >
-                <p class="text-[#feff7c] text-xs mb-6">06</p>
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-3"
-                >
-                  Role-based access
-                </h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Customers, agents and admins each get exactly the tools they
-                  need.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Process -->
-          <section
-            id="process"
-            class="px-5 sm:px-8 py-20 bg-[#0b0b06] border-y border-white/10"
-          >
-            <div
-              data-reveal
-              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
-            >
-              <p
-                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
-              >
-                / Process
-              </p>
-              <h2
-                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
-              >
-                From request to <span class="text-[#feff7c]">resolved</span>
-              </h2>
-            </div>
-
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-white/10 bg-[#080809]"
-            >
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 p-6 border-b lg:border-b-0 sm:border-r border-white/10"
-              >
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
-                >
-                  01
-                </p>
-                <h3 class="text-sm uppercase mb-2">Submit</h3>
-                <p class="text-white/60 text-sm leading-6">
-                  A customer or integration opens a ticket with a priority.
-                </p>
-              </div>
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 p-6 border-b lg:border-b-0 lg:border-r border-white/10"
-              >
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
-                >
-                  02
-                </p>
-                <h3 class="text-sm uppercase mb-2">Assign</h3>
-                <p class="text-white/60 text-sm leading-6">
-                  It lands in the queue and gets routed to the right agent.
-                </p>
-              </div>
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 p-6 border-b sm:border-b-0 sm:border-r border-white/10"
-              >
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
-                >
-                  03
-                </p>
-                <h3 class="text-sm uppercase mb-2">Resolve</h3>
-                <p class="text-white/60 text-sm leading-6">
-                  The agent replies and moves it through the workflow within
-                  SLA.
-                </p>
-              </div>
-              <div
-                data-reveal
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-300 p-6"
-              >
-                <p
-                  class="font-['Geist_Pixel',sans-serif] text-4xl text-[#feff7c] tracking-[-1px] mb-5"
-                >
-                  04
-                </p>
-                <h3 class="text-sm uppercase mb-2">Review</h3>
-                <p class="text-white/60 text-sm leading-6">
-                  Admins watch breaches, workload and response times.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Roles -->
-          <section id="roles" class="px-5 sm:px-8 py-20">
-            <div
-              data-reveal
-              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
-            >
-              <p
-                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
-              >
-                / Roles
-              </p>
-              <h2
-                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
-              >
-                One desk, <span class="text-[#feff7c]">three views</span>
-              </h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div
-                data-reveal
-                data-corners="y"
-                class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-7"
-              >
-                <span
-                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] mb-5"
-                  >Customer</span
-                >
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
-                >
-                  Ask and follow
-                </h3>
-                <p class="text-white/60 text-sm leading-6 mb-6">
-                  Open tickets, set priority and track every reply in one place.
-                </p>
-                <a
-                  href="signup.html"
-                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
-                  >Create an account →</a
-                >
-              </div>
-              <div
-                data-reveal
-                data-corners="y"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-100 relative border border-white/10 bg-[#020203] p-7"
-              >
-                <span
-                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] mb-5"
-                  >Agent</span
-                >
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
-                >
-                  Work the queue
-                </h3>
-                <p class="text-white/60 text-sm leading-6 mb-6">
-                  Triage by SLA, reply, leave internal notes and resolve faster.
-                </p>
-                <a
-                  href="login.html"
-                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
-                  >Agent log in →</a
-                >
-              </div>
-              <div
-                data-reveal
-                data-corners="y"
-                class="opacity-0 translate-y-10 transition-all duration-700 delay-200 relative border border-white/10 bg-[#020203] p-7"
-              >
-                <span
-                  class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#ffb347]/30 bg-[#ffb347]/10 text-[#ffb347] mb-5"
-                  >Admin</span
-                >
-                <h3
-                  class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-3"
-                >
-                  Run the desk
-                </h3>
-                <p class="text-white/60 text-sm leading-6 mb-6">
-                  Provision agents, issue API keys and monitor SLA health.
-                </p>
-                <a
-                  href="login.html"
-                  class="text-xs uppercase text-[#feff7c] hover:text-[#ffff47] underline underline-offset-4"
-                  >Admin log in →</a
-                >
-              </div>
-            </div>
-          </section>
-
-          <!-- Creator -->
-          <section id="creator" class="px-5 sm:px-8 pb-20">
-            <div
-              data-reveal
-              class="opacity-0 translate-y-10 transition-all duration-700 max-w-xl mb-12"
-            >
-              <p
-                class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-3"
-              >
-                / Creator
-              </p>
-              <h2
-                class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px]"
-              >
-                Built by <span class="text-[#feff7c]">Aditya Singh</span>
-              </h2>
-            </div>
-
-            <div
-              data-reveal
-              data-corners="y"
-              class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#020203] p-6 sm:p-8 max-w-3xl"
-            >
-              <div class="flex flex-col sm:flex-row sm:items-center gap-6">
-                <span
-                  class="w-20 h-20 shrink-0 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-3xl"
-                  >AS</span
-                >
-                <div class="flex-1 min-w-0">
-                  <span
-                    class="inline-flex px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] mb-3"
-                    >Full Stack Developer</span
-                  >
-                  <h3
-                    class="font-['Geist_Pixel',sans-serif] text-2xl tracking-[-1px] mb-2"
-                  >
-                    Aditya Singh
-                  </h3>
-                  <p class="text-white/60 text-sm leading-6">
-                    Designed and built HelpDesk Pro from A to Z as the sole full
-                    stack developer: the agent queue, SLA tracking, role-based
-                    access and the rate-limited API, from database to interface.
-                  </p>
+              <div class="ticket-row">
+                <span class="priority-bar" style="background: #b5b5b5"></span>
+                <span class="ticket-id">#TCK-1039</span>
+                <div class="grow-min">
+                  <p class="tk-title">Feature request: dark mode</p>
+                  <p class="tk-meta">Meera Iyer · 1d ago</p>
                 </div>
-              </div>
-
-              <div class="flex flex-col sm:flex-row gap-3 mt-8">
-                <a
-                  href="https://adityasingh.info"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-center text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-7 py-3.5 transition-colors"
-                  >Visit adityasingh.info ↗</a
+                <span class="status-pill status-resolved"
+                  ><span></span>Resolved</span
                 >
-                <a
-                  href="https://github.com/AdityaSingh21Official"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center gap-2.5 text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-7 py-3.5 transition-colors"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
-                    />
-                  </svg>
-                  GitHub ↗
-                </a>
               </div>
             </div>
-          </section>
+          </div>
+        </div>
+      </section>
 
-          <!-- CTA -->
-          <section class="px-5 sm:px-8 pb-20">
-            <div
-              data-reveal
-              data-corners="y"
-              class="opacity-0 translate-y-10 transition-all duration-700 relative border border-white/10 bg-[#0b0b06] px-6 py-16 sm:py-20 text-center overflow-hidden"
-            >
-              <div
-                class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-              ></div>
-              <div class="relative">
-                <h2
-                  class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-5xl tracking-[-2px] max-w-2xl mx-auto"
-                >
-                  Ready to <span class="text-[#feff7c]">clear the queue?</span>
-                </h2>
-                <p class="text-white/60 text-sm mt-5">
-                  / Create a customer account in under a minute.
-                </p>
-                <div
-                  class="flex flex-col sm:flex-row justify-center gap-3 mt-9"
-                >
-                  <a
-                    href="signup.html"
-                    class="text-sm font-medium uppercase tracking-[-0.5px] bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] px-8 py-3.5 transition-colors"
-                    >Sign up</a
-                  >
-                  <a
-                    href="login.html"
-                    class="text-sm uppercase tracking-[-0.5px] border border-white/10 hover:border-[#feff7c] hover:text-[#feff7c] px-8 py-3.5 transition-colors"
-                    >Log in</a
-                  >
-                </div>
-              </div>
+      <!-- Stats -->
+      <section class="wrap sec">
+        <div class="cards c4 tight">
+          <div class="stat-card reveal">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">SLA met (30 days)</p>
+            <p class="stat-value">
+              <span data-count="99.2" data-decimals="1">0</span>%
+            </p>
+          </div>
+          <div class="stat-card reveal" style="--d: 100ms">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">Avg first response</p>
+            <p class="stat-value is-blue"><span data-count="4">0</span>m</p>
+          </div>
+          <div class="stat-card reveal" style="--d: 200ms">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">API req/min on Pro</p>
+            <p class="stat-value"><span data-count="600">0</span></p>
+          </div>
+          <div class="stat-card reveal" style="--d: 300ms">
+            <span class="stat-well" aria-hidden="true"></span>
+            <p class="stat-label">Roles, one platform</p>
+            <p class="stat-value is-blue"><span data-count="3">0</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section id="features" class="wrap sec">
+        <div class="reveal section-head">
+          <h2 class="section-title">Built for the <b>whole desk</b></h2>
+        </div>
+
+        <div class="cards c3">
+          <div class="feature-card reveal">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
             </div>
-          </section>
-        </main>
+            <h3 class="card-title">SLA tracking</h3>
+            <p class="card-text">
+              Live countdowns and breach alerts on every ticket, by priority.
+            </p>
+          </div>
+          <div class="feature-card reveal" style="--d: 100ms">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 13l3-8h12l3 8" />
+                <path d="M3 13v6h18v-6h-5l-1 3H9l-1-3z" />
+              </svg>
+            </div>
+            <h3 class="card-title">Agent queue</h3>
+            <p class="card-text">
+              Filter by mine, unassigned or breached, and assign in one click.
+            </p>
+          </div>
+          <div class="feature-card reveal" style="--d: 200ms">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="5" y="11" width="14" height="9" rx="2" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+              </svg>
+            </div>
+            <h3 class="card-title">Internal notes</h3>
+            <p class="card-text">
+              Agents collaborate privately, customers only see the replies.
+            </p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="6" cy="6" r="2.5" />
+                <circle cx="18" cy="12" r="2.5" />
+                <circle cx="6" cy="18" r="2.5" />
+                <path
+                  d="M8.5 6H12a3 3 0 0 1 3 3v.5M8.5 18H12a3 3 0 0 0 3-3v-.5"
+                />
+              </svg>
+            </div>
+            <h3 class="card-title">Status workflow</h3>
+            <p class="card-text">
+              Open, in progress, resolved, closed. Only valid transitions
+              allowed.
+            </p>
+          </div>
+          <div class="feature-card reveal" style="--d: 100ms">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="15" r="4" />
+                <path d="M11 12l9-9M16 7l3 3M14 9l2 2" />
+              </svg>
+            </div>
+            <h3 class="card-title">Rate-limited API</h3>
+            <p class="card-text">
+              Per-organization keys with Free and Pro tiers and daily usage.
+            </p>
+          </div>
+          <div class="feature-card reveal" style="--d: 200ms">
+            <div class="icon-well">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="8" r="3.5" />
+                <path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
+                <path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6" />
+              </svg>
+            </div>
+            <h3 class="card-title">Role-based access</h3>
+            <p class="card-text">
+              Customers, agents and admins each get exactly the tools they need.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <footer
-          class="border-t border-white/10 px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40"
-        >
-          <span>
-            © 2026 HELPDESK PRO · Built by
+      <!-- Process -->
+      <section id="process" class="wrap sec">
+        <div class="reveal section-head">
+          <h2 class="section-title">From request to <b>resolved</b></h2>
+        </div>
+
+        <div class="cards c4">
+          <div class="step-card reveal">
+            <div class="step-num">1</div>
+            <h3 class="card-title">Submit</h3>
+            <p class="card-text">
+              A customer or integration opens a ticket with a priority.
+            </p>
+          </div>
+          <div class="step-card reveal" style="--d: 100ms">
+            <div class="step-num">2</div>
+            <h3 class="card-title">Assign</h3>
+            <p class="card-text">
+              It lands in the queue and gets routed to the right agent.
+            </p>
+          </div>
+          <div class="step-card reveal" style="--d: 200ms">
+            <div class="step-num">3</div>
+            <h3 class="card-title">Resolve</h3>
+            <p class="card-text">
+              The agent replies and moves it through the workflow within SLA.
+            </p>
+          </div>
+          <div class="step-card reveal" style="--d: 300ms">
+            <div class="step-num">4</div>
+            <h3 class="card-title">Review</h3>
+            <p class="card-text">
+              Admins watch breaches, workload and response times.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Roles -->
+      <section id="roles" class="wrap sec">
+        <div class="reveal section-head">
+          <h2 class="section-title">One desk, <b>three views</b></h2>
+        </div>
+
+        <div class="cards c3r">
+          <div class="role-card reveal">
+            <span class="role-chip role-customer">Customer</span>
+            <h3 class="card-title" style="font-size: 22px">Ask and follow</h3>
+            <p class="card-text role-text">
+              Open tickets, set priority and track every reply in one place.
+            </p>
+            <a href="signup.html" class="btn-soft btn-sm">Create an account</a>
+          </div>
+          <div class="role-card reveal" style="--d: 100ms">
+            <span class="role-chip role-agent">Agent</span>
+            <h3 class="card-title" style="font-size: 22px">Work the queue</h3>
+            <p class="card-text role-text">
+              Triage by SLA, reply, leave internal notes and resolve faster.
+            </p>
+            <a href="login.html" class="btn-soft btn-sm">Agent log in</a>
+          </div>
+          <div class="role-card reveal" style="--d: 200ms">
+            <span class="role-chip role-admin">Admin</span>
+            <h3 class="card-title" style="font-size: 22px">Run the desk</h3>
+            <p class="card-text role-text">
+              Provision agents, issue API keys and monitor SLA health.
+            </p>
+            <a href="login.html" class="btn-soft btn-sm">Admin log in</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Creator -->
+      <section id="creator" class="wrap sec">
+        <div class="reveal section-head">
+          <h2 class="section-title">Built by <b>Aditya Singh</b></h2>
+        </div>
+
+        <div class="panel reveal creator-panel">
+          <div class="creator-row">
+            <span class="avatar-lg">AS</span>
+            <div class="grow-min">
+              <span class="role-chip role-agent" style="margin-bottom: 14px"
+                >Full Stack Developer</span
+              >
+              <h3 class="creator-name">Aditya Singh</h3>
+              <p class="card-text">
+                Designed and built craftkel.ai from A to Z as the sole full
+                stack developer: the agent queue, SLA tracking, role-based
+                access and the rate-limited API, from database to interface.
+              </p>
+            </div>
+          </div>
+
+          <div class="btn-row btn-row-top">
             <a
               href="https://adityasingh.info"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-white/60 hover:text-[#feff7c] transition-colors underline underline-offset-4"
-              >Aditya Singh</a
+              class="btn-primary"
+              >Visit adityasingh.info</a
             >
-          </span>
-          <div class="flex items-center gap-6 uppercase">
             <a
               href="https://github.com/AdityaSingh21Official"
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-[#feff7c] transition-colors"
-              >GitHub</a
+              class="btn-soft"
             >
-            <a href="login.html" class="hover:text-[#feff7c] transition-colors"
-              >Log in</a
-            >
-            <a href="signup.html" class="hover:text-[#feff7c] transition-colors"
-              >Sign up</a
-            >
+              <svg
+                class="gh-icon"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+              GitHub
+            </a>
           </div>
-        </footer>
-      </div>
+        </div>
+      </section>
 
-      <div
-        class="hidden xl:block w-[77px] shrink-0 border-l border-white/10 bg-[radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:7px_7px]"
-      ></div>
-    </div>
+      <!-- CTA -->
+      <section class="wrap sec">
+        <div class="panel reveal cta-panel">
+          <h2 class="section-title cta-title">
+            Ready to <b>clear the queue?</b>
+          </h2>
+          <p class="section-lead">
+            Create a customer account in under a minute.
+          </p>
+          <div class="btn-row btn-row-top center">
+            <a href="signup.html" class="btn-primary">Sign up</a>
+            <a href="login.html" class="btn-soft">Log in</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap footer-wrap">
+      <div class="footer-row">
+        <span>
+          © 2026 craftkel.ai · Built by
+          <a
+            href="https://adityasingh.info"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link footer-under"
+            >Aditya Singh</a
+          >
+        </span>
+        <div class="footer-links">
+          <a
+            href="https://github.com/AdityaSingh21Official"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+            >GitHub</a
+          >
+          <a href="login.html" class="footer-link">Log in</a>
+          <a href="signup.html" class="footer-link">Sign up</a>
+        </div>
+      </div>
+    </footer>
 
     <script>
-      const cornerColors = { y: "border-[#feff7c]", o: "border-[#41412b]" };
-      const cornerSpots = [
-        "-top-px -left-px border-t border-l",
-        "-top-px -right-px border-t border-r",
-        "-bottom-px -left-px border-b border-l",
-        "-bottom-px -right-px border-b border-r",
-      ];
-      document.querySelectorAll("[data-corners]").forEach((el) => {
-        cornerSpots.forEach((spot) => {
-          const corner = document.createElement("span");
-          corner.className = `absolute w-2.5 h-2.5 pointer-events-none ${spot} ${cornerColors[el.dataset.corners]}`;
-          el.appendChild(corner);
-        });
-      });
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
+      /* Headline: letters fade in one by one */
       const letters = [];
       function splitLetters(node) {
         [...node.childNodes].forEach((child) => {
@@ -765,12 +1311,11 @@
             if (/^\s+$/.test(part))
               return fragment.appendChild(document.createTextNode(" "));
             const word = document.createElement("span");
-            word.className = "inline-block whitespace-nowrap";
+            word.className = "word";
             [...part].forEach((char) => {
               const letter = document.createElement("span");
               letter.textContent = char;
-              letter.className =
-                "inline-block opacity-0 blur-[10px] translate-y-2 transition-all duration-500";
+              letter.className = "letter";
               letters.push(letter);
               word.appendChild(letter);
             });
@@ -779,17 +1324,24 @@
           child.replaceWith(fragment);
         });
       }
-      document.querySelectorAll("[data-split]").forEach(splitLetters);
-      requestAnimationFrame(() => {
-        letters.forEach((letter, index) => {
-          letter.style.transitionDelay = `${index * 25}ms`;
-          letter.classList.remove("opacity-0", "blur-[10px]", "translate-y-2");
+      if (!reduceMotion) {
+        document.querySelectorAll("[data-split]").forEach(splitLetters);
+        requestAnimationFrame(() => {
+          letters.forEach((letter, index) => {
+            letter.style.transitionDelay = `${index * 25}ms`;
+            letter.classList.add("is-in");
+          });
         });
-      });
+      }
 
+      /* Count-up numbers */
       const countUp = (el) => {
         const target = parseFloat(el.dataset.count);
         const decimals = parseInt(el.dataset.decimals || "0", 10);
+        if (reduceMotion) {
+          el.textContent = target.toFixed(decimals);
+          return;
+        }
         const duration = 1400;
         const start = performance.now();
         const tick = (now) => {
@@ -801,18 +1353,19 @@
         requestAnimationFrame(tick);
       };
 
+      /* Scroll reveal */
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            entry.target.classList.remove("opacity-0", "translate-y-10");
+            entry.target.classList.add("is-in");
             observer.unobserve(entry.target);
           });
         },
         { threshold: 0.15 },
       );
       document
-        .querySelectorAll("[data-reveal]")
+        .querySelectorAll(".reveal")
         .forEach((el) => observer.observe(el));
 
       const counterObserver = new IntersectionObserver(
@@ -829,21 +1382,17 @@
         .querySelectorAll("[data-count]")
         .forEach((el) => counterObserver.observe(el));
 
+      /* Mobile menu */
       const menuBtn = document.getElementById("menuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
-      const bars = menuBtn.querySelectorAll("span");
-      let menuOpen = false;
       const setMenu = (open) => {
-        menuOpen = open;
-        mobileMenu.classList.toggle("grid-rows-[1fr]", open);
-        mobileMenu.classList.toggle("grid-rows-[0fr]", !open);
-        bars[0].classList.toggle("translate-y-2", open);
-        bars[0].classList.toggle("rotate-45", open);
-        bars[1].classList.toggle("opacity-0", open);
-        bars[2].classList.toggle("-translate-y-2", open);
-        bars[2].classList.toggle("-rotate-45", open);
+        menuBtn.classList.toggle("is-open", open);
+        menuBtn.setAttribute("aria-expanded", String(open));
+        mobileMenu.classList.toggle("is-open", open);
       };
-      menuBtn.addEventListener("click", () => setMenu(!menuOpen));
+      menuBtn.addEventListener("click", () =>
+        setMenu(!mobileMenu.classList.contains("is-open")),
+      );
       mobileMenu
         .querySelectorAll("a")
         .forEach((link) =>

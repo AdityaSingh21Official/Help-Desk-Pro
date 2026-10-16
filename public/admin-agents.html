@@ -3,106 +3,439 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agents · HelpDesk Pro</title>
+    <title>Agents · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --amber: #9a6a1f;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+
+      /* ---------- Buttons ---------- */
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--blue);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--raised-sm);
+        transition:
+          box-shadow 160ms ease,
+          background 160ms ease;
+      }
+      .btn-primary:hover {
+        background: var(--blue-ink);
+      }
+      .btn-primary:active {
+        box-shadow: var(--inset-sm);
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* ---------- Panels ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+
+      /* ---------- Table ---------- */
+      .table-wrap {
+        margin: 0 14px;
+        overflow-x: auto;
+      }
+      .data-table {
+        width: 100%;
+        min-width: 560px;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+      }
+      .data-table thead th {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+      }
+      .data-table thead th:first-child {
+        border-radius: 9999px 0 0 9999px;
+        padding-left: 26px;
+      }
+      .data-table thead th:last-child {
+        border-radius: 0 9999px 9999px 0;
+      }
+      .data-table tbody td {
+        padding: 18px;
+        color: var(--ink);
+        vertical-align: middle;
+      }
+      .data-table tbody td:first-child {
+        padding-left: 26px;
+        font-weight: 500;
+        color: var(--ink-strong);
+      }
+      .data-table tbody tr + tr td {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+
+      /* Fallbacks so rows injected by admin-agents.js with the old
+         dark-theme utility classes still read correctly. */
+      #agentsTableBody * {
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      #agentsTableBody [class*="text-white"] {
+        color: var(--ink);
+      }
+      #agentsTableBody [class*="text-white/4"],
+      #agentsTableBody [class*="text-white/3"],
+      #agentsTableBody [class*="text-white/5"] {
+        color: var(--muted);
+      }
+
+      /* Status badges */
+      #agentsTableBody span[class*="border"],
+      #agentsTableBody span[class*="bg-"],
+      #agentsTableBody .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+      }
+      #agentsTableBody span[class*="feff7c"],
+      #agentsTableBody span[class*="green"],
+      #agentsTableBody span[class*="emerald"],
+      #agentsTableBody .status-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+      #agentsTableBody span[class*="red"],
+      #agentsTableBody span[class*="ff6b6b"],
+      #agentsTableBody .status-inactive {
+        background: var(--surface);
+        color: var(--red);
+        box-shadow: var(--inset-sm);
+      }
+      /* Status dot: small circle in the badge's text colour */
+      #agentsTableBody span[class] > span,
+      #agentsTableBody span > span[class],
+      #agentsTableBody .status-pill > span {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 7px;
+        height: 7px;
+        min-width: 7px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: none;
+      }
+      #agentsTableBody [class*="text-[#feff7c]"],
+      #agentsTableBody [class*="text-green"],
+      #agentsTableBody [class*="text-emerald"] {
+        color: var(--blue-ink);
+      }
+      #agentsTableBody [class*="text-red"],
+      #agentsTableBody [class*="text-[#ff6b6b]"] {
+        color: var(--red);
+      }
+
+      /* Row actions (edit, deactivate, remove...) */
+      #agentsTableBody button {
+        padding: 8px 18px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+        transition: box-shadow 160ms ease;
+      }
+      #agentsTableBody button:hover {
+        color: var(--blue-ink);
+        background: var(--surface);
+      }
+      #agentsTableBody button:active {
+        box-shadow: var(--inset-sm);
+      }
+      #agentsTableBody button:disabled {
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+        cursor: not-allowed;
+      }
+
+      /* ---------- Form ---------- */
+      .field-label {
+        display: block;
+        margin-bottom: 10px;
+        padding-left: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .field {
+        width: 100%;
+        padding: 14px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink-strong);
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: var(--inset-sm);
+      }
+      .field::placeholder {
+        color: #9a9a9a;
+      }
+      .note {
+        padding: 14px 20px;
+        border-radius: 22px;
+        font-size: 13px;
+        line-height: 20px;
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Toast ---------- */
+      #toast {
+        background: var(--surface);
+        color: var(--blue-ink);
+        border-radius: 9999px;
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: var(--raised);
+      }
+
+      @media (max-width: 639px) {
+        .sidebar {
+          border-radius: 28px;
+        }
+        .table-wrap {
+          margin: 0 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nav-item,
+        .btn-soft,
+        .btn-primary {
+          transition: none;
+        }
+      }
+    </style>
     <script src="./js/auth.js"></script>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div class="flex min-h-screen flex-col lg:flex-row">
+  <body class="antialiased">
+    <div class="flex min-h-screen flex-col lg:flex-row gap-6 p-4 sm:p-6 lg:p-8">
       <!-- Sidebar -->
       <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+        class="sidebar w-full lg:w-64 shrink-0 flex flex-col p-6 lg:sticky lg:top-8 lg:self-start lg:min-h-[calc(100vh-4rem)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+        <div class="flex items-center gap-3 mb-8 lg:mb-10">
+          <div class="brand-mark">CK</div>
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0"
         >
-          <a
-            href="admin-dashboard.html"
-            id="navDashboard"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-dashboard.html" id="navDashboard" class="nav-item"
             >Dashboard</a
           >
           <a
             href="admin-agents.html"
             id="navAgents"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >Agents</a
           >
           <a
             href="admin-organizations.html"
             id="navOrganizations"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+            class="nav-item"
             >Organizations</a
           >
-          <a
-            href="admin-api-keys.html"
-            id="navApiKeys"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="admin-api-keys.html" id="navApiKeys" class="nav-item"
             >API Keys</a
           >
-          <a
-            href="agent-tickets.html"
-            id="navAllTickets"
-            class="flex items-center gap-2.5 px-3 py-2.5 text-white/60 hover:bg-white/5 hover:text-white border-l-2 border-transparent transition-colors whitespace-nowrap"
+          <a href="agent-tickets.html" id="navAllTickets" class="nav-item"
             >All Tickets</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-            id="userAvatar"
-          >
-            RM
+        <div class="mt-6 lg:mt-auto pt-6 flex items-center gap-3">
+          <div class="avatar" id="userAvatar">RM</div>
+          <div class="min-w-0 leading-tight">
+            <p
+              id="adminName"
+              class="text-sm font-medium text-[#3d3d3d] truncate"
+            >
+              Rita Mehta
+            </p>
+            <p class="text-[12px] text-[#6f6f6f] mt-0.5">Admin</p>
           </div>
-          <div class="text-sm leading-tight">
-            <p id="adminName">Rita Mehta</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Admin</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
+          <button id="logoutBtn" type="button" class="btn-soft ml-auto">
             Log out
           </button>
         </div>
       </aside>
 
       <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="mb-8">
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-          >
-            / Team
-          </p>
+      <main class="flex-1 min-w-0 py-2 lg:py-4 lg:pr-2">
+        <div class="mb-10">
+          <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">Team</p>
           <h1
-            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            class="text-3xl sm:text-4xl tracking-[-1.2px] text-[#3d3d3d] leading-tight font-semibold"
           >
             Agents
           </h1>
@@ -110,119 +443,74 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
           <!-- Agents table -->
-          <div
-            class="xl:col-span-2 relative border border-white/10 bg-[#020203]"
-          >
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-            ></span>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm">
+          <section class="panel xl:col-span-2 pb-4 pt-4 min-w-0">
+            <div class="table-wrap">
+              <table class="data-table">
                 <thead>
-                  <tr
-                    class="text-left text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
-                  >
-                    <th class="px-6 py-3.5 font-normal">/ Agent</th>
-                    <th class="px-6 py-3.5 font-normal">/ Open workload</th>
-                    <th class="px-6 py-3.5 font-normal">/ Status</th>
-                    <th class="px-6 py-3.5 font-normal"></th>
+                  <tr>
+                    <th>Agent</th>
+                    <th>Open workload</th>
+                    <th>Status</th>
+                    <th></th>
                   </tr>
                 </thead>
-                <tbody
-                  id="agentsTableBody"
-                  class="divide-y divide-white/10"
-                ></tbody>
+                <tbody id="agentsTableBody"></tbody>
               </table>
             </div>
-          </div>
+          </section>
 
           <!-- Add agent form -->
-          <div class="relative border border-white/10 bg-[#020203] p-6">
-            <span
-              class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#41412b]"
-            ></span>
-            <span
-              class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#41412b]"
-            ></span>
-
+          <section class="panel p-8">
             <h2
-              class="font-['Geist_Pixel',sans-serif] text-xl tracking-[-1px] mb-2"
+              class="text-xl tracking-[-0.5px] text-[#3d3d3d] mb-2 font-semibold"
             >
-              Add an <span class="text-[#feff7c]">agent</span>
+              Add an agent
             </h2>
-            <p class="text-white/60 text-xs leading-5 mb-6">
-              / Agents don't self-register — you provision their account here.
+            <p class="text-[13px] leading-5 text-[#6f6f6f] mb-8">
+              Agents don't self-register. You provision their account here.
             </p>
 
-            <form id="addAgentForm" class="space-y-4">
+            <form id="addAgentForm" class="space-y-6">
               <div>
-                <label
-                  for="agentName"
-                  class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Full name</label
-                >
+                <label for="agentName" class="field-label">Full name</label>
                 <input
                   type="text"
                   id="agentName"
                   name="agentName"
                   placeholder="Jane Doe"
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                  class="field"
                   required
                 />
               </div>
               <div>
-                <label
-                  for="agentEmail"
-                  class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Email</label
-                >
+                <label for="agentEmail" class="field-label">Email</label>
                 <input
                   type="email"
                   id="agentEmail"
                   name="agentEmail"
-                  placeholder="jane@helpdesk.pro"
-                  class="w-full px-4 py-3 bg-[#080809] border border-white/10 text-sm text-white placeholder:text-white/30 font-['Geist_Mono',monospace] focus:outline-none focus:border-[#feff7c] focus:ring-1 focus:ring-[#feff7c]/40 transition-colors"
+                  placeholder="jane@craftkel.ai"
+                  class="field"
                   required
                 />
               </div>
               <div>
-                <label
-                  for="agentTempPassword"
-                  class="block text-[11px] uppercase tracking-[-0.2px] text-white/60 mb-2"
-                  >Temporary password - Auto Generated - Sent Via Email</label
-                >
+                <p id="agentTempPassword" class="note">
+                  Temporary password is auto-generated and sent to the agent by
+                  email.
+                </p>
               </div>
-              <button
-                type="submit"
-                id="addAgentBtn"
-                class="w-full bg-[#feff7c] hover:bg-[#ffff47] text-[#434302] text-sm font-medium uppercase tracking-[-0.5px] py-3.5 transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-              >
+              <button type="submit" id="addAgentBtn" class="btn-primary">
                 Add agent
               </button>
             </form>
-          </div>
+          </section>
         </div>
       </main>
     </div>
+
     <div
       id="toast"
-      class="fixed -top-28 left-1/2 -translate-x-1/2 bg-[#feff7c] text-[#434302] border border-[#434302]/30 px-6 py-3 text-sm font-medium uppercase tracking-[-0.5px] font-['Geist_Mono',monospace] shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-[top] duration-400 ease-out z-[1001]"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 transition-[top] duration-400 ease-out z-[1001]"
     ></div>
   </body>
   <script type="module" src="./js/admin-agents.js"></script>

@@ -3,265 +3,547 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Queue · HelpDesk Pro</title>
+    <title>My Queue · craftkel.ai</title>
     <link rel="stylesheet" href="../src/output.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Geist+Pixel&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      :root {
+        --surface: #e0e0e0;
+        --ink: #555555;
+        --ink-strong: #3d3d3d;
+        --muted: #6f6f6f;
+        --blue: #4f86c6;
+        --blue-ink: #3f74b3;
+        --red: #d4605a;
+        --amber: #d9973b;
+        --grey: #b5b5b5;
+        --light: rgba(255, 255, 255, 0.92);
+        --dark: rgba(150, 150, 150, 0.5);
+
+        --raised: 9px 9px 18px var(--dark), -9px -9px 18px var(--light);
+        --raised-sm: 5px 5px 10px var(--dark), -5px -5px 10px var(--light);
+        --raised-xs: 3px 3px 6px var(--dark), -3px -3px 6px var(--light);
+        --inset:
+          inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light);
+        --inset-sm:
+          inset 3px 3px 6px var(--dark), inset -3px -3px 6px var(--light);
+      }
+
+      body {
+        background: var(--surface);
+        color: var(--ink);
+        font-family: "Montserrat", system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        background: var(--surface);
+        border-radius: 36px;
+        box-shadow: var(--raised);
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--raised-xs);
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 9999px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .nav-item:hover {
+        box-shadow: var(--raised-xs);
+        color: var(--ink-strong);
+      }
+      .nav-item:active {
+        box-shadow: var(--inset-sm);
+      }
+      .nav-item.is-active {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-sm);
+      }
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-ink);
+        background: var(--surface);
+        box-shadow: var(--raised-sm);
+      }
+      .btn-soft {
+        padding: 8px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      .btn-soft:hover {
+        color: var(--blue-ink);
+      }
+      .btn-soft:active {
+        box-shadow: var(--inset-sm);
+      }
+
+      /* ---------- Filter pills ---------- */
+      #ticketFilters .filter-pill {
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        text-transform: none;
+        letter-spacing: normal;
+        cursor: pointer;
+        box-shadow: var(--raised-xs);
+        transition:
+          box-shadow 160ms ease,
+          color 160ms ease;
+      }
+      #ticketFilters .filter-pill:hover {
+        color: var(--ink-strong);
+      }
+      #ticketFilters .filter-pill:active {
+        box-shadow: var(--inset-sm);
+      }
+      #ticketFilters .filter-pill.active,
+      #ticketFilters .filter-pill[aria-pressed="true"],
+      #ticketFilters .filter-pill[class~="bg-[#feff7c]"] {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: var(--raised-xs);
+      }
+
+      /* ---------- Panel + list ---------- */
+      .panel {
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: var(--raised);
+      }
+      .queue-scroll {
+        overflow-x: auto;
+      }
+      .queue-inner {
+        min-width: 860px;
+        padding: 20px 0 16px;
+      }
+      .queue-head {
+        margin: 0 14px 8px;
+        padding: 14px 18px;
+        border-radius: 9999px;
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .ticket-row {
+        margin: 0 14px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        color: inherit;
+        transition: box-shadow 160ms ease;
+      }
+      .ticket-row + .ticket-row {
+        box-shadow:
+          0 -1px 0 rgba(150, 150, 150, 0.28),
+          0 -2px 0 var(--light);
+      }
+      .ticket-row:hover {
+        box-shadow: var(--inset-sm);
+      }
+      .ticket-row:hover + .ticket-row {
+        box-shadow: none;
+      }
+
+      .ticket-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-strong);
+      }
+      .ticket-meta {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .ticket-id,
+      .ticket-assignee {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .priority-bar {
+        width: 6px;
+        height: 38px;
+        border-radius: 9999px;
+        box-shadow: var(--raised-xs);
+      }
+      .p-critical {
+        background: var(--red);
+      }
+      .p-high {
+        background: var(--amber);
+      }
+      .p-medium {
+        background: var(--blue);
+      }
+      .p-low {
+        background: var(--grey);
+      }
+
+      /* Status pills (static rows and JS rows) */
+      #ticketQueueList .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 7px 16px;
+        border: 0;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--blue-ink);
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: none;
+        white-space: nowrap;
+        box-shadow: var(--raised-xs);
+      }
+      #ticketQueueList .status-pill > span {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      /* Open */
+      #ticketQueueList .status-pill.status-open,
+      #ticketQueueList .status-pill[class*="ff6b6b"] {
+        background: var(--blue);
+        color: #fff;
+      }
+      /* In progress */
+      #ticketQueueList .status-pill.status-progress,
+      #ticketQueueList .status-pill[class*="feff7c" i] {
+        background: var(--surface);
+        color: var(--blue-ink);
+      }
+      /* Resolved */
+      #ticketQueueList .status-pill.status-resolved,
+      #ticketQueueList .status-pill[class*="6ee7a0"] {
+        background: var(--surface);
+        color: var(--muted);
+        box-shadow: var(--inset-sm);
+      }
+
+      /* SLA */
+      .sla-indicator > div {
+        width: 100%;
+        height: 8px;
+        margin-bottom: 8px;
+        border-radius: 9999px;
+        background: var(--surface);
+        box-shadow: var(--inset-sm);
+        overflow: hidden;
+      }
+      .sla-indicator > div > div {
+        height: 100%;
+        border-radius: 9999px;
+        background: var(--blue);
+      }
+      .sla-indicator > div > div.fill-red,
+      .sla-indicator > div > div[class*="ff6b6b"] {
+        background: var(--red);
+      }
+      .sla-indicator > div > div.fill-amber,
+      .sla-indicator > div > div[class*="ffb347"] {
+        background: var(--amber);
+      }
+      .sla-indicator p {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .sla-indicator p.sla-breach,
+      .sla-indicator p[class*="ff8a8a"] {
+        color: var(--red);
+      }
+
+      /* Fallback for rows the JS may inject with the old dark-theme classes */
+      #ticketQueueList [class*="text-white"] {
+        color: var(--ink);
+      }
+      #ticketQueueList [class*="text-white/4"],
+      #ticketQueueList [class*="text-white/3"],
+      #ticketQueueList [class*="text-white/5"],
+      #ticketQueueList [class*="text-white/6"] {
+        color: var(--muted);
+      }
+      #ticketQueueList .priority-bar[class*="ff6b6b"] {
+        background: var(--red);
+      }
+      #ticketQueueList .priority-bar[class*="ffb347"] {
+        background: var(--amber);
+      }
+      #ticketQueueList .priority-bar[class*="feff7c" i] {
+        background: var(--blue);
+      }
+      #ticketQueueList .priority-bar[class*="41412b"] {
+        background: var(--grey);
+      }
+
+      @media (max-width: 639px) {
+        .sidebar {
+          border-radius: 28px;
+        }
+        .queue-head,
+        .ticket-row {
+          margin-left: 8px;
+          margin-right: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .nav-item,
+        .btn-soft,
+        .ticket-row,
+        #ticketFilters .filter-pill {
+          transition: none;
+        }
+      }
+    </style>
   </head>
-  <body
-    class="bg-[#080809] text-white font-['Geist_Mono',monospace] antialiased"
-  >
-    <div class="flex min-h-screen flex-col lg:flex-row">
+  <body class="antialiased">
+    <div class="flex min-h-screen flex-col lg:flex-row gap-6 p-4 sm:p-6 lg:p-8">
       <!-- Sidebar -->
       <aside
-        class="w-full lg:w-64 shrink-0 bg-[#0b0b06] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col p-6 relative"
+        class="sidebar w-full lg:w-64 shrink-0 flex flex-col p-6 lg:sticky lg:top-8 lg:self-start lg:min-h-[calc(100vh-4rem)]"
       >
-        <div
-          class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:7px_7px] pointer-events-none"
-        ></div>
-
-        <div class="relative flex items-center gap-2.5 mb-8 lg:mb-10">
-          <div
-            class="w-8 h-8 bg-[#feff7c] text-[#434302] flex items-center justify-center font-['Geist_Pixel',sans-serif] text-sm"
-          >
-            HD
-          </div>
-          <span class="font-['Geist_Pixel',sans-serif] text-lg tracking-[-1px]"
-            >HelpDesk Pro</span
+        <div class="flex items-center gap-3 mb-8 lg:mb-10">
+          <div class="brand-mark">CK</div>
+          <span
+            class="text-[17px] font-semibold tracking-[-0.4px] text-[#3d3d3d]"
+            >craftkel.ai</span
           >
         </div>
 
         <nav
-          class="relative flex flex-row lg:flex-col gap-1 text-xs uppercase tracking-[-0.2px] overflow-x-auto"
+          class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0"
         >
           <a
             href="agent-tickets.html"
             id="navQueue"
-            class="flex items-center gap-2.5 px-3 py-2.5 bg-[#feff7c]/10 text-white border-l-2 border-[#feff7c] whitespace-nowrap"
+            aria-current="page"
+            class="nav-item is-active"
             >My Queue</a
           >
         </nav>
 
-        <div
-          class="relative mt-6 lg:mt-auto pt-6 border-t border-white/10 flex items-center gap-3"
-        >
-          <div
-            class="w-9 h-9 border border-[#feff7c]/40 bg-[#feff7c]/10 text-[#feff7c] flex items-center justify-center text-xs"
-          >
-            AS
+        <div class="mt-6 lg:mt-auto pt-6 flex items-center gap-3">
+          <div class="avatar">AS</div>
+          <div class="min-w-0 leading-tight">
+            <p
+              id="agentName"
+              class="text-sm font-medium text-[#3d3d3d] truncate"
+            >
+              Aarav Shah
+            </p>
+            <p class="text-[12px] text-[#6f6f6f] mt-0.5">Agent</p>
           </div>
-          <div class="text-sm leading-tight">
-            <p id="agentName">Aarav Shah</p>
-            <p class="text-white/40 text-[11px] uppercase mt-0.5">Agent</p>
-          </div>
-          <button
-            id="logoutBtn"
-            class="ml-auto text-white/40 hover:text-[#feff7c] text-[11px] uppercase underline underline-offset-4 cursor-pointer transition-colors"
-          >
+          <button id="logoutBtn" type="button" class="btn-soft ml-auto">
             Log out
           </button>
         </div>
       </aside>
 
       <!-- Main -->
-      <main class="flex-1 p-6 sm:p-8 lg:p-10 min-w-0">
-        <div class="mb-6">
-          <p
-            class="text-[11px] uppercase tracking-[-0.2px] text-[#feff7c] mb-2"
-          >
-            / Queue
-          </p>
+      <main class="flex-1 min-w-0 py-2 lg:py-4 lg:pr-2">
+        <div class="mb-8">
+          <p class="text-[13px] font-medium text-[#6f6f6f] mb-2">Queue</p>
           <h1
-            class="font-['Geist_Pixel',sans-serif] text-3xl sm:text-4xl tracking-[-2px]"
+            class="text-3xl sm:text-4xl tracking-[-1.2px] text-[#3d3d3d] leading-tight font-semibold"
           >
             Tickets
           </h1>
         </div>
 
         <!-- Filter pills -->
-        <div id="ticketFilters" class="flex flex-wrap items-center gap-2 mb-6">
-          <button
-            class="filter-pill active px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#feff7c] text-[#434302] border border-[#feff7c] cursor-pointer transition-colors"
-            data-filter="mine"
-          >
+        <div id="ticketFilters" class="flex flex-wrap items-center gap-3 mb-8">
+          <button class="filter-pill active" data-filter="mine">
             Assigned to me · 9
           </button>
-          <button
-            class="filter-pill px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#020203] border border-white/10 text-white/60 hover:border-[#feff7c]/50 hover:text-white cursor-pointer transition-colors"
-            data-filter="unassigned"
-          >
+          <button class="filter-pill" data-filter="unassigned">
             Unassigned · 6
           </button>
-          <button
-            class="filter-pill px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#020203] border border-white/10 text-white/60 hover:border-[#feff7c]/50 hover:text-white cursor-pointer transition-colors"
-            data-filter="all"
-          >
+          <button class="filter-pill" data-filter="all">
             All tickets · 42
           </button>
-          <button
-            class="filter-pill px-4 py-2 text-[11px] uppercase tracking-[-0.2px] bg-[#020203] border border-white/10 text-white/60 hover:border-[#feff7c]/50 hover:text-white cursor-pointer transition-colors"
-            data-filter="breached"
-          >
+          <button class="filter-pill" data-filter="breached">
             SLA breached · 3
           </button>
         </div>
 
         <!-- Ticket table -->
-        <div class="relative border border-white/10 bg-[#020203]">
-          <span
-            class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -top-px -right-px w-2.5 h-2.5 border-t border-r border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -left-px w-2.5 h-2.5 border-b border-l border-[#feff7c]"
-          ></span>
-          <span
-            class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-[#feff7c]"
-          ></span>
-
-          <div class="overflow-x-auto">
-            <div class="min-w-[860px]">
+        <section class="panel">
+          <div class="queue-scroll">
+            <div class="queue-inner">
               <div
-                class="grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-3.5 text-[11px] uppercase tracking-[-0.2px] text-white/40 bg-[#080809] border-b border-white/10"
+                class="queue-head grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4"
               >
                 <span></span>
-                <span>/ ID</span>
-                <span>/ Subject</span>
-                <span>/ Status</span>
-                <span>/ SLA</span>
-                <span class="text-right">/ Assignee</span>
+                <span>ID</span>
+                <span>Subject</span>
+                <span>Status</span>
+                <span>SLA</span>
+                <span class="text-right">Assignee</span>
               </div>
 
-              <div id="ticketQueueList" class="divide-y divide-white/10">
+              <div id="ticketQueueList">
                 <a
                   href="ticket-detail.html"
-                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-white/[0.03] transition-colors"
+                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 items-center"
                   data-ticket-id="1042"
                 >
-                  <span class="priority-bar h-full bg-[#ff6b6b]"></span>
-                  <span class="text-xs text-white/40">#TCK-1042</span>
+                  <span class="priority-bar p-critical"></span>
+                  <span class="ticket-id">#TCK-1042</span>
                   <div class="min-w-0">
-                    <p class="text-sm truncate">
+                    <p class="ticket-title truncate">
                       Payment webhook failing intermittently
                     </p>
-                    <p class="text-[11px] text-white/40 mt-1">
-                      Sana Vora · Critical priority
-                    </p>
+                    <p class="ticket-meta">Sana Vora · Critical priority</p>
                   </div>
-                  <span
-                    class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#ff6b6b]/30 bg-[#ff6b6b]/10 text-[#ff8a8a] w-fit"
-                  >
-                    <span class="w-1.5 h-1.5 bg-[#ff6b6b]"></span> Open
-                  </span>
+                  <span class="status-pill status-open"><span></span>Open</span>
                   <div class="sla-indicator">
-                    <div
-                      class="w-full h-1.5 bg-white/10 overflow-hidden mb-1.5"
-                    >
-                      <div
-                        class="h-full bg-[#ff6b6b]"
-                        style="width: 100%"
-                      ></div>
+                    <div>
+                      <div class="fill-red" style="width: 100%"></div>
                     </div>
-                    <p class="text-[11px] text-[#ff8a8a]">Breached 12m ago</p>
+                    <p class="sla-breach">Breached 12m ago</p>
                   </div>
-                  <span class="text-xs text-white/40 text-right"
-                    >Unassigned</span
-                  >
+                  <span class="ticket-assignee text-right">Unassigned</span>
                 </a>
 
                 <a
                   href="ticket-detail.html"
-                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-white/[0.03] transition-colors"
+                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 items-center"
                   data-ticket-id="1041"
                 >
-                  <span class="priority-bar h-full bg-[#ffb347]"></span>
-                  <span class="text-xs text-white/40">#TCK-1041</span>
+                  <span class="priority-bar p-high"></span>
+                  <span class="ticket-id">#TCK-1041</span>
                   <div class="min-w-0">
-                    <p class="text-sm truncate">
+                    <p class="ticket-title truncate">
                       Unable to export report as CSV
                     </p>
-                    <p class="text-[11px] text-white/40 mt-1">
-                      Kabir Nair · High priority
-                    </p>
+                    <p class="ticket-meta">Kabir Nair · High priority</p>
                   </div>
-                  <span
-                    class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] w-fit"
+                  <span class="status-pill status-progress"
+                    ><span></span>In progress</span
                   >
-                    <span class="w-1.5 h-1.5 bg-[#feff7c]"></span> In progress
-                  </span>
                   <div class="sla-indicator">
-                    <div
-                      class="w-full h-1.5 bg-white/10 overflow-hidden mb-1.5"
-                    >
-                      <div class="h-full bg-[#ffb347]" style="width: 70%"></div>
+                    <div>
+                      <div class="fill-amber" style="width: 70%"></div>
                     </div>
-                    <p class="text-[11px] text-white/60">1h 20m left</p>
+                    <p>1h 20m left</p>
                   </div>
-                  <span class="text-xs text-white/40 text-right">Aarav S.</span>
+                  <span class="ticket-assignee text-right">Aarav S.</span>
                 </a>
 
                 <a
                   href="ticket-detail.html"
-                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-white/[0.03] transition-colors"
+                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 items-center"
                   data-ticket-id="1038"
                 >
-                  <span class="priority-bar h-full bg-[#feff7c]"></span>
-                  <span class="text-xs text-white/40">#TCK-1038</span>
+                  <span class="priority-bar p-medium"></span>
+                  <span class="ticket-id">#TCK-1038</span>
                   <div class="min-w-0">
-                    <p class="text-sm truncate">Question about billing cycle</p>
-                    <p class="text-[11px] text-white/40 mt-1">
-                      Meera Iyer · Medium priority
+                    <p class="ticket-title truncate">
+                      Question about billing cycle
                     </p>
+                    <p class="ticket-meta">Meera Iyer · Medium priority</p>
                   </div>
-                  <span
-                    class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#feff7c]/30 bg-[#feff7c]/10 text-[#feff7c] w-fit"
+                  <span class="status-pill status-progress"
+                    ><span></span>In progress</span
                   >
-                    <span class="w-1.5 h-1.5 bg-[#feff7c]"></span> In progress
-                  </span>
                   <div class="sla-indicator">
-                    <div
-                      class="w-full h-1.5 bg-white/10 overflow-hidden mb-1.5"
-                    >
-                      <div class="h-full bg-[#feff7c]" style="width: 35%"></div>
+                    <div>
+                      <div style="width: 35%"></div>
                     </div>
-                    <p class="text-[11px] text-white/60">5h 10m left</p>
+                    <p>5h 10m left</p>
                   </div>
-                  <span class="text-xs text-white/40 text-right">Aarav S.</span>
+                  <span class="ticket-assignee text-right">Aarav S.</span>
                 </a>
 
                 <a
                   href="ticket-detail.html"
-                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 px-6 py-4 items-center hover:bg-white/[0.03] transition-colors"
+                  class="ticket-row grid grid-cols-[4px_90px_1fr_140px_170px_110px] gap-4 items-center"
                   data-ticket-id="1029"
                 >
-                  <span class="priority-bar h-full bg-[#41412b]"></span>
-                  <span class="text-xs text-white/40">#TCK-1029</span>
+                  <span class="priority-bar p-low"></span>
+                  <span class="ticket-id">#TCK-1029</span>
                   <div class="min-w-0">
-                    <p class="text-sm truncate">Feature request: bulk export</p>
-                    <p class="text-[11px] text-white/40 mt-1">
-                      Priya Kapoor · Low priority
+                    <p class="ticket-title truncate">
+                      Feature request: bulk export
                     </p>
+                    <p class="ticket-meta">Priya Kapoor · Low priority</p>
                   </div>
-                  <span
-                    class="status-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] uppercase border border-[#6ee7a0]/30 bg-[#6ee7a0]/10 text-[#6ee7a0] w-fit"
+                  <span class="status-pill status-resolved"
+                    ><span></span>Resolved</span
                   >
-                    <span class="w-1.5 h-1.5 bg-[#6ee7a0]"></span> Resolved
-                  </span>
                   <div class="sla-indicator">
-                    <p class="text-[11px] text-white/60">Met · closed</p>
+                    <p>Met · closed</p>
                   </div>
-                  <span class="text-xs text-white/40 text-right">Aarav S.</span>
+                  <span class="ticket-assignee text-right">Aarav S.</span>
                 </a>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
   </body>

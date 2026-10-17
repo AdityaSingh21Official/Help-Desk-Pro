@@ -26,6 +26,279 @@
           inset 3px 3px 6px rgba(150, 150, 150, 0.5),
           inset -3px -3px 6px rgba(255, 255, 255, 0.92);
       }
+      /* ============ Paste inside the <style> block of new-ticket.html ============ */
+
+      /* ---------- Page-load sequence ---------- */
+      @keyframes ck-rise {
+        from {
+          opacity: 0;
+          transform: translateY(22px) scale(0.985);
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+          filter: blur(0);
+        }
+      }
+      .ck-reveal {
+        opacity: 0;
+        animation: ck-rise 650ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: calc(var(--i, 0) * 90ms);
+      }
+
+      /* ---------- Inputs ---------- */
+      #ticketSubject,
+      #ticketDescription {
+        transition:
+          box-shadow 220ms ease,
+          transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      #ticketSubject:focus,
+      #ticketDescription:focus {
+        transform: translateY(-1px);
+        box-shadow:
+          inset 5px 5px 10px rgba(150, 150, 150, 0.55),
+          inset -5px -5px 10px rgba(255, 255, 255, 0.95),
+          0 0 0 3px rgba(79, 134, 198, 0.25);
+      }
+      .ck-invalid {
+        box-shadow:
+          inset 3px 3px 6px rgba(150, 150, 150, 0.5),
+          inset -3px -3px 6px rgba(255, 255, 255, 0.92),
+          0 0 0 2px rgba(212, 96, 90, 0.6) !important;
+      }
+
+      /* ---------- Character counters ---------- */
+      .ck-counter {
+        margin: 10px 8px 0 0;
+        text-align: right;
+        font-size: 12px;
+        font-weight: 500;
+        color: #8a8a8a;
+        transition: color 200ms ease;
+      }
+      .ck-counter.is-warn {
+        color: #9a6a1f;
+      }
+      .ck-counter.is-over {
+        color: #d4605a;
+      }
+      @keyframes ck-bump {
+        0% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-3px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .ck-bump {
+        animation: ck-bump 180ms ease-out;
+      }
+
+      /* ---------- Priority pills ---------- */
+      @keyframes ck-pop {
+        0% {
+          transform: scale(1);
+        }
+        35% {
+          transform: scale(0.9);
+        }
+        70% {
+          transform: scale(1.07);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .ck-pop {
+        animation: ck-pop 420ms cubic-bezier(0.3, 1.4, 0.5, 1);
+      }
+      @keyframes ck-dot {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.7);
+        }
+      }
+      input[name="priority"]:checked + span > span:first-child {
+        animation: ck-dot 1.8s ease-in-out infinite;
+      }
+      input[name="priority"][value="critical"]:checked
+        + span
+        > span:first-child {
+        animation-duration: 0.85s;
+      }
+
+      /* ---------- Validation shake ---------- */
+      @keyframes ck-shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-7px);
+        }
+        40% {
+          transform: translateX(6px);
+        }
+        60% {
+          transform: translateX(-4px);
+        }
+        80% {
+          transform: translateX(3px);
+        }
+      }
+      .ck-shake {
+        animation: ck-shake 380ms ease-in-out;
+      }
+
+      /* ---------- Submit button ---------- */
+      #submitTicketBtn {
+        position: relative;
+        overflow: hidden;
+        transition:
+          box-shadow 150ms ease,
+          background 150ms ease,
+          transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      #submitTicketBtn:not(:disabled):hover {
+        transform: translateY(-2px);
+      }
+      #submitTicketBtn:not(:disabled):active {
+        transform: translateY(0) scale(0.97);
+      }
+      #cancelTicketBtn {
+        transition:
+          box-shadow 150ms ease,
+          color 150ms ease,
+          transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      #cancelTicketBtn:hover {
+        transform: translateY(-2px);
+      }
+
+      .ck-ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(0);
+        pointer-events: none;
+        animation: ck-ripple 600ms ease-out forwards;
+      }
+      @keyframes ck-ripple {
+        to {
+          transform: scale(3.2);
+          opacity: 0;
+        }
+      }
+
+      .ck-spinner {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: ck-spin 700ms linear infinite;
+      }
+      @keyframes ck-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .ck-check {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        fill: none;
+        stroke: #fff;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: ck-draw 450ms 80ms ease-out forwards;
+      }
+      @keyframes ck-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* ---------- Success: settle + burst ---------- */
+      @keyframes ck-settle {
+        0% {
+          transform: scale(1);
+        }
+        40% {
+          transform: scale(0.985);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .ck-settle {
+        animation: ck-settle 500ms cubic-bezier(0.3, 1.3, 0.5, 1);
+      }
+
+      .ck-burst {
+        position: fixed;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        z-index: 1002;
+      }
+      .ck-burst span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        animation: ck-burst 800ms cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+      }
+      @keyframes ck-burst {
+        from {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translate(var(--dx), calc(var(--dy) + 30px)) scale(0.3);
+          opacity: 0;
+        }
+      }
+
+      /* ---------- Respect reduced motion ---------- */
+      @media (prefers-reduced-motion: reduce) {
+        .ck-reveal,
+        .ck-bump,
+        .ck-pop,
+        .ck-shake,
+        .ck-settle,
+        .ck-ripple,
+        .ck-burst span,
+        input[name="priority"]:checked + span > span:first-child {
+          animation: none !important;
+        }
+        .ck-reveal {
+          opacity: 1;
+        }
+        #submitTicketBtn,
+        #cancelTicketBtn,
+        #ticketSubject,
+        #ticketDescription {
+          transition: none;
+        }
+        .ck-check {
+          animation: none;
+          stroke-dashoffset: 0;
+        }
+      }
     </style>
   </head>
   <body
@@ -248,6 +521,11 @@
         </form>
       </main>
     </div>
+    <div
+      id="toast"
+      class="fixed -top-28 left-1/2 -translate-x-1/2 transition-[top] duration-400 ease-out z-[1001]"
+    ></div>
   </body>
+  <script type="module" src="./js/new-ticket.js"></script>
   <script type="module" src="./js/utils.js"></script>
 </html>

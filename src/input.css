@@ -17,6 +17,18 @@
   --font-mono: "IBM Plex Mono", monospace;
 }
 
+#toast {
+  background: #e0e0e0;
+  color: #3f74b3;
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: calc(100vw - 32px);
+  box-shadow: var(--raised);
+}
+
 /* only needed if v4's auto-detection doesn't find your HTML files —
    paths are relative to THIS css file, adjust to match your actual layout */
 @source "../*.html";

@@ -108,4 +108,70 @@ function nameVerify(name) {
   return data;
 }
 
-export { emailVerify, passwordVerify, nameVerify, newPasswordValidate };
+function checkTicketSubject(sub) {
+  const data = {
+    success: true,
+    message: "",
+  };
+  if (typeof sub !== "string") {
+    data.success = false;
+    data.message = "Invalid Subject";
+    return data;
+  }
+
+  if (sub.length < 2) {
+    data.success = false;
+    data.message = "Minimum 2 characters in Subject";
+    return data;
+  }
+
+  if (sub.length > 100) {
+    data.success = false;
+    data.message = "Maximum 100 characters in Subject";
+    return data;
+  }
+
+  const titleRegex = /^[a-zA-Z0-9,._\-\s]{2,100}$/;
+  if (!titleRegex.test(sub)) {
+    data.success = false;
+    data.message = "Invalid Characters in Subject";
+    return data;
+  }
+  return data;
+}
+
+function checkTicketDescription(desc) {
+  const data = {
+    success: true,
+    message: "",
+  };
+  if (typeof desc !== "string") {
+    data.success = false;
+    data.message = "Invalid Description";
+    return data;
+  }
+
+  if (desc.length < 5 || desc.length > 2000) {
+    data.success = false;
+    data.message = "Description should be between 5 - 2k Characters";
+    return data;
+  }
+
+  const descRegex = /^[a-zA-Z0-9,._:?()'"\s\-!;@#]{5,2000}$/;
+  if (!descRegex.test(desc)) {
+    data.success = false;
+    data.message = "Invalid Characters in Description";
+    return data;
+  }
+
+  return data;
+}
+
+export {
+  emailVerify,
+  passwordVerify,
+  nameVerify,
+  newPasswordValidate,
+  checkTicketSubject,
+  checkTicketDescription,
+};

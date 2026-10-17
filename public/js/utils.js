@@ -5,7 +5,7 @@ const adminName = document.getElementById("adminName");
 const userAvatar = document.getElementById("userAvatar");
 
 document.addEventListener("DOMContentLoaded", function () {
-  renderUserName();
+  // renderUserName();
 });
 
 function renderUserName() {

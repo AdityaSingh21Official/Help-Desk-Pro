@@ -4,11 +4,50 @@ import redisClient from "../database/redis.config.js";
 import cacheGetOrSet from "../services/cache/caching.service.js";
 
 async function newTicket(req, res) {
-  //todo : add data validation middleware for incoming data
-  // this controller assumes the data is valid! and ok!
+  //todo : add data validation middleware for incoming data - DONE
+  // this controller assumes the data is valid! and ok! -
   let tempConn;
   try {
-    const { sub, desc, priority } = req.body;
+    tempConn = await dbConn.getConnection();
+    await tempConn.beginTransaction();
+
+    const userId = req.user.userId;
+    const { sub, desc, priority, idempoKey } = req.body;
+
+    const [idemCheck] = await tempConn.query(
+      `select cid from ticket where idempotencykey = ? and cid = ?`,
+      [idempoKey, userId],
+    );
+
+    if (idemCheck.length) {
+      await tempConn.rollback();
+      return res.status(201).json({
+        success: true,
+        message: "Ticket Created",
+      });
+    }
+
+    const SLA_PRIORITY = {
+      low: 1440,
+      medium: 1080,
+      high: 720,
+      critical: 360,
+    };
+
+    await tempConn.query(
+      `insert into 
+                          ticket(TTitle, TBody, TPriority, TStatus, TcreationTime, BreachDueAt, IdempotencyKey, CID) 
+                          values(?, ?, ?, 'open', now(), now() + interval ? minute , ? , ?);`,
+      [sub, desc, priority, SLA_PRIORITY[priority], idempoKey, userId],
+    );
+
+    await tempConn.commit();
+    // await redisClient.del("")
+
+    return res.status(201).json({
+      success: true,
+      message: "Ticket Created",
+    });
   } catch (error) {
     if (tempConn) {
       await tempConn.rollback();
@@ -193,4 +232,4 @@ async function revokeMyKey(req, res) {
   }
 }
 
-export { newPresonalApiKey, getMyKeys, revokeMyKey };
+export { newPresonalApiKey, getMyKeys, revokeMyKey, newTicket };
